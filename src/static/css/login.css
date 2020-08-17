@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+  background-color: #edeff2;
+}
+
+.login-logo{
+  height: 150px;
+  background-color: #ffffff;
+  padding: 20px;
+}
+
+.window-color{
+  background-color: #ffffff;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.title {
+  font-family: 'Montserrat Alternates';
+  font-size:30px;
+  font-weight: bolder;
+  color: #53b50b;
+  text-align: center;
+  background-color: #ffffff;
+}

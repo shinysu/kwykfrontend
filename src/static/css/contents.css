@@ -1,0 +1,34 @@
+.topic-btn{
+  width: 30%;
+  margin: 2% 1%;
+  height: 7vh;
+  background-color: #edeff2;
+  color: #7bc143;
+  border: none;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topics-area{
+  background-color: #ffffff;
+  height: 35vh;
+  overflow-y: scroll;
+}
+
+.subtopics-area{
+  background-color: #ffffff;
+  height: 15vh;
+  overflow-x: scroll;
+}
+
+button:focus{
+  outline-color: #7bc143;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}

@@ -1,0 +1,94 @@
+.chat{
+  height:60vh;
+  background-color: #E3F0D9;
+  overflow-y: auto;
+}
+
+.knowbot{
+  width:8%;
+  height:1%;
+  padding: 1vh;
+  background-color: #E3F0D9;
+}
+
+.avatar{
+  width: 100%;
+  height: auto;
+}
+
+.chatcolor{
+  background-color: #E3F0D9;
+}
+
+.botmessage{
+  background-color: #ffffff;
+  width: 75%;
+  margin: 1vh;
+  height: auto;
+  vertical-align: middle;
+  font-family: "Lucida Console", Monaco, monospace;
+  border-radius: 20px;
+}
+
+.usermessage{
+  background-color: #fff2cc;
+  width: 75%;
+  margin-left: 10%;
+  height: auto;
+  vertical-align: middle;
+  font-family: "Lucida Console", Monaco, monospace;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.bot{
+  background-color: #E3F0D9;
+
+}
+
+ul,li{
+  list-style: none;
+  background-color: #E3F0D9;
+}
+
+.ideabutton, .skipbutton{
+  width:10%;
+  display: block;
+  position: relative;
+  height: 100%;
+  border: none;
+  background-color: #E3F0D9;
+}
+
+.input-area{
+  bottom: 5%;
+  height: 8vh;
+  width: 100%;
+  position: relative;
+}
+
+.chatarea{
+  background-color: #E3F0D9;
+  height: 75vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.idealogo{
+  height: auto;
+  width: 100%;
+}
+
+.input-text{
+  background-color: #ffffff;
+  border-radius: 10px;
+  position: relative;
+  width: 80%;
+}
+
+.skipbutton{
+  text-align: left;
+  color: #7bc143;
+  font-weight: bold;
+  height: auto;
+}

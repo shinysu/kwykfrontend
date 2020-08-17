@@ -1,0 +1,95 @@
+* {
+  box-sizing: border-box;
+  background-color: #edeff2;
+}
+
+.knowbotlogo{
+  height: auto;
+  width: 8vh;
+  padding: 1vh;
+  background-color: #ffffff;
+}
+
+.headerfont {
+  font-family: 'Montserrat Alternates';
+  font-size:5vh;
+  font-weight: bold;
+  color: #7bc143;
+  text-align: center;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  width:80%;
+}
+
+.white{
+  background-color: #ffffff;
+}
+
+.green{
+  background-color: #7bc143;
+}
+
+.ellipsislogo{
+  padding-top: 1vh;
+  width: 1.8vh;
+  height: auto;
+  background-color: #ffffff;
+}
+
+.header-row{
+  height: 10%;
+  background-color: #ffffff;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.clock-img{
+  background-color: #7bc143;
+  height: 1.5em;
+}
+.timer{
+  background-color: #7bc143;
+  text-align: left;
+  font-size:1.2em;
+  color: #ffffff;
+}
+
+.info-text{
+  font-family: "Lucida Console", Monaco, monospace;
+  background-color: #ffffff;
+  color: #7bc143;
+  font-size:1.5em;
+  display: block;
+  text-align: center;
+  padding: 2vh;
+  height: 15vh;
+}
+
+ul, li{
+  padding-top: 1vh;
+  background-color: #ffffff;
+}
+
+.start-button{
+  font-size:28px;
+  color: #ffffff;
+  background-color: #7bc143;
+  display: block;
+  width: 100%;
+  height: auto;
+  bottom: 5%;
+  position: relative;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-weight: bold;
+}
+
+.display-row{
+  width: 100%;
+  height: 10vh;
+}
+
+.ellipsisbutton{
+  padding-top: 0.5vh;
+  height: auto;
+  background-color:#ffffff;
+}

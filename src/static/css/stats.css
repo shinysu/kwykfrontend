@@ -1,0 +1,73 @@
+.stats-area{
+  background-color: #E3F0D9;
+  height: 85vh;
+}
+
+.score{
+  background-color: #E3F0D9;
+}
+
+.green{
+  background-color: #7bc143;
+}
+
+.score{
+  background-color: #ffffff;
+  width: 75%;
+  margin: 1vh;
+  height: auto;
+  vertical-align: middle;
+  font-family: "Lucida Console", Monaco, monospace;
+  border-radius: 20px;
+}
+
+.text{
+  background-color: #7bc143;
+  color: #ffffff;
+  font-size: 1.3em;
+  font-family: "Lucida Console", Monaco, monospace;
+  padding: 1vh;
+}
+
+.display-area{
+  margin-left: 2vw;
+  margin-right: 2vw;
+  margin-top: 2vw;
+  background-color: #E3F0D9;
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+
+.left{
+  display: block;
+  text-align: left;
+}
+
+.right{
+  display: block;
+  text-align: right;
+}
+
+.center{
+  display: block;
+  text-align: center;
+}
+
+.retry-button{
+  width: 100%;
+  background-color: #ffffff;
+  height: 100%;
+  font-size: 1.2em;
+  padding: 1vh;
+  color: #7bc143;
+  font-family: "Lucida Console", Monaco, monospace;
+  border: 10px;
+  
+}
+
+.button-area{
+  margin-left: 2vw;
+  margin-right: 2vw;
+  background-color: #E3F0D9;
+  height: 8vh;
+}
