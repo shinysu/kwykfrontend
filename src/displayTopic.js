@@ -54,7 +54,14 @@ function DisplayStartButton(props){
       console.log("subtopic=",props.subtopic);
       props.returnTopic(props.topic);
       props.returnSubtopic(props.subtopic);
-      history.push('/'+props.topic+'/'+props.subtopic);
+      history.push({
+        pathname:'/test/'+props.topic+'/'+props.subtopic,
+        state:{
+          topic: props.topic,
+          subtopic: props.subtopic
+        }
+      });
+      //history.push('/'+props.topic+'/'+props.subtopic);
   }
   return(
     <div className="white">

@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import * as constant from './constants'
 
 function usePost(url, text, defaultResponse) {
   const [data, setData] = useState(defaultResponse);
   const  requestOptions = {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ "text": text, "username": "shiny.suresh@gmail.com"})
+    body: JSON.stringify({ "text": text, "username": constant.username})
   };
   async function postDataToAPI() {
     try {

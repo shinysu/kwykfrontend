@@ -15,7 +15,10 @@ var time;
 
 function ChatBot(props){
   console.log("ChatBot");
-  console.log(props.topic);
+  let history = useHistory();
+  const topic = history.location.state.topic;
+  const subtopic = history.location.state.subtopic;
+
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   function getTime(minutes,seconds){
@@ -29,7 +32,7 @@ function ChatBot(props){
         <div className="col-sm-8 chatcolor">
             <Header />
             <ShowTimeHeader/>
-            <DisplayChat topic={props.topic} subtopic={props.subtopic} minutes={minutes} seconds={seconds}/>
+            <DisplayChat topic={topic} subtopic={subtopic} minutes={minutes} seconds={seconds}/>
         </div>
         <div className="col-sm-2"></div>
       </div>
@@ -51,13 +54,19 @@ function DisplayChat(props){
   console.log("DisplayChat");
   const [chatMessages, setChatMessages] = useState(["welcome","first"]);
   const [userInput, setUserInput] = useState("");
+  const actions = ["welcome","first","next","skip","hint","afterinput"]
 
   function getUserInput(input){
     setUserInput(input);
   }
 
   function addChat(message){
-    setChatMessages([...chatMessages,message]);
+    if(actions.includes(message)){
+      setChatMessages([...chatMessages,message]);
+    }
+    else{
+      setChatMessages([...chatMessages,message,"afterinput"]);
+    }
   }
 
   const chatList = chatMessages.map((message,index) => {
@@ -66,16 +75,16 @@ function DisplayChat(props){
     if(message ==="welcome"){
       return <ShowWelcomeChat key={index} />;
     }else if(message ==="first" || message ==="next" || message ==="skip"){
-      return <GetWord key={index} addChat={addChat} message={message}/>
+      return <GetWord key={index} addChat={addChat} message={message} topic={props.topic} subtopic={props.subtopic} />
     }
     else if(message ==="hint"){
       return <ShowHint addChat={addChat} key={index}/>
     }
+    else if(message ==="afterinput"){
+      return <GetWord key={index} addChat={addChat} message={userInput} topic={props.topic} subtopic={props.subtopic} />
+    }
     else{
-      return (<div>
-        <DisplayUserInput key={index} input={userInput}/>
-        <GetWord key={index} addChat={addChat} message={userInput}/>
-        </div>);
+      return <DisplayUserInput key={index} input={message}/>
     }
   }
  );
@@ -108,6 +117,10 @@ function ShowWelcomeChat(props){
 function GetWord(props){
   console.log("GetWord");
   let history = useHistory();
+  //const topic = history.location.state.topic;
+//  const subtopic = history.location.state.subtopic;
+  console.log("topic here=",props.topic);
+  console.log("subtopic here=",props.subtopic);
   const url = constant.postURL;
   let text;
   //const text = props.message ==='skip' ? '/skip' : '/new'
@@ -120,19 +133,18 @@ function GetWord(props){
     default:
       text = props.message; break;
   }
-
+console.log("text here=",text);
   const fetchResponse = usePost(url, text, {isLoading: true, data: null});
   if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
   }
   const word = fetchResponse.data
   if(word === 'finish_topic'){
-    //history.push('/user_stats');
-  //  const minutes = useTimer();
-  console.log("before push=",time);
     history.push({
-      pathname:'/user_stats',
+      pathname:`/user_stats/${props.topic}/${props.subtopic}`,
       state:{
+        topic: props.topic,
+        subtopic: props.subtopic,
         minutes: time[0],
         seconds: time[1]
       }
@@ -166,7 +178,7 @@ function DisplayForm(props){
   function handleClick(e){
     if(userInput){
       props.getUserInput(userInput);
-      props.addChat("userinput");
+      props.addChat(userInput);
       setUserInput("");
     }
   }
@@ -199,10 +211,12 @@ function DisplayUserInput(props){
 }
 
 function BotReply(props){
-  function handleClick(){
+  const [buttonText, setButtonText] = useState("Skip");
+  function handleClick(e){
+    e.target.setAttribute("disabled", "disabled");
+    setButtonText("");
     props.addChat("skip")
   }
-  const buttonText = props.dsableSkipButton === true ? "" : "Skip"
   return(
     <li>
     <div className="row bot">

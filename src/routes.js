@@ -4,6 +4,8 @@ import history from './components/history';
 import DisplayTopic from './displayTopic';
 import ChatBot from './chatBot'
 import UserStats from './UserStats'
+import Responses from './Responses'
+import Insights from './Insights'
 
 
 function Routes(){
@@ -20,8 +22,10 @@ function Routes(){
       <Router  >
       <Switch>
         <Route path="/" exact render={() => <DisplayTopic getSelectedTopic={getSelectedTopic} getSelectedSubTopic={getSelectedSubTopic}/>} />
-        <Route path="/:topic/:subtopic" render={() => <ChatBot topic={topic} subtopic={subtopic}/>} />
-        <Route path="/:use_stats" render={() => <UserStats/>} />
+        <Route path="/test/:topic/:subtopic" render={() => <ChatBot topic={topic} subtopic={subtopic}/>} />
+        <Route path="/user_stats/:topic/:subtopic" render={() => <UserStats/>} />
+        <Route path="/view_responses/:topic/:subtopic" render={() => <Responses/>} />
+        <Route path="/admin" render={() => <Insights/>} />
       </Switch>
       </Router>
     );

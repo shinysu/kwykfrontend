@@ -12,11 +12,14 @@ import usePost from "./components/postData";
 
 
 function UserStats(props){
-  //console.log("time=",props.time);
-  //console.log(history);
   let history = useHistory()
   const minutes = history.location.state.minutes;
   const seconds = history.location.state.seconds;
+  const topic = "python";
+  const subtopic = "flask";
+//  const topic = history.location.state.topic;
+//  const subtopic = history.location.state.subtopic;
+  console.log("UserStats");
   return(
     <div className="container">
       <div className="row">
@@ -24,7 +27,7 @@ function UserStats(props){
         <div className="col-sm-8 chatcolor">
             <Header />
             <ShowTimeHeader minutes={minutes} seconds={seconds}/>
-            <DisplayStats minutes={minutes} seconds={seconds} topic={props.topic} subtopic={props.subtopic}/>
+            <DisplayStats minutes={minutes} seconds={seconds} topic={topic} subtopic={subtopic}/>
         </div>
         <div className="col-sm-2"></div>
       </div>
@@ -35,8 +38,6 @@ function UserStats(props){
 export default UserStats;
 
 function ShowTimeHeader(props){
-  //let time;
-  //time = props.minutes+":"+props.seconds
   return (
     <TimerHeader time={[props.minutes,props.seconds]} />
   );
@@ -68,7 +69,14 @@ function RetrySkips(){
 function ViewResponses(props){
   let history = useHistory();
   function handleClick(){
-    history.push('/view_responses/'+props.topic+'/'+props.subtopic);
+    history.push({
+    pathname:`/view_responses/${props.topic}/${props.subtopic}`,
+    //pathname:`/view_responses/python/flask`,
+      state:{
+        topic: props.topic,
+        subtopic: props.subtopic,
+        }
+    });
   }
   return(
     <div className= "button-area">
@@ -101,8 +109,13 @@ function FeedBack(){
 }
 
 function DisplayScore(props){
-  //let time;
-  //time = props.minutes+":"+props.seconds
+  const url = constant.postURL;
+  const text = '/score';
+  const fetchResponse = usePost(url, text, {isLoading: true, data: null});
+  if (!fetchResponse.data || fetchResponse.isLoading) {
+    return 'Loading...';
+  }
+  const counts = JSON.parse(fetchResponse.data)
   return(
     <div className= "display-area">
       <br />
@@ -111,7 +124,7 @@ function DisplayScore(props){
       </div>
       <div className = "row ">
         <div className="col-sm-6 text right">
-          #Attempted:
+          #Attempted: {counts[0]}
         </div>
         <div className="col-sm-6 text left">
         {props.attempted}
@@ -119,7 +132,7 @@ function DisplayScore(props){
       </div>
       <div className = "row ">
         <div className="col-sm-6 text right">
-        #Skipped:
+        #Skipped: {counts[1]}
         </div>
         <div className="col-sm-6 text left">
         {props.skipped}
