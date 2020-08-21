@@ -8,8 +8,6 @@ import { useHistory } from "react-router-dom";
 import useFetch from "./components/getData";
 import * as constant from './components/constants'
 import usePost from "./components/postData";
-import TopicSelectHeader from "./components/TopicSelectHeader";
-import Statistics from "./components/Statistics";
 
 function Insights() {
   return (
@@ -56,12 +54,25 @@ function StatisticsTab(props){
       </Tabs>
       <>
         <Content active={active === 0}>
-          <Statistics data={data}/>
+          <ShowStatistics data={data}/>
         </Content>
         <Content active={active === 1}>
           <ShowInsights data={data}/>
         </Content>
       </>
+    </div>
+  );
+}
+
+function ShowStatistics(props){
+  const [selectedValue, setSelectedValue] = useState("");
+  function getSelectedValue(value){
+    setSelectedValue(value);
+  }
+  const topics = props.data["topics"];
+  return(
+    <div >
+      <TopicHeader getSelectedValue={getSelectedValue} selectedValue={selectedValue} topics={topics}/>
     </div>
   );
 }
@@ -77,35 +88,59 @@ function ShowInsights(props){
   console.log("userData=",userData);
   return(
     <div >
-      <TopicSelectHeader getSelectedValue={getSelectedValue} selectedValue={selectedValue} topics={topics}/>
+      <TopicHeader getSelectedValue={getSelectedValue} selectedValue={selectedValue} topics={topics}/>
       <DisplayUserData selectedValue={selectedValue} userData={userData}/>
     </div>
   );
 }
 
-
+function TopicHeader(props){
+  console.log("TopicHeader");
+  const [selectedValue, setSelectedValue] = useState(props.selectedValue);
+  const topics=props.topics;
+  function handleChange(e){
+    setSelectedValue(e.target.value);
+    props.getSelectedValue(e.target.value);
+  }
+  return(
+    <div className="row green">
+    <label className="green topic-label"> TOPIC: </label>
+    <select className="topic-select" onChange={handleChange} value={selectedValue}>
+      {topics.map((topic,index) => <option key={index} > {topic} </option>)}
+    </select>
+    </div>
+  );
+}
 
 function DisplayUserData(props){
   let words, userData;
   let header,body;
   console.log("DisplayUserData");
+  console.log(props.userData);
   const data = props.userData[props.selectedValue];
+  console.log("data=",data);
   if(data){
     words=data["topic_words"];
+    console.log("words=",words);
     userData = data["user_data"];
+    console.log("userData=",userData);
     header = words.map((word,index)=>{
       return <th className="data" key={index}>{word}</th>
     });
     body = Object.keys(userData).map((user,index)=>{
       const userVal = userData[user];
+
       const userInput = words.map((word,index)=>{
+        console.log("this=",userVal[word]);
         if(userVal[word]){
           return <td style={{backgroundColor:"#b2de83"}} key={index}></td>;
         }
         else {
           return <td style={{backgroundColor:"#c35c14"}} key={index}></td>;
         }
+
       });
+      console.log("userInput=",userInput);
       return(
         <tr key={index}>
         <td>{user}</td>
@@ -118,33 +153,15 @@ function DisplayUserData(props){
     <div className="display-data">
       <table>
         <thead>
-          <GetTableHeader data={data}/>
+          <tr>
+            <th style={{"minWidth":"200px"}}>Username</th>
+            {header}
+          </tr>
         </thead>
         <tbody>
-          {body}
+        {body}
         </tbody>
       </table>
     </div>
   );
-}
-
-function GetTableHeader(props){
-  let words, userData;
-  let header;
-   if(props.data){
-     words=props.data["topic_words"];
-     userData = props.data["user_data"];
-     header = words.map((word,index)=>{
-       return <th className="data" key={index}>{word}</th>
-     });
-     return(
-         <tr>
-           <th style={{"minWidth":"200px"}}>Username</th>
-           {header}
-         </tr>
-     );
-   }
-   else {
-     return <tr></tr>
-   }
 }

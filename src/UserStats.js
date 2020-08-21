@@ -111,7 +111,8 @@ function FeedBack(){
 function DisplayScore(props){
   const url = constant.postURL;
   const text = '/score';
-  const fetchResponse = usePost(url, text, {isLoading: true, data: null});
+  const dataText = { "text": text, "username": constant.username};
+  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
   if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
   }

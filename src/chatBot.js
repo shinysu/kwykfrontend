@@ -134,7 +134,9 @@ function GetWord(props){
       text = props.message; break;
   }
 console.log("text here=",text);
-  const fetchResponse = usePost(url, text, {isLoading: true, data: null});
+  const dataText = { "text": text, "username": constant.username};
+  console.log("here=",dataText);
+  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
   if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
   }
@@ -161,7 +163,9 @@ function ShowHint(props){
   console.log("ShowHint");
   const url = constant.postURL;
   const text = '/explain';
-  const fetchResponse = usePost(url, text, {isLoading: true, data: null});
+  const dataText = { "text": text, "username": constant.username}
+  console.log(dataText);
+  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
   if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
   }

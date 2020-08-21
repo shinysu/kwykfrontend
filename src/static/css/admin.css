@@ -1,0 +1,93 @@
+.display-data{
+  background-color: #E3F0D9;
+  height: 75vh;
+  overflow-x:auto;
+}
+
+.display-stats{
+  background-color: #E3F0D9;
+  height: 75vh;
+  display: block;
+  text-align: center;
+}
+
+.display-btn{
+  display: block;
+  text-align: center;
+  background-color: #E3F0D9;
+}
+
+.btn-stats:hover{
+  background-color: #7bc143;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+  background-color: #ffffff;
+}
+
+
+th, td{
+  border: 1px solid black;
+  overflow: hidden;
+  text-align: center;
+
+}
+
+th.user{
+  color: blue;
+  min-width: 200px;
+}
+
+th.data{
+  min-width: 100px;
+}
+
+.table-topics{
+  overflow-x: scroll;
+}
+
+.btn-stats{
+  margin: 3vh;
+  background-color: #7bc143;
+  width: 90%;
+  align-items: center;
+  color: #ffffff;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 1.2em;
+}
+
+.stats-data{
+  display: block;
+  text-align: center;
+}
+
+.progress-bar{
+  width: 100%;
+}
+
+.progress {
+    color: white;
+    width:auto;
+    margin-top: 0.5vh;
+    text-align: right;
+  }
+
+  .statsBar{
+    width: 80%;
+    margin-left: 10%;
+    background-color: #E3F0D9;
+  }
+
+.lightgreen{
+  background-color: #E3F0D9;
+}
+
+.data-label{
+  display: block;
+  text-align: left;
+  background-color: #ffffff;
+  padding-left: 1vh;
+  font-family: "Lucida Console", Monaco, monospace;
+}
