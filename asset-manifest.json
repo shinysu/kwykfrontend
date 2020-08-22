@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/kwykfrontend/static/css/main.78a33340.chunk.css",
+    "main.js": "/kwykfrontend/static/js/main.eccfe6e2.chunk.js",
+    "main.js.map": "/kwykfrontend/static/js/main.eccfe6e2.chunk.js.map",
+    "runtime-main.js": "/kwykfrontend/static/js/runtime-main.c8876517.js",
+    "runtime-main.js.map": "/kwykfrontend/static/js/runtime-main.c8876517.js.map",
+    "static/js/2.5942e09e.chunk.js": "/kwykfrontend/static/js/2.5942e09e.chunk.js",
+    "static/js/2.5942e09e.chunk.js.map": "/kwykfrontend/static/js/2.5942e09e.chunk.js.map",
+    "index.html": "/kwykfrontend/index.html",
+    "precache-manifest.2be9c6243e86a02fdb46f5ba6c38fcd2.js": "/kwykfrontend/precache-manifest.2be9c6243e86a02fdb46f5ba6c38fcd2.js",
+    "service-worker.js": "/kwykfrontend/service-worker.js",
+    "static/css/main.78a33340.chunk.css.map": "/kwykfrontend/static/css/main.78a33340.chunk.css.map",
+    "static/js/2.5942e09e.chunk.js.LICENSE.txt": "/kwykfrontend/static/js/2.5942e09e.chunk.js.LICENSE.txt",
+    "static/media/avatar.png": "/kwykfrontend/static/media/avatar.2dea87fd.png",
+    "static/media/clock.png": "/kwykfrontend/static/media/clock.4ffec318.png",
+    "static/media/knowbotSVG.svg": "/kwykfrontend/static/media/knowbotSVG.ae02fd80.svg",
+    "static/media/send.png": "/kwykfrontend/static/media/send.2f9b2bee.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c8876517.js",
+    "static/js/2.5942e09e.chunk.js",
+    "static/css/main.78a33340.chunk.css",
+    "static/js/main.eccfe6e2.chunk.js"
+  ]
+}
