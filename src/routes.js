@@ -19,13 +19,13 @@ function Routes(){
       setSubTopics(selectedSubTopic);
     }
     return(
-      <Router  >
+      <Router  basename={`${process.env.PUBLIC_URL}/`}>
       <Switch>
-        <Route path="/" exact render={() => <DisplayTopic getSelectedTopic={getSelectedTopic} getSelectedSubTopic={getSelectedSubTopic}/>} />
-        <Route path="/test/:topic/:subtopic" render={() => <ChatBot topic={topic} subtopic={subtopic}/>} />
-        <Route path="/user_stats/:topic/:subtopic" render={() => <UserStats/>} />
-        <Route path="/view_responses/:topic/:subtopic" render={() => <Responses/>} />
-        <Route path="/admin" render={() => <Insights/>} />
+      <Route path="/" exact render={() => <DisplayTopic getSelectedTopic={getSelectedTopic} getSelectedSubTopic={getSelectedSubTopic}/>} />
+      <Route path="/test/:topic/:subtopic" render={() => <ChatBot topic={topic} subtopic={subtopic}/>} />
+      <Route path="/user_stats/:topic/:subtopic" render={() => <UserStats/>} />
+      <Route path="/view_responses/:topic/:subtopic" render={() => <Responses/>} />
+      <Route path="/admin" exact render={() => <Insights/>} />
       </Switch>
       </Router>
     );

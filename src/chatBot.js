@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { useHistory } from "react-router-dom";
 import Header from "./components/kwykHeader";
 import TimerHeader from "./components/timerHeader";
@@ -10,8 +10,9 @@ import sendlogo from './static/images/send.png';
 import './static/css/chat.css';
 import * as constant from './components/constants'
 import usePost from "./components/postData";
-//import history from './components/history';
 var time;
+var attempted = 0;
+var skipped = 0;
 
 function ChatBot(props){
   console.log("ChatBot");
@@ -88,11 +89,17 @@ function DisplayChat(props){
     }
   }
  );
+ const messagesEndRef = useRef(null);
+ useEffect(() => {
+    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  },[chatList]);
+ console.log(chatList);
  return(
     <div>
       <div className="chatarea">
       <ul>
         {chatList}
+        <li><div className="scroll-div" ref={messagesEndRef} /></li>
       </ul>
       </div>
         <DisplayForm addChat={addChat} getUserInput={getUserInput}/>
@@ -117,8 +124,6 @@ function ShowWelcomeChat(props){
 function GetWord(props){
   console.log("GetWord");
   let history = useHistory();
-  //const topic = history.location.state.topic;
-//  const subtopic = history.location.state.subtopic;
   console.log("topic here=",props.topic);
   console.log("subtopic here=",props.subtopic);
   const url = constant.postURL;
@@ -133,7 +138,7 @@ function GetWord(props){
     default:
       text = props.message; break;
   }
-console.log("text here=",text);
+  console.log("text here=",text);
   const dataText = { "text": text, "username": constant.username};
   console.log("here=",dataText);
   const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
@@ -148,7 +153,9 @@ console.log("text here=",text);
         topic: props.topic,
         subtopic: props.subtopic,
         minutes: time[0],
-        seconds: time[1]
+        seconds: time[1],
+        attempted: attempted,
+        skipped: skipped
       }
     });
   }
@@ -179,25 +186,33 @@ function ShowHint(props){
 function DisplayForm(props){
   console.log("DisplayForm");
   const [userInput, setUserInput] = useState("");
-  function handleClick(e){
-    if(userInput){
+  function handleClick(){
+    if(userInput.length > 0){
       props.getUserInput(userInput);
       props.addChat(userInput);
       setUserInput("");
+      attempted++;
     }
   }
   function handleChange(e){
     setUserInput(e.target.value);
   }
   function handleHint(e){
-    props.addChat("hint")
+    props.addChat("hint");
+  }
+  function handleKeyPress(e){
+    if(e.charCode==13){
+        e.preventDefault();
+        handleClick();
+    }
   }
   return(
     <div className="row input-area">
-      <button className="ideabutton fixed-bottom" value="start" onClick={handleHint}>
+    <button className="ideabutton fixed-bottom" value="start" onClick={handleHint}>
         <img src={ideapng} className="idealogo" alt="logo" />
       </button>
-      <textarea className="input-text" value={userInput} onChange={handleChange} required></textarea>
+      <textarea className="input-text" value={userInput} onChange={handleChange}
+        onKeyPress={handleKeyPress} required></textarea>
       <button className="ideabutton fixed-bottom" value="start" onClick={handleClick}>
         <img src={sendlogo} className="idealogo" alt="logo" />
       </button>
@@ -208,7 +223,6 @@ function DisplayForm(props){
 function DisplayUserInput(props){
   console.log("DisplayUserInput");
   console.log(props.input);
-
   return(
     <UserReply message={props.input} />
   )
@@ -220,12 +234,13 @@ function BotReply(props){
     e.target.setAttribute("disabled", "disabled");
     setButtonText("");
     props.addChat("skip")
+    skipped++;
   }
   return(
     <li>
     <div className="row bot">
         <img src={knowbotSVG} className="knowbot" alt="logo" />
-        <textarea className="botmessage" value={props.message} disabled>
+        <textarea className="botmessage" value={props.message} id="bottext" disabled>
         </textarea>
         <button className="skipbutton fixed-bottom" value="start" disabled={props.dsableSkipButton}
           onClick={handleClick}>{buttonText}</button>

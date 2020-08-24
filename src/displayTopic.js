@@ -23,7 +23,7 @@ function DisplayTopic(props){
           <div className="col-sm-2"></div>
             <div className="col-sm-8 white">
               <Header />
-              <DisplayMessage props="Let's pick your topic..."/>
+              <DisplayMessage message="Let's pick your topic..."/>
               <DisplayTopics getSelectedTopic={getSelectedTopic} styling={"topics-area"}/>
               <DisplaySubTopics topic={topic} getSelectedSubTopic={getSelectedSubTopic}/>
               <DisplayStartButton topic={topic} subtopic={subtopic}
@@ -49,6 +49,14 @@ function DisplayMessage(props){
 
 function DisplayStartButton(props){
   let history = useHistory();
+  let buttonDisplay;
+  //const [buttonDisplay, setButtonDisplay] = useState("none");
+  if(props.subtopic){
+    buttonDisplay ="block";
+  }
+  else{
+    buttonDisplay ="none";
+  }
   function handleClick(e){
       console.log("topic=",props.topic);
       console.log("subtopic=",props.subtopic);
@@ -65,7 +73,8 @@ function DisplayStartButton(props){
   }
   return(
     <div className="white">
-      <button className="start-button fixed-bottom" value="start" onClick={handleClick}>Start</button>
+      <button className="start-button fixed-bottom" value="start"
+      onClick={handleClick} style={{display: buttonDisplay}}>Start</button>
     </div>
   );
 }
@@ -88,8 +97,7 @@ function DisplaySubTopics(props){
       <div>
       <DisplayMessage message="Choose your subtopic"/>
       <GetSubTopics getSelectedSubTopic={props.getSelectedSubTopic} topic={props.topic}
-                styling={"subtopics-area"}
-      />
+                styling={"subtopics-area"}/>
       </div>
     );
   }

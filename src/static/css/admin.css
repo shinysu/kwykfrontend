@@ -6,9 +6,10 @@
 
 .display-stats{
   background-color: #E3F0D9;
-  height: 75vh;
+  height: 72vh;
   display: block;
   text-align: center;
+  overflow-y: auto;
 }
 
 .display-btn{
@@ -49,7 +50,7 @@ th.data{
 }
 
 .btn-stats{
-  margin: 3vh;
+  margin: 2vh;
   background-color: #7bc143;
   width: 90%;
   align-items: center;

@@ -14,13 +14,13 @@
 .topics-area{
   background-color: #ffffff;
   height: 35vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .subtopics-area{
   background-color: #ffffff;
   height: 15vh;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 button:focus{

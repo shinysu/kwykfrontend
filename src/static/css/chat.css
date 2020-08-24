@@ -24,7 +24,6 @@
   background-color: #ffffff;
   width: 75%;
   margin: 1vh;
-  height: auto;
   vertical-align: middle;
   font-family: "Lucida Console", Monaco, monospace;
   border-radius: 20px;
@@ -70,7 +69,7 @@ ul,li{
 .chatarea{
   background-color: #E3F0D9;
   height: 75vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -91,4 +90,9 @@ ul,li{
   color: #7bc143;
   font-weight: bold;
   height: auto;
+}
+
+.scroll-div{
+  height: 20vh;
+  background-color: #E3F0D9;
 }

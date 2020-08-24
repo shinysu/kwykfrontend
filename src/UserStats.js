@@ -8,17 +8,16 @@ import './static/css/chat.css';
 import './static/css/stats.css';
 import * as constant from './components/constants'
 import usePost from "./components/postData";
-//import history from './components/history';
 
 
 function UserStats(props){
   let history = useHistory()
   const minutes = history.location.state.minutes;
   const seconds = history.location.state.seconds;
-  const topic = "python";
-  const subtopic = "flask";
-//  const topic = history.location.state.topic;
-//  const subtopic = history.location.state.subtopic;
+  const attempted = history.location.state.attempted;
+  const skipped = history.location.state.skipped;
+  const topic = history.location.state.topic;
+  const subtopic = history.location.state.subtopic;
   console.log("UserStats");
   return(
     <div className="container">
@@ -27,7 +26,8 @@ function UserStats(props){
         <div className="col-sm-8 chatcolor">
             <Header />
             <ShowTimeHeader minutes={minutes} seconds={seconds}/>
-            <DisplayStats minutes={minutes} seconds={seconds} topic={topic} subtopic={subtopic}/>
+            <DisplayStats minutes={minutes} seconds={seconds} topic={topic}
+            subtopic={subtopic} attempted={attempted} skipped={skipped}/>
         </div>
         <div className="col-sm-2"></div>
       </div>
@@ -46,7 +46,7 @@ function ShowTimeHeader(props){
 function DisplayStats(props){
   return(
     <div className="stats-area">
-      <DisplayScore minutes={props.minutes} seconds={props.seconds} />
+      <DisplayScore minutes={props.minutes} seconds={props.seconds} attempted={props.attempted} skipped={props.skipped}/>
       <RetrySkips />
       <ViewResponses topic={props.topic} subtopic={props.subtopic}/>
       <SwitchTopic />
@@ -61,7 +61,7 @@ function RetrySkips(){
   }
   return(
     <div className= "button-area">
-    <button className="retry-button" value="retry" onClick={handleClick}>Retry Skipped Questions</button>
+    <button className="retry-button" value="retry" onClick={handleClick}>Retry Skipped Questions [TBD]</button>
     </div>
   );
 }
@@ -103,20 +103,12 @@ function FeedBack(){
   }
   return(
     <div className= "button-area">
-    <button className="retry-button" value="retry" onClick={handleClick}>Get Feedback</button>
+    <button className="retry-button" value="retry" onClick={handleClick}>Get Feedback [TBD]</button>
     </div>
   );
 }
 
 function DisplayScore(props){
-  const url = constant.postURL;
-  const text = '/score';
-  const dataText = { "text": text, "username": constant.username};
-  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
-  if (!fetchResponse.data || fetchResponse.isLoading) {
-    return 'Loading...';
-  }
-  const counts = JSON.parse(fetchResponse.data)
   return(
     <div className= "display-area">
       <br />
@@ -125,7 +117,7 @@ function DisplayScore(props){
       </div>
       <div className = "row ">
         <div className="col-sm-6 text right">
-          #Attempted: {counts[0]}
+          #Attempted:
         </div>
         <div className="col-sm-6 text left">
         {props.attempted}
@@ -133,7 +125,7 @@ function DisplayScore(props){
       </div>
       <div className = "row ">
         <div className="col-sm-6 text right">
-        #Skipped: {counts[1]}
+        #Skipped:
         </div>
         <div className="col-sm-6 text left">
         {props.skipped}
