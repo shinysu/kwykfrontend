@@ -8,3 +8,4 @@ export const whiteColor = "#ffffff";
 export const postURL="http://localhost:3001/input_custom";
 //export const postURL="https://shiny.kwyk.in/input_custom";
 export const welcomeMessage="You will be given a word. Type as many words (separated by comma) that come to your mind and tap send"
+export const tableColors = ['#740000', '#c55b11','#f8aa73', '#b2de83', '#7bc143', '#02b150' ]

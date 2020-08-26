@@ -156,3 +156,25 @@
   background-color: #ffffff;
   padding: 2vh;
 }
+
+.view-div{
+  background-color: #7bc143;
+  margin-top: 2vh;
+  margin-right: 1vh;
+  margin-left: 1vh;
+  margin-bottom: 1vh;
+  text-align: center;
+  height: 5vh;
+}
+
+.view-select{
+  width: 100%;
+  background-color: #7bc143;
+  height: 100%;
+  padding-left: 5%;
+  font-size: 1.2em;
+  color: #ffffff;
+  border-radius: 1px;
+  border-color: #7bc143;
+  font-family: "Lucida Console", Monaco, monospace;
+}
