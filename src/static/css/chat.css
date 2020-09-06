@@ -25,6 +25,7 @@
   width: 75%;
   margin: 1vh;
   vertical-align: middle;
+  padding: 1vh;
   font-family: "Lucida Console", Monaco, monospace;
   border-radius: 20px;
 }
@@ -64,11 +65,13 @@ ul,li{
   height: 8vh;
   width: 100%;
   position: relative;
+  padding-bottom: 1vh;
+  background-color: #E3F0D9;
 }
 
 .chatarea{
   background-color: #E3F0D9;
-  height: 75vh;
+  height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
 }

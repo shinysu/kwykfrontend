@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import history from './components/history';
 import DisplayTopic from './displayTopic';
 import ChatBot from './chatBot'
 import UserStats from './UserStats'
 import Responses from './Responses'
 import Insights from './Insights'
-
+import Login from "./login";
+import PasswordReset from './PasswordReset';
 
 function Routes(){
     const [topic, setTopic] = useState("");
@@ -21,7 +21,9 @@ function Routes(){
     return(
       <Router  basename={`${process.env.PUBLIC_URL}/`}>
       <Switch>
-      <Route path="/" exact render={() => <DisplayTopic getSelectedTopic={getSelectedTopic} getSelectedSubTopic={getSelectedSubTopic}/>} />
+      <Route path="/topics" exact render={() => <DisplayTopic getSelectedTopic={getSelectedTopic} getSelectedSubTopic={getSelectedSubTopic}/>} />
+      <Route path="/" exact render={() => <Login/>} />
+      <Route path="/reset" exact render={() => <PasswordReset/>} />
       <Route path="/test/:topic/:subtopic" render={() => <ChatBot topic={topic} subtopic={subtopic}/>} />
       <Route path="/user_stats/:topic/:subtopic" render={() => <UserStats/>} />
       <Route path="/view_responses/:topic/:subtopic" render={() => <Responses/>} />

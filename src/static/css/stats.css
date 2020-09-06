@@ -21,13 +21,6 @@
   border-radius: 20px;
 }
 
-.text{
-  background-color: #7bc143;
-  color: #ffffff;
-  font-size: 1.3em;
-  font-family: "Lucida Console", Monaco, monospace;
-  padding: 1vh;
-}
 
 .display-area{
   margin-left: 2vw;
@@ -89,6 +82,7 @@
 }
 
 .topic-label{
+  margin-left: 0;
   background-color: #7bc143;
   padding: 1vh;
   color: #ffffff;
@@ -96,17 +90,36 @@
   font-family: "Lucida Console", Monaco, monospace;
 }
 
+.topic-text{
+  background-color: #7bc143;
+  padding: 1vh;
+  color: #ffffff;
+  font-size: 1.3em;
+  font-family: "Lucida Console", Monaco, monospace;
+  width: 100%;
+}
+
+.text{
+  background-color: #7bc143;
+  color: #ffffff;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 1.3em;
+}
+
 .lightgreen{
   background-color: #E3F0D9;
 }
 
-.topic-name{
+.topicname{
+  margin-left: 0;
   background-color: #E3F0D9;
   font-size: 1.2em;
   font-family: "Lucida Console", Monaco, monospace;
   color: #7bc143;
   font-weight: bold;
   padding-top: 2vh;
+  display: block;
+  text-align: left;
 }
 
 .word{
@@ -134,8 +147,9 @@
   height: 5vh;
 }
 
-.title-label{
+.titlelabel{
   background-color: #ffffff;
+  color: black;
   font-family: "Lucida Console", Monaco, monospace;
   padding-top: 2vh;
   padding-bottom: 1vh;
@@ -177,4 +191,8 @@
   border-radius: 1px;
   border-color: #7bc143;
   font-family: "Lucida Console", Monaco, monospace;
+}
+
+.chatcolor{
+  background-color: #E3F0D9;
 }

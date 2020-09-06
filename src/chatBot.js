@@ -14,6 +14,8 @@ var time;
 var attempted = 0;
 var skipped = 0;
 
+
+
 function ChatBot(props){
   console.log("ChatBot");
   let history = useHistory();
@@ -22,10 +24,6 @@ function ChatBot(props){
 
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-  function getTime(minutes,seconds){
-    setMinutes(minutes);
-    setSeconds(seconds);
-  }
   return(
     <div className="container">
       <div className="row">
@@ -44,7 +42,6 @@ function ChatBot(props){
 export default ChatBot;
 
 function ShowTimeHeader(props){
-  //time = <Timer getTime={props.getTime}/>
   time=useTimer();
   return (
     <TimerHeader time={time}/>
@@ -95,7 +92,7 @@ function DisplayChat(props){
   },[chatList]);
  console.log(chatList);
  return(
-    <div>
+    <div className="chatcolor">
       <div className="chatarea">
       <ul>
         {chatList}
@@ -110,11 +107,14 @@ function DisplayChat(props){
 
 function ShowWelcomeChat(props){
   console.log("ShowWelcomeChat");
+  const textArea = document.querySelector('textarea')
+  const textRowCount = textArea ? textArea.value.split("\n").length : 0;
+  const rows = textRowCount + 3;
   return(
     <li>
     <div className="row bot">
         <img src={knowbotSVG} className="knowbot" alt="logo" />
-        <textarea className="botmessage" value={constant.welcomeMessage} disabled></textarea>
+        <textarea className="botmessage" rows={rows} value={constant.welcomeMessage} disabled></textarea>
   </div>
   </li>
 );
@@ -127,7 +127,7 @@ function GetWord(props){
   console.log("topic here=",props.topic);
   console.log("subtopic here=",props.subtopic);
   const url = constant.postURL;
-  let text;
+  let text, session='';
   //const text = props.message ==='skip' ? '/skip' : '/new'
   switch(props.message){
     case 'skip':
@@ -139,13 +139,17 @@ function GetWord(props){
       text = props.message; break;
   }
   console.log("text here=",text);
-  const dataText = { "text": text, "username": constant.username};
+  const useremail = sessionStorage.getItem('useremail');
+  session = sessionStorage.getItem('session');
+
+  const dataText = { "text": text, "username": useremail, "session":session};
   console.log("here=",dataText);
   const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
   if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
   }
-  const word = fetchResponse.data
+  const word = fetchResponse.data.text
+  console.log(word);
   if(word === 'finish_topic'){
     history.push({
       pathname:`/user_stats/${props.topic}/${props.subtopic}`,
@@ -170,13 +174,18 @@ function ShowHint(props){
   console.log("ShowHint");
   const url = constant.postURL;
   const text = '/explain';
-  const dataText = { "text": text, "username": constant.username}
+  let session = '';
+  const useremail = sessionStorage.getItem('useremail');
+  session = sessionStorage.getItem('session');
+
+
+  const dataText = { "text": text, "username": useremail, "session": session}
   console.log(dataText);
   const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
   if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
   }
-  const hint = fetchResponse.data;
+  const hint = fetchResponse.data.text;
 
   console.log(hint);
   return( <BotReply message={hint} addChat={props.addChat} dsableSkipButton={false}/>
@@ -201,13 +210,13 @@ function DisplayForm(props){
     props.addChat("hint");
   }
   function handleKeyPress(e){
-    if(e.charCode==13){
+    if(e.charCode === 13){
         e.preventDefault();
         handleClick();
     }
   }
   return(
-    <div className="row input-area">
+    <div className="row input-area chatcolor">
     <button className="ideabutton fixed-bottom" value="start" onClick={handleHint}>
         <img src={ideapng} className="idealogo" alt="logo" />
       </button>

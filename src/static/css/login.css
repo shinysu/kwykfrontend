@@ -23,7 +23,101 @@
   font-family: 'Montserrat Alternates';
   font-size:30px;
   font-weight: bolder;
-  color: #53b50b;
+  color: #7bc143;
   text-align: center;
   background-color: #ffffff;
+  padding-bottom: 3vh;
+}
+
+.logintab{
+  padding: 2vh;
+}
+
+.white{
+  background-color: white;
+}
+
+.signin{
+  font-size:24px;
+  color: #ffffff;
+  background-color: #7bc143;
+  display: block;
+  width: 70%;
+  text-align: center;
+  margin-left: 15%;
+  margin-top: 5%;
+  height: auto;
+  bottom: 10%;
+  font-family: "Lucida Console", Monaco, monospace;
+
+}
+.pwdbtn{
+  font-size:24px;
+  color: #ffffff;
+  background-color: #7bc143;
+  display: block;
+  width: 60%;
+  text-align: center;
+  margin-left: 20%;
+  margin-top: 5%;
+  height: auto;
+  bottom: 10%;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+.text{
+  background-color: #edeff2;
+  width: 60%;
+  margin-top: 6vh;
+  margin-left: 20%;
+  border: 0px;
+  border-radius: 5px;
+  color: black;
+  font-size: 18px;
+}
+
+.loginform{
+  padding-top: 2vh;
+  background-color: #ffffff;
+}
+
+.reset{
+  color: #7bc143;
+  background-color: #ffffff;
+  text-align:center;
+  font-size: 18px;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+
+.link{
+  display: block;
+  text-align: center;
+  padding-top: 5vh;
+}
+
+label{
+  color: #7bc143;
+  background-color: #ffffff;
+  font-size: 18px;
+  font-family: "Lucida Console", Monaco, monospace;
+  padding: 1vh;
+  margin-left: 20%;
+  height: 10%;
+}
+
+.pwdreset{
+  height: 75vh;
+  background-color: #ffffff;
+  margin: 4vh;
+}
+.pwdtext{
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 20px;
+  padding-top: 2vh;
+}
+
+.pwdmessage{
+  height: 15vh;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 18px;
+  padding-top: 7vh;
 }

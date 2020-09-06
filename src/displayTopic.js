@@ -16,14 +16,16 @@ function DisplayTopic(props){
     function getSelectedSubTopic(data){
       setSubTopic(data);
     }
-
+    const username = sessionStorage.getItem('username');
+    const message = "Let's pick your topic..."
     return(
       <div className="container">
         <div className="row">
           <div className="col-sm-2"></div>
             <div className="col-sm-8 white">
               <Header />
-              <DisplayMessage message="Let's pick your topic..."/>
+              <UserHeader />
+              <DisplayMessage message={message} username={username}/>
               <DisplayTopics getSelectedTopic={getSelectedTopic} styling={"topics-area"}/>
               <DisplaySubTopics topic={topic} getSelectedSubTopic={getSelectedSubTopic}/>
               <DisplayStartButton topic={topic} subtopic={subtopic}
@@ -147,4 +149,15 @@ function TopicButton(props){
   return (<button className="rounded-pill topic-btn" value={props.name}
             style={{color: props.textColor, backgroundColor: props.buttonColor}}
             onClick={handleClick}> {props.name}</button>);
+}
+
+function UserHeader() {
+  const username = sessionStorage.getItem('username');
+  return(
+    <div className="row timer-row green">
+        <div className="col-sm-9 green user">
+          {username}
+        </div>
+    </div>
+  );
 }

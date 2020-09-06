@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import * as constant from './constants'
 
 function usePost(url, dataText, defaultResponse) {
   console.log("usePost=",dataText);
@@ -13,10 +12,9 @@ function usePost(url, dataText, defaultResponse) {
     try {
       const res = await fetch(url, requestOptions);
       const result = await res.json();
-      let dataList = result.text;
       setData({
         isLoading: false,
-        data: dataList
+        data: result
       });
     } catch (e) {
       console.error(e);

@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 import { Tabs, Tab, Content } from "./components/tab";
 import Header from "./components/kwykHeader";
 import './static/css/header.css';
 import './static/css/admin.css';
-import { useHistory } from "react-router-dom";
 import useFetch from "./components/getData";
 import * as constant from './components/constants'
-import usePost from "./components/postData";
 import TopicSelectHeader from "./components/TopicSelectHeader";
 import Statistics from "./components/Statistics";
 
@@ -46,11 +43,11 @@ function StatisticsTab(props){
 
   return(
     <div className="tab-color">
-      <Tabs>
-        <Tab onClick={handleClick} active={active === 0} id={0}>
+      <Tabs tabcolor={constant.adminTabColor}>
+        <Tab onClick={handleClick} active={active === 0} id={0} tabcolor={constant.adminTabColor}>
           STATISTICS
         </Tab>
-        <Tab onClick={handleClick} active={active === 1} id={1}>
+        <Tab onClick={handleClick} active={active === 1} id={1} tabcolor={constant.adminTabColor}>
           INSIGHTS
         </Tab>
       </Tabs>
@@ -90,8 +87,8 @@ function ShowInsights(props){
 }
 
 function DisplayUserData(props){
-  let words, userData, wordResponse;
-  let header,body, headerWords, limits;
+  let words;
+  let headerWords, limits;
   console.log("DisplayUserData");
   const data = props.userData[props.selectedValue];
   if(data){
@@ -101,7 +98,7 @@ function DisplayUserData(props){
   }
   return(
     <div className="display-data">
-      <table>
+      <table class="container">
         <GetTableHeader selectedView={props.selectedView} headerWords={headerWords}/>
         <GetTableData data={data} selectedView={props.selectedView} limits={limits}/>
       </table>
@@ -110,7 +107,6 @@ function DisplayUserData(props){
 }
 
 function GetTableHeader(props){
-  let words;
   console.log("GetTableHeader");
   console.log(props.headerWords);
    if(props.headerWords){
@@ -134,8 +130,7 @@ function GetTableHeader(props){
 function GetTableData(props){
   console.log("GetTableData");
   let words, userData;
-  let body;
-   if(props.data){
+  if(props.data){
      words=props.data["topic_words"];
      userData = props.data["user_data"];
   }
@@ -201,7 +196,7 @@ function ViewByUsers(props){
       });
       return(
         <tr key={index}>
-          <td>{user}</td>
+          <th>{user}</th>
           {userInput}
         </tr>
       );
@@ -234,7 +229,7 @@ function ViewByResponses(props) {
 
     return (
       <tr key={index}>
-        <td>{word}</td>
+        <th>{word}</th>
         {wordRow}
       </tr>
     );
@@ -252,17 +247,6 @@ function getWordResponseCount(word, userData){
     }
   }
   return count;
-}
-
-function getColor(count, limits) {
-  console.log("count=", count);
-  console.log("limits=",limits);
-  for(let i=0; i < limits.length; i++){
-    if((count >= limits[i][0]) && (count <= limits[i][1])){
-      console.log("here");
-      return constant.tableColors[i];
-    }
-  }
 }
 
 function getLimits(totalUsers, userDivisions){

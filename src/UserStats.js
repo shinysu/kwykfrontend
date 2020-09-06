@@ -3,19 +3,15 @@ import { useHistory } from "react-router-dom";
 import Header from "./components/kwykHeader";
 import TimerHeader from "./components/timerHeader";
 import Timer from "./components/timer";
-import knowbotSVG from './static/images/knowbotSVG.svg';
-import './static/css/chat.css';
 import './static/css/stats.css';
 import * as constant from './components/constants'
 import usePost from "./components/postData";
-
+import useFetch from "./components/getData"
 
 function UserStats(props){
   let history = useHistory()
   const minutes = history.location.state.minutes;
   const seconds = history.location.state.seconds;
-  const attempted = history.location.state.attempted;
-  const skipped = history.location.state.skipped;
   const topic = history.location.state.topic;
   const subtopic = history.location.state.subtopic;
   console.log("UserStats");
@@ -27,7 +23,7 @@ function UserStats(props){
             <Header />
             <ShowTimeHeader minutes={minutes} seconds={seconds}/>
             <DisplayStats minutes={minutes} seconds={seconds} topic={topic}
-            subtopic={subtopic} attempted={attempted} skipped={skipped}/>
+            subtopic={subtopic} />
         </div>
         <div className="col-sm-2"></div>
       </div>
@@ -44,10 +40,22 @@ function ShowTimeHeader(props){
 }
 
 function DisplayStats(props){
+  const useremail = sessionStorage.getItem('useremail');
+  console.log(useremail);
+  console.log(props.topic);
+  const url = constant.kwykURL+"user_attempts_custom/"+useremail+"/"+props.topic+"/"+props.subtopic;
+  console.log(url);
+  const fetchResponse = useFetch(url, {isLoading: true, data: null});
+  if (!fetchResponse.data || fetchResponse.isLoading) {
+    return 'Loading...';
+  }
+  const data = fetchResponse.data
+  const skipped = data["total_words"] - data["attempted_words"]
+  console.log(data);
   return(
     <div className="stats-area">
-      <DisplayScore minutes={props.minutes} seconds={props.seconds} attempted={props.attempted} skipped={props.skipped}/>
-      <RetrySkips />
+      <DisplayScore minutes={props.minutes} seconds={props.seconds} data={data}/>
+      <RetrySkips topic={props.topic} subtopic={props.subtopic} skipped={skipped}/>
       <ViewResponses topic={props.topic} subtopic={props.subtopic}/>
       <SwitchTopic />
       <FeedBack />
@@ -55,15 +63,24 @@ function DisplayStats(props){
   );
 }
 
-function RetrySkips(){
-  function handleClick(){
-
+function RetrySkips(props){
+  let history = useHistory();
+  if(props.skipped != 0){
+    function handleClick(){
+      console.log("clicked");
+    }
+    return(
+      <div className= "button-area">
+      <button className="retry-button" value="retry" onClick={handleClick}>Retry Skipped Questions [TBD]</button>
+      </div>
+    );
   }
-  return(
-    <div className= "button-area">
-    <button className="retry-button" value="retry" onClick={handleClick}>Retry Skipped Questions [TBD]</button>
-    </div>
-  );
+  else{
+    return(
+      <div></div>
+    );
+  }
+
 }
 
 function ViewResponses(props){
@@ -88,7 +105,7 @@ function ViewResponses(props){
 function SwitchTopic(){
   let history = useHistory();
   function handleClick(){
-    history.push('/')
+    history.push('/topics')
   }
   return(
     <div className= "button-area">
@@ -109,33 +126,36 @@ function FeedBack(){
 }
 
 function DisplayScore(props){
+  const data = props.data;
   return(
     <div className= "display-area">
       <br />
-      <div className = "row text center">
+      <div className = "row ">
+      <div className="col-sm-12 topic-text center">
         You have completed this topic!
       </div>
+      </div>
       <div className = "row ">
-        <div className="col-sm-6 text right">
+        <div className="col-sm-6 topic-text right">
           #Attempted:
         </div>
-        <div className="col-sm-6 text left">
-        {props.attempted}
+        <div className="col-sm-6 topic-text left">
+        {data["attempted_words"]}
         </div>
       </div>
       <div className = "row ">
-        <div className="col-sm-6 text right">
+        <div className="col-sm-6 topic-text right">
         #Skipped:
         </div>
-        <div className="col-sm-6 text left">
-        {props.skipped}
+        <div className="col-sm-6 topic-text left">
+        {data["total_words"] - data["attempted_words"]}
         </div>
       </div>
       <div className = "row ">
-        <div className="col-sm-6 text right">
+        <div className="col-sm-6 topic-text right">
         #Time Taken :
         </div>
-        <div className="col-sm-6 text left">
+        <div className="col-sm-6 topic-text left">
           {props.minutes} mins : {props.seconds} secs
         </div>
       </div>

@@ -12,7 +12,7 @@
 
 .headerfont {
   font-family: 'Montserrat Alternates';
-  font-size:5vh;
+  font-size:4vh;
   font-weight: bold;
   color: #7bc143;
   text-align: center;
@@ -46,6 +46,8 @@
 .clock-img{
   background-color: #7bc143;
   height: 1.5em;
+  display: block;
+  text-align: right;
 }
 .timer{
   background-color: #7bc143;
@@ -61,8 +63,8 @@
   font-size:1.5em;
   display: block;
   text-align: center;
-  padding: 2vh;
-  height: 15vh;
+  height: 12vh;
+  padding-bottom: 2vh;
 }
 
 ul, li{
@@ -92,4 +94,37 @@ ul, li{
   padding-top: 0.5vh;
   height: auto;
   background-color:#ffffff;
+}
+
+.user{
+  color: #ffffff;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 18px;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  padding-left: 3vh;
+}
+
+.clock-div{
+  padding-top: 1vh;
+}
+
+.clock-time{
+  padding-top: 1vh;
+  display: block;
+  text-align: left;
+}
+.kwykheader{
+  display: block;
+  text-align: center;
+  background-color: #ffffff;
+  padding-bottom: 1vh;
+}
+
+.sessionname{
+  display: block;
+  text-align: center;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 18px;
+  background-color: #ffffff;
 }

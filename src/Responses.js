@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 import { Tabs, Tab, Content } from "./components/tab";
 import Header from "./components/kwykHeader";
 import './static/css/header.css';
@@ -28,7 +27,6 @@ function Responses() {
   );
 }
 
-
 function ResponsesTab(props){
   const [active, setActive] = useState(0);
   const handleClick = e => {
@@ -37,7 +35,8 @@ function ResponsesTab(props){
       setActive(index);
     }
   };
-  const url = constant.kwykURL+"user_stats_custom/"+constant.username;
+  const useremail = sessionStorage.getItem('useremail');
+  const url = constant.kwykURL+"user_stats_custom/"+useremail;
   const fetchResponse = useFetch(url, {isLoading: true, data: null});
   if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
@@ -46,11 +45,11 @@ function ResponsesTab(props){
 
   return(
     <div className="tab-color">
-      <Tabs>
-        <Tab onClick={handleClick} active={active === 0} id={0}>
+      <Tabs tabcolor={constant.adminTabColor}>
+        <Tab onClick={handleClick} active={active === 0} id={0} tabcolor={constant.adminTabColor}>
           RESPONSES
         </Tab>
-        <Tab onClick={handleClick} active={active === 1} id={1}>
+        <Tab onClick={handleClick} active={active === 1} id={1} tabcolor={constant.adminTabColor}>
           EXPLANATION
         </Tab>
       </Tabs>
@@ -105,12 +104,18 @@ function TopicHeader(props){
     setSelectedValue(e.target.value);
     props.getSelectedValue(e.target.value);
   }
+  const username = sessionStorage.getItem('username');
   return(
     <div className="row green">
+    <div className="col-sm-6 user green">
+    {username}
+    </div>
+    <div className="col-sm-6 green">
     <label className="green topic-label"> TOPIC: </label>
     <select className="topic-select" onChange={handleChange} value={selectedValue}>
     {options.map((option,index) => <option key={index}> {option} </option>)}
     </select>
+    </div>
     </div>
   );
 }
@@ -120,14 +125,14 @@ function DisplayWordResponses(props){
   const topWords = props.topicTopWords[props.word];
   return(
     <div className="word-response">
-    <label className="topic-name">{props.word}</label>
+    <label className="topicname">{props.word}</label>
     <div className="row padding-right lightgreen">
       <div className="col-sm-6 white">
-        <label className="title-label">Your Responses </label><br />
+        <label className="titlelabel">Your Responses </label><br />
         <DisplayWord words={userWords} />
       </div>
       <div className="col-sm-6 white padding-right">
-        <label className="title-label"> Top 5 Responses </label><br />
+        <label className="titlelabel"> Top 5 Responses </label><br />
         <DisplayWord words={topWords} />
       </div>
     </div>
@@ -186,7 +191,7 @@ function DisplayExplanation(props) {
   const explanations = props.topicExplanation[props.word];
   return(
     <div className="explain-area">
-    <label className="topic-name">{props.word}</label>
+    <label className="topicname">{props.word}</label>
     <div className="row explain-text">
       {explanations}
       </div>

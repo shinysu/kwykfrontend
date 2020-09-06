@@ -1,7 +1,7 @@
 import styled from "styled-components";
 export const Tabs = styled.div`
   overflow: hidden;
-  background: #F6E262;
+  background: ${props => props.tabcolor};
   font-family: "Lucida Console", Monaco, monospace;
   height: 3em;
   width:100%;
@@ -13,7 +13,7 @@ export const Tab = styled.button`
   cursor: pointer;
   width: 50%;
   position: relative;
-  background: #F6E262;
+  background: ${props => props.tabcolor};
 
   font-size: 1em;
   border: ${props => (props.active ? "1px solid #ccc" : "")};
