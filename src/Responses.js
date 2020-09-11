@@ -42,7 +42,7 @@ function ResponsesTab(props){
     return 'Loading...';
   }
   const data = fetchResponse.data
-
+  const topicUserWords = JSON.parse(sessionStorage.getItem('userResponses'));
   return(
     <div className="tab-color">
       <Tabs tabcolor={constant.adminTabColor}>
@@ -55,10 +55,10 @@ function ResponsesTab(props){
       </Tabs>
       <>
         <Content active={active === 0}>
-          <ShowResponses subtopic={props.subtopic} data={data}/>
+          <ShowResponses subtopic={props.subtopic} data={data} topicUserWords={topicUserWords}/>
         </Content>
         <Content active={active === 1}>
-          <ShowExplanation subtopic={props.subtopic} data={data} />
+          <ShowExplanation subtopic={props.subtopic} data={data} topicUserWords={topicUserWords}/>
         </Content>
       </>
     </div>
@@ -80,9 +80,13 @@ function ShowResponses(props){
   console.log(words);
   const topicWords = words["topic_words"];
   const topicTopWords = words["top_words"];
-  const topicUserWords = words["user_data"];
+  console.log("topicWords=",topicWords);
+  const topicUserWords = props.topicUserWords;
+  console.log("topicUserWords=",topicUserWords);
   const wordResponses = topicWords.map((word,index)=>{
-    return <DisplayWordResponses word={word} topicTopWords={topicTopWords} topicUserWords={topicUserWords} key={index}/>
+    if(word in topicUserWords){
+      return <DisplayWordResponses word={word} topicTopWords={topicTopWords} topicUserWords={topicUserWords} key={index}/>
+    }
   });
   return(
     <div >
@@ -148,7 +152,7 @@ function DisplayWord(props){
   return(
     <div>
     {words ?
-        <div className="white">{words.map((word,index) => <div className="white">
+        <div className="white">{words.map((word,index) => <div className="white" key={index}>
             <label className="word">{word}</label>
         </div>)}</div>
         : null}
@@ -170,8 +174,11 @@ function ShowExplanation(props) {
   console.log(words);
   const topicWords = words["topic_words"];
   const topicExplanation = words["explanation"];
+  const topicUserWords = props.topicUserWords;
   const wordExplanations = topicWords.map((word,index)=>{
-    return <DisplayExplanation word={word} topicExplanation={topicExplanation} key={index}/>
+    if(word in topicUserWords){
+      return <DisplayExplanation word={word} topicExplanation={topicExplanation} key={index}/>
+    }
   });
 
   return(

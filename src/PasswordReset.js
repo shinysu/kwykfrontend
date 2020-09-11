@@ -37,6 +37,9 @@ function ResetArea() {
       message = <ChangePwd email={email} password={newPassword}/>
       setPwdMessage(message);
       setBtnValue("Home")
+      setEmail("")
+      setNewPassword("")
+      setConfirmPassword("")
     }
     else {
       message = "Password Mismatch";
@@ -63,11 +66,12 @@ function ResetArea() {
     <div className="pwdreset">
     <form className="loginform" onSubmit={handleSubmit}>
       <label className="pwdtext"> Change your password here...</label>
-      <input type="text" name="email" className="text" placeholder="email id" onChange={handleEmail} required/><br/>
+      <input type="text" name="email" className="text" placeholder="email id"
+      value={email} onChange={handleEmail} required/><br/>
       <input type="password" name="password" className="text" placeholder="new password"
-        onChange={handleOldPassword} required/><br/>
+        value={newPassword} onChange={handleOldPassword} required/><br/>
       <input type="password" name="password" className="text" placeholder="confirm password"
-          onChange={handleNewPassword} required/><br/>
+          value={confirmPassword} onChange={handleNewPassword} required/><br/>
       <label className="pwdmessage">{pwdMessage}</label>
       <input type="submit" value={btnValue} className="pwdbtn" onClick={handleClick}/>
       </form>

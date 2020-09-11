@@ -6,8 +6,21 @@ import * as constant from './components/constants'
 import useFetch from "./components/getData";
 import './static/css/contents.css';
 
-
 function DisplayTopic(props){
+  console.log("DisplayTopic");
+  let history = useHistory();
+  if(sessionStorage.getItem('useremail') == null){
+    history.push({
+      pathname:`/`
+    });
+    return null;
+  }
+  else{
+    return <TopicSelection />
+  }
+}
+
+function TopicSelection(props){
     const [topic,setTopic] = useState("");
     const [subtopic,setSubTopic] = useState("");
     function getSelectedTopic(data){
@@ -64,6 +77,9 @@ function DisplayStartButton(props){
       console.log("subtopic=",props.subtopic);
       props.returnTopic(props.topic);
       props.returnSubtopic(props.subtopic);
+      sessionStorage.setItem('attempted', 0);
+      sessionStorage.setItem('skipped', 0);
+      sessionStorage.setItem('userResponses', JSON.stringify({}));
       history.push({
         pathname:'/test/'+props.topic+'/'+props.subtopic,
         state:{

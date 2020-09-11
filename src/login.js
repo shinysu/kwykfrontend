@@ -94,6 +94,8 @@ function SignInForm() {
     console.log("going");
     const message = <ValidateUser email={email} password={password}/>
     setLoginMessage(message);
+    setEmail("")
+    setPassword("")
     console.log("loginMessage=",loginMessage);
   }
   function handleEmail(e){
@@ -109,9 +111,10 @@ function SignInForm() {
   }
   return(
     <form className="loginform" onSubmit={handleSubmit}>
-      <input type="text" name="email" className="text" placeholder="email" onChange={handleEmail} required/><br/>
+      <input type="text" name="email" className="text" placeholder="email"
+      value={email} onChange={handleEmail} required/><br/>
       <input type="password" name="password" className="text" placeholder="password"
-        onChange={handlePassword} required/><br/>
+        value={password} onChange={handlePassword} required/><br/>
       <a href='#' className="link" onClick={handleClick}><span className="reset">Forgot password?</span></a>
       <div style={{backgroundColor:"#ffffff"}} className="text" visible="false"></div>
       <label >{loginMessage}</label>
@@ -131,6 +134,9 @@ function SignUpForm() {
     e.preventDefault();
     const message = <CreateNewUser username={userName} email={email} password={password}/>
     setLoginMessage(message);
+    setUserName("")
+    setEmail("")
+    setPassword("")
   }
   function handleUserName(e) {
     setUserName(e.target.value);
@@ -143,10 +149,12 @@ function SignUpForm() {
   }
   return(
     <form className="loginform" onSubmit={handleSubmit}>
-      <input type="text" id="username" name="username" className="text"
-        placeholder="username" onChange={handleUserName}/><br/>
-      <input type="text" name="email" className="text" placeholder="email" onChange={handleEmail}/><br/>
-      <input type="password" name="password" className="text" placeholder="password" onChange={handlePassword}/><br/>
+      <input type="text" id="username" name="username" className="text" value={userName}
+        placeholder="username" onChange={handleUserName} required/><br/>
+      <input type="text" name="email" className="text" placeholder="email"
+      value={email} onChange={handleEmail} required/><br/>
+      <input type="password" name="password" className="text" placeholder="password"
+      value={password} onChange={handlePassword} required/><br/>
       <label >{loginMessage}</label>
       <input type="submit" value="Sign Up" className="signin"/>
     </form>

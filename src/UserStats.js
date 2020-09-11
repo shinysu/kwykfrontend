@@ -9,6 +9,20 @@ import usePost from "./components/postData";
 import useFetch from "./components/getData"
 
 function UserStats(props){
+  console.log("DisplayTopic");
+  let history = useHistory();
+  if(sessionStorage.getItem('useremail') == null){
+    history.push({
+      pathname:`/`
+    });
+    return null;
+  }
+  else{
+    return <StatsPage />
+  }
+}
+
+function StatsPage(props){
   let history = useHistory()
   const minutes = history.location.state.minutes;
   const seconds = history.location.state.seconds;
@@ -41,21 +55,14 @@ function ShowTimeHeader(props){
 
 function DisplayStats(props){
   const useremail = sessionStorage.getItem('useremail');
+  const attemptedCount = parseInt(sessionStorage.getItem('attempted'));
+  const skippedCount = parseInt(sessionStorage.getItem('skipped'));
   console.log(useremail);
-  console.log(props.topic);
-  const url = constant.kwykURL+"user_attempts_custom/"+useremail+"/"+props.topic+"/"+props.subtopic;
-  console.log(url);
-  const fetchResponse = useFetch(url, {isLoading: true, data: null});
-  if (!fetchResponse.data || fetchResponse.isLoading) {
-    return 'Loading...';
-  }
-  const data = fetchResponse.data
-  const skipped = data["total_words"] - data["attempted_words"]
-  console.log(data);
   return(
     <div className="stats-area">
-      <DisplayScore minutes={props.minutes} seconds={props.seconds} data={data}/>
-      <RetrySkips topic={props.topic} subtopic={props.subtopic} skipped={skipped}/>
+      <DisplayScore minutes={props.minutes} seconds={props.seconds}
+      skippedCount={skippedCount} attemptedCount={attemptedCount}/>
+      <RetrySkips topic={props.topic} subtopic={props.subtopic} skippedCount={skippedCount}/>
       <ViewResponses topic={props.topic} subtopic={props.subtopic}/>
       <SwitchTopic />
       <FeedBack />
@@ -65,9 +72,16 @@ function DisplayStats(props){
 
 function RetrySkips(props){
   let history = useHistory();
-  if(props.skipped != 0){
+  if(props.skippedCount == 0){
     function handleClick(){
       console.log("clicked");
+      history.push({
+        pathname:'/test/'+props.topic+'/'+props.subtopic,
+        state:{
+          topic: props.topic,
+          subtopic: props.subtopic
+        }
+      });
     }
     return(
       <div className= "button-area">
@@ -126,7 +140,6 @@ function FeedBack(){
 }
 
 function DisplayScore(props){
-  const data = props.data;
   return(
     <div className= "display-area">
       <br />
@@ -140,7 +153,7 @@ function DisplayScore(props){
           #Attempted:
         </div>
         <div className="col-sm-6 topic-text left">
-        {data["attempted_words"]}
+        {props.attemptedCount}
         </div>
       </div>
       <div className = "row ">
@@ -148,7 +161,7 @@ function DisplayScore(props){
         #Skipped:
         </div>
         <div className="col-sm-6 topic-text left">
-        {data["total_words"] - data["attempted_words"]}
+        {props.skippedCount}
         </div>
       </div>
       <div className = "row ">
