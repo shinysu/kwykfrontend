@@ -12,7 +12,7 @@ import * as constant from './components/constants'
 import usePost from "./components/postData";
 var time;
 var currentWord = '';
-
+var is_retry = false;
 function ChatBot(props){
   console.log("ChatBot");
   let history = useHistory();
@@ -32,10 +32,12 @@ function DisplayTest() {
   let history = useHistory();
   const topic = history.location.state.topic;
   const subtopic = history.location.state.subtopic;
-  if(history.location.state.skippedWords){
-    const skippedWords = history.location.state.skippedWords;
+  const prevWords = JSON.parse(sessionStorage.getItem('userResponses'));
+
+  if(history.location.state.retry){
+    is_retry = true;
     chatMessages=["retry"];
-    console.log("skippedWords=",skippedWords);
+    console.log("retry");
   }
   else{
     chatMessages=["welcome","first"];
@@ -51,7 +53,7 @@ function DisplayTest() {
             <Header />
             <ShowTimeHeader/>
             <DisplayChat topic={topic} subtopic={subtopic} minutes={minutes} seconds={seconds}
-            chatMessages={chatMessages}/>
+            chatMessages={chatMessages} prevWords={prevWords}/>
         </div>
         <div className="col-sm-2"></div>
       </div>
@@ -92,14 +94,16 @@ function DisplayChat(props){
     console.log("chatMessages=",chatMessages);
     if(message ==="welcome"){
       return <ShowWelcomeChat key={index} />;
-    }else if(message ==="first" || message ==="next" || message ==="skip"){
-      return <GetWord key={index} addChat={addChat} message={message} topic={props.topic} subtopic={props.subtopic} />
+    }else if(message ==="first" || message ==="next" || message ==="skip" ||message ==="retry"){
+      return <GetWord key={index} addChat={addChat} message={message} prevWords={props.prevWords}
+      topic={props.topic} subtopic={props.subtopic} />
     }
     else if(message ==="hint"){
       return <ShowHint addChat={addChat} key={index}/>
     }
     else if(message ==="afterinput"){
-      return <GetWord key={index} addChat={addChat} message={userInput} topic={props.topic} subtopic={props.subtopic} />
+      return <GetWord key={index} addChat={addChat} message={userInput} prevWords={props.prevWords}
+      topic={props.topic} subtopic={props.subtopic} />
     }
     else{
       return <DisplayUserInput key={index} input={message}/>
@@ -152,6 +156,9 @@ function GetWord(props){
     case 'first':
     case 'next':
       text = '/new'; break;
+    case 'retry':
+      text = '/retry';
+      break;
     default:
       text = props.message; break;
   }
@@ -177,13 +184,25 @@ function GetWord(props){
       }
     });
   }
-  currentWord = word
+  console.log("word here is: ",word);
+  currentWord = word;
+  if(word in props.prevWords){
+    return <Test word={word} addChat={props.addChat}/>
+  }
+  else{
   const messageNoun = props.message==='first' ? 'first' : 'next';
   const messageText = "Your " + messageNoun + " word is '"+word + "'";
   console.log(word);
-  return (<BotReply message={messageText} dsableSkipButton={false} addChat={props.addChat}/>);
+  return (<BotReply message={messageText} dsableSkipButton={false} addChat={props.addChat} />);
+}
 }
 
+function Test(props) {
+  useEffect(()=>{
+    props.addChat("next")
+  },[props.word])
+  return <div></div>
+}
 
 function ShowHint(props){
   console.log("ShowHint");
@@ -218,9 +237,10 @@ function DisplayForm(props){
       props.getUserInput(userInput);
       props.addChat(userInput);
       setUserInput("");
-      let attemptedCount=parseInt(sessionStorage.getItem('attempted'));
-      attemptedCount++;
-      sessionStorage.setItem('attempted', attemptedCount);
+      updateAttemptedCount();
+      if(is_retry){
+        updateSkippedCount('reduce');
+      }
       console.log(sessionStorage);
     }
   }
@@ -259,14 +279,15 @@ function DisplayUserInput(props){
 }
 
 function BotReply(props){
+  console.log("BotReply");
   const [buttonText, setButtonText] = useState("Skip");
   function handleClick(e){
     e.target.setAttribute("disabled", "disabled");
     setButtonText("");
     props.addChat("skip")
-    let skippedCount=parseInt(sessionStorage.getItem('skipped'));
-    skippedCount++
-    sessionStorage.setItem('skipped', skippedCount);
+    if(!is_retry){
+      updateSkippedCount('add');
+    }
     console.log(sessionStorage);
   }
   return(
@@ -292,4 +313,16 @@ function  UserReply(props){
       </button>
     </div>
   </li>);
+}
+
+function updateSkippedCount(action) {
+  let skippedCount=parseInt(sessionStorage.getItem('skipped'));
+  action ==='add' ? skippedCount++ : skippedCount-- ;
+  sessionStorage.setItem('skipped', skippedCount);
+}
+
+function updateAttemptedCount() {
+  let attemptedCount=parseInt(sessionStorage.getItem('attempted'));
+  attemptedCount++;
+  sessionStorage.setItem('attempted', attemptedCount);
 }

@@ -72,20 +72,21 @@ function DisplayStats(props){
 
 function RetrySkips(props){
   let history = useHistory();
-  if(props.skippedCount == 0){
+  if(props.skippedCount !== 0){
     function handleClick(){
       console.log("clicked");
       history.push({
         pathname:'/test/'+props.topic+'/'+props.subtopic,
         state:{
           topic: props.topic,
-          subtopic: props.subtopic
+          subtopic: props.subtopic,
+          retry: true
         }
       });
     }
     return(
       <div className= "button-area">
-      <button className="retry-button" value="retry" onClick={handleClick}>Retry Skipped Questions [TBD]</button>
+      <button className="retry-button" value="retry" onClick={handleClick}>Retry Skipped Questions </button>
       </div>
     );
   }

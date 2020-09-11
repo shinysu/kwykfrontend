@@ -16,7 +16,9 @@ function DisplayTopic(props){
     return null;
   }
   else{
-    return <TopicSelection />
+    const getSelectedTopic = props.getSelectedTopic;
+    const getSelectedSubTopic = props.getSelectedSubTopic;
+    return <TopicSelection getSelectedTopic={getSelectedTopic} getSelectedSubTopic={getSelectedSubTopic}/>
   }
 }
 

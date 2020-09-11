@@ -83,6 +83,7 @@ function ShowResponses(props){
   console.log("topicWords=",topicWords);
   const topicUserWords = props.topicUserWords;
   console.log("topicUserWords=",topicUserWords);
+  topicWords.sort();
   const wordResponses = topicWords.map((word,index)=>{
     if(word in topicUserWords){
       return <DisplayWordResponses word={word} topicTopWords={topicTopWords} topicUserWords={topicUserWords} key={index}/>
@@ -117,7 +118,7 @@ function TopicHeader(props){
     <div className="col-sm-6 green">
     <label className="green topic-label"> TOPIC: </label>
     <select className="topic-select" onChange={handleChange} value={selectedValue}>
-    {options.map((option,index) => <option key={index}> {option} </option>)}
+    <option > {props.selectedValue} </option>)}
     </select>
     </div>
     </div>
@@ -136,7 +137,7 @@ function DisplayWordResponses(props){
         <DisplayWord words={userWords} />
       </div>
       <div className="col-sm-6 white padding-right">
-        <label className="titlelabel"> Top 5 Responses </label><br />
+        <label className="titlelabel"> Popular Responses </label><br />
         <DisplayWord words={topWords} />
       </div>
     </div>
@@ -175,6 +176,7 @@ function ShowExplanation(props) {
   const topicWords = words["topic_words"];
   const topicExplanation = words["explanation"];
   const topicUserWords = props.topicUserWords;
+  topicWords.sort();
   const wordExplanations = topicWords.map((word,index)=>{
     if(word in topicUserWords){
       return <DisplayExplanation word={word} topicExplanation={topicExplanation} key={index}/>
