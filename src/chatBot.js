@@ -64,7 +64,10 @@ function DisplayTest() {
 export default ChatBot;
 
 function ShowTimeHeader(props){
-  time=useTimer();
+  console.log("ShowTimeHeader=",ShowTimeHeader);
+  const minutes = parseInt(sessionStorage.getItem('minutes'));
+  const seconds = parseInt(sessionStorage.getItem('seconds'));
+  time=useTimer(minutes, seconds);
   return (
     <TimerHeader time={time}/>
   );
@@ -174,6 +177,8 @@ function GetWord(props){
   const word = fetchResponse.data.text
   console.log(word);
   if(word === 'finish_topic'){
+    sessionStorage.setItem('minutes', time[0]);
+    sessionStorage.setItem('seconds', time[1]);
     history.push({
       pathname:`/user_stats/${props.topic}/${props.subtopic}`,
       state:{

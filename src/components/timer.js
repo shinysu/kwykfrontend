@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import '../static/css/header.css';
 
-const useTimer = () => {
-    const [seconds, setSeconds] = useState(0);
-    const [minutes, setMinutes] = useState(0);
+const useTimer = (mins, secs) => {
+    const [seconds, setSeconds] = useState(secs);
+    const [minutes, setMinutes] = useState(mins);
     useEffect(() => {
       const time = setInterval(setTime, 1000);
         return () => {

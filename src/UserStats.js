@@ -130,12 +130,14 @@ function SwitchTopic(){
 }
 
 function FeedBack(){
+  let history = useHistory();
   function handleClick(){
+      history.push('/feedback')
 
   }
   return(
     <div className= "button-area">
-    <button className="retry-button" value="retry" onClick={handleClick}>Get Feedback [TBD]</button>
+    <button className="retry-button" value="retry" onClick={handleClick}>Get Feedback</button>
     </div>
   );
 }
@@ -144,32 +146,32 @@ function DisplayScore(props){
   return(
     <div className= "display-area">
       <br />
-      <div className = "row ">
-      <div className="col-sm-12 topic-text center">
-        You have completed this topic!
+      <div className = "row">
+      <div className="col-12 topic-text center">
+      You have completed this topic!
       </div>
       </div>
-      <div className = "row ">
-        <div className="col-sm-6 topic-text right">
-          #Attempted:
+      <div className = "row">
+        <div className="col-6 topic-text right">
+        #Attempted:
         </div>
-        <div className="col-sm-6 topic-text left">
+        <div className="col-6 topic-text left">
         {props.attemptedCount}
         </div>
       </div>
       <div className = "row ">
-        <div className="col-sm-6 topic-text right">
+        <div className="col-6 topic-text right">
         #Skipped:
         </div>
-        <div className="col-sm-6 topic-text left">
+        <div className="col-6 topic-text left">
         {props.skippedCount}
         </div>
       </div>
       <div className = "row ">
-        <div className="col-sm-6 topic-text right">
+        <div className="col topic-text right">
         #Time Taken :
         </div>
-        <div className="col-sm-6 topic-text left">
+        <div className="col topic-text left">
           {props.minutes} mins : {props.seconds} secs
         </div>
       </div>

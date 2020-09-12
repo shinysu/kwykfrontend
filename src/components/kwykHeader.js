@@ -7,19 +7,16 @@ function Header(){
   let session = "";
   session = sessionStorage.getItem('session_name');
   return(
-    <div className="row">
-        <div className="col-sm-2 white">
-            <img src={knowbotSVG} className="knowbotlogo" alt="logo" />
-        </div>
+    <div className="row white">
+        <img src={knowbotSVG} className="knowbotlogo white" alt="logo" />
         <div className="col-sm-9  white headerfont">
         <div className="row kwykheader">KWYK - Know what you know !</div>
         <div className="row sessionname">{session}</div>
         </div>
-        <div className="col-sm-1 white">
-            <button type="button" className="btn btn-default btn-sm ellipsisbutton" aria-label="Left Align">
+        <button type="button" className="btn btn-default btn-sm ellipsisbutton" aria-label="Left Align">
                     <img src={verticalellipsis} className="ellipsislogo" alt="vertical ellipsis" />
-            </button>
-        </div>
+        </button>
+
     </div>
   );
 }

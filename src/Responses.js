@@ -36,12 +36,13 @@ function ResponsesTab(props){
     }
   };
   const useremail = sessionStorage.getItem('useremail');
-  const url = constant.kwykURL+"user_stats_custom/"+useremail;
+  const url = constant.kwykURL+"user_stats_custom/"+useremail+"/"+props.topic+"/"+props.subtopic;
   const fetchResponse = useFetch(url, {isLoading: true, data: null});
   if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
   }
   const data = fetchResponse.data
+  console.log(data)
   const topicUserWords = JSON.parse(sessionStorage.getItem('userResponses'));
   return(
     <div className="tab-color">
@@ -55,10 +56,10 @@ function ResponsesTab(props){
       </Tabs>
       <>
         <Content active={active === 0}>
-          <ShowResponses subtopic={props.subtopic} data={data} topicUserWords={topicUserWords}/>
+          <ShowResponses topic={props.topic} subtopic={props.subtopic} data={data} topicUserWords={topicUserWords}/>
         </Content>
         <Content active={active === 1}>
-          <ShowExplanation subtopic={props.subtopic} data={data} topicUserWords={topicUserWords}/>
+          <ShowExplanation topic={props.topic} subtopic={props.subtopic} data={data} topicUserWords={topicUserWords}/>
         </Content>
       </>
     </div>
@@ -72,17 +73,11 @@ function ShowResponses(props){
     setSelectedValue(value);
   }
   const data = props.data;
-  const topics = data["topics"];
   const topicWordsResponses = data["topic_answers"];
-  const words = topicWordsResponses[selectedValue];
-
-  console.log(data["topics"]);
-  console.log(words);
-  const topicWords = words["topic_words"];
-  const topicTopWords = words["top_words"];
-  console.log("topicWords=",topicWords);
+  const words = topicWordsResponses;
+  const topicWords = topicWordsResponses["topic_words"];
+  const topicTopWords = topicWordsResponses["top_words"];
   const topicUserWords = props.topicUserWords;
-  console.log("topicUserWords=",topicUserWords);
   topicWords.sort();
   const wordResponses = topicWords.map((word,index)=>{
     if(word in topicUserWords){
@@ -91,7 +86,7 @@ function ShowResponses(props){
   });
   return(
     <div >
-      <TopicHeader topics={topics} getSelectedValue={getSelectedValue} selectedValue={selectedValue}/>
+      <TopicHeader topics={props.subtopic} getSelectedValue={getSelectedValue} selectedValue={selectedValue}/>
       <div className="responses-area">
       <ul>
         {wordResponses}
@@ -112,10 +107,10 @@ function TopicHeader(props){
   const username = sessionStorage.getItem('username');
   return(
     <div className="row green">
-    <div className="col-sm-6 user green">
+    <div className="col-sm-5 user green">
     {username}
     </div>
-    <div className="col-sm-6 green">
+    <div className="col-sm-7 green">
     <label className="green topic-label"> TOPIC: </label>
     <select className="topic-select" onChange={handleChange} value={selectedValue}>
     <option > {props.selectedValue} </option>)}
@@ -169,12 +164,8 @@ function ShowExplanation(props) {
   const data = props.data;
   const topics = data["topics"];
   const topicWordsResponses = data["topic_answers"];
-  const words = topicWordsResponses[selectedValue];
-
-  console.log(data["topics"]);
-  console.log(words);
-  const topicWords = words["topic_words"];
-  const topicExplanation = words["explanation"];
+  const topicWords = topicWordsResponses["topic_words"];
+  const topicExplanation = topicWordsResponses["explanation"];
   const topicUserWords = props.topicUserWords;
   topicWords.sort();
   const wordExplanations = topicWords.map((word,index)=>{

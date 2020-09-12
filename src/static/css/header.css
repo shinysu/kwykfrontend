@@ -4,15 +4,17 @@
 }
 
 .knowbotlogo{
-  height: auto;
+  height: 8vh;
   width: 8vh;
   padding: 1vh;
+  margin-left: 2vw;
+  margin-top: 2vh;
   background-color: #ffffff;
 }
 
 .headerfont {
   font-family: 'Montserrat Alternates';
-  font-size:4vh;
+  font-size:1.8em;
   font-weight: bold;
   color: #7bc143;
   text-align: center;
@@ -47,6 +49,8 @@
   background-color: #7bc143;
   height: 1.5em;
   display: block;
+  padding-left: 30vw;
+  padding-right: 2vw;
   text-align: right;
 }
 .timer{
@@ -92,8 +96,20 @@ ul, li{
 
 .ellipsisbutton{
   padding-top: 0.5vh;
+  padding-left: 1vh;
   height: auto;
   background-color:#ffffff;
+}
+
+.timer-row{
+  background-color: #7bc143;
+  color: #ffffff;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 18px;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  padding-left: 3vh;
+
 }
 
 .user{
@@ -102,6 +118,12 @@ ul, li{
   font-size: 18px;
   padding-top: 1vh;
   padding-bottom: 1vh;
+  padding-left: 3vh;
+}
+.userheader{
+  color: #ffffff;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 18px;
   padding-left: 3vh;
 }
 
@@ -118,7 +140,7 @@ ul, li{
   display: block;
   text-align: center;
   background-color: #ffffff;
-  padding-bottom: 1vh;
+
 }
 
 .sessionname{
@@ -127,4 +149,29 @@ ul, li{
   font-family: "Lucida Console", Monaco, monospace;
   font-size: 18px;
   background-color: #ffffff;
+}
+
+@media (max-width: 500px){
+  .headerfont {
+    font-family: 'Montserrat Alternates';
+    font-size:1.2em;
+    font-weight: bold;
+    color: #7bc143;
+    text-align: center;
+    padding-top: 1vh;
+    width:70%;
+  }
+  .sessionname{
+    display: block;
+    text-align: center;
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 1em;
+    background-color: #ffffff;
+  }
+  .knowbotlogo{
+    height: 7vh;
+    width: 7vh;
+    padding: 1vh;
+    background-color: #ffffff;
+  }
 }

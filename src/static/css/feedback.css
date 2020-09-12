@@ -1,0 +1,43 @@
+.fblabel{
+  font-size: 1.1em;
+  font-family: "Lucida Console", Monaco, monospace;
+  color: #7bc143;
+  padding: 2vh;
+  margin-left: 3vh;
+  margin-right: 3vh;
+  background-color: #ffffff;
+}
+
+.fbarea{
+  background-color: #ffffff;
+  height: 75vh;
+}
+
+.blank{
+  margin-top: 5vh;
+}
+
+.white{
+  background-color: #ffffff;
+}
+
+.fbtext{
+  margin-left: 10%;
+  width: 80%;
+  height: 30vh;
+  background-color: #ffffff;
+}
+
+.fbsubmitbtn{
+  font-size:24px;
+  color: #ffffff;
+  background-color: #7bc143;
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 20%;
+  height: auto;
+  bottom: 10%;
+  font-family: "Lucida Console", Monaco, monospace;
+
+}

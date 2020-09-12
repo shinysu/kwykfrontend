@@ -9,15 +9,9 @@ function TimerHeader(props){
   const username = sessionStorage.getItem('username');
   return(
     <div className="row timer-row">
-        <div className="col-sm-9 green user">
-          {username}
-        </div>
-            <div className="col-sm-1 green clock-div">
-                    <img src={clock} className="clock-img" alt="logo" />
-            </div>
-            <div className="col-sm-2 timer clock-time">
-                    {time[0]} : {time[1]}
-            </div>
+        {username}
+        <img src={clock} className="clock-img" alt="logo" />
+        {time[0]} : {time[1]}
     </div>
   );
 }

@@ -9,11 +9,13 @@ export const loginTabColor = "#ffffff";
 export const adminTabColor = "#F6E262";
 
 ///URL changes
-//export const kwykURL = "http://localhost:3001/";
-export const kwykURL = "https://shiny.kwyk.in/";
-export const postURL= kwykURL+"input_custom";
+export const kwykURL = "http://localhost:3001/";
+//export const kwykURL = "https://shiny.kwyk.in/";
+export const postURL= kwykURL + "input_custom";
 //export const postURL="https://shiny.kwyk.in/input_custom";
 export const loginURL = kwykURL + "login_custom";
 export const pwdResetURL = kwykURL + "pwd_reset";
 export const pwdResetSuccessMsg = 'Your password has been changed! SignIn to continue';
 export const pwdResetFailedMsg = 'Email id is not registered. Signup with your email id';
+export const feedbackMessage = 'Hello! you feedback is important to us. Tell us about your experience, issues faced, ideas and suggestions for improvement'
+export const fbToEmail = 'kwyktest01@gmail.com'

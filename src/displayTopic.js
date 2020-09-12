@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Header from "./components/kwykHeader";
+import UserHeader from "./components/UserHeader";
 import { useHistory } from "react-router-dom";
 import * as constant from './components/constants'
 //import history from './components/history';
@@ -81,6 +82,8 @@ function DisplayStartButton(props){
       props.returnSubtopic(props.subtopic);
       sessionStorage.setItem('attempted', 0);
       sessionStorage.setItem('skipped', 0);
+      sessionStorage.setItem('minutes', 0);
+      sessionStorage.setItem('seconds', 0);
       sessionStorage.setItem('userResponses', JSON.stringify({}));
       history.push({
         pathname:'/test/'+props.topic+'/'+props.subtopic,
@@ -167,15 +170,4 @@ function TopicButton(props){
   return (<button className="rounded-pill topic-btn" value={props.name}
             style={{color: props.textColor, backgroundColor: props.buttonColor}}
             onClick={handleClick}> {props.name}</button>);
-}
-
-function UserHeader() {
-  const username = sessionStorage.getItem('username');
-  return(
-    <div className="row timer-row green">
-        <div className="col-sm-9 green user">
-          {username}
-        </div>
-    </div>
-  );
 }

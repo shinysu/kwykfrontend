@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.5.0",
     "bootstrap-material-design-icons": "^2.2.0",
+    "emailjs-com": "^2.6.3",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.2",
     "react-dom": "^16.13.1",

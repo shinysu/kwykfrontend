@@ -6,6 +6,7 @@ import UserStats from './UserStats'
 import Responses from './Responses'
 import Insights from './Insights'
 import Login from "./login";
+import Feedback from "./Feedback";
 import PasswordReset from './PasswordReset';
 
 function Routes(){
@@ -27,7 +28,9 @@ function Routes(){
       <Route path="/test/:topic/:subtopic" render={() => <ChatBot topic={topic} subtopic={subtopic}/>} />
       <Route path="/user_stats/:topic/:subtopic" render={() => <UserStats/>} />
       <Route path="/view_responses/:topic/:subtopic" render={() => <Responses/>} />
+      <Route path="/feedback" exact render={() => <Feedback/>} />
       <Route path="/admin" exact render={() => <Insights/>} />
+
       </Switch>
       </Router>
     );
