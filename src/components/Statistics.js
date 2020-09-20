@@ -3,6 +3,9 @@ import TopicSelectHeader from "./TopicSelectHeader";
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
+import Histogram from 'react-chart-histogram'
 import '../static/css/admin.css';
 
 
@@ -31,8 +34,9 @@ function DisplayStats(props) {
   let leastResponse =[];
   let mostSkips =[];
   let commonResponse =[];
-  let mostResponseUser =[];
-  let leastResponseUser =[];
+  let userResponseCount =[];
+  let userResponseData;
+  //let leastResponseUser =[];
   console.log("DisplayStats");
   if(props.selectedValue){
     const stats = getStats(props.userData,props.selectedValue);
@@ -41,25 +45,32 @@ function DisplayStats(props) {
     const uniqueResponseCount = stats["uniqueWordsCount"];
     const commonResponseCount = stats["commonResponseCount"];
     const userAnswerCount = stats["userAnswerCount"];
+    console.log("userAnswerCount=",userAnswerCount);
     totalUsers = stats["totalUsers"];
     totalWords = stats["totalWords"];
     mostSkips = getSortedData(skipsCount,1); //second arg 1 to sort desc
     leastResponse = getSortedData(answeredCount,0);
     uniqueResponse = getSortedData(uniqueResponseCount,1);
     commonResponse = getSortedData(commonResponseCount,1);
-    mostResponseUser = getSortedData(userAnswerCount, 1);
-    leastResponseUser = getSortedData(userAnswerCount, 0);
+    console.log(uniqueResponse);
+    const userResponse = getResponseHist(userAnswerCount, totalWords);
+    userResponseData = userResponse["userDivisionData"];
+    userResponseCount = userResponse["userResponseCount"];
+    console.log("userResponse=",userResponseData);
+    console.log("userResponseCount=",userResponseCount);
+  //  mostResponseUser = getSortedData(userAnswerCount, 1);
+  //  leastResponseUser = getSortedData(userAnswerCount, 0);
   }
 
   const displayItems = [{message:'Key terms with most unique responses',data:uniqueResponse,maxVal:totalUsers},
                   {message:'Key terms with least responses',data:leastResponse,maxVal:totalUsers},
                   {message:'Key terms with most skips',data:mostSkips,maxVal:totalUsers},
                   {message:'Key terms with most common responses',data:commonResponse,maxVal:totalUsers},
-                  {message:'Users with most responses',data:mostResponseUser,maxVal:totalWords},
-                  {message:'Users with least responses',data:leastResponseUser,maxVal:totalWords}
+                  {message:'Users responses',data:userResponseCount,maxVal:totalUsers,value:userResponseData}
                 ]
   const statButtons = displayItems.map((item,index)=>{
-    return <DisplayButton message={item.message} key={index} maxVal={item.maxVal} data={item.data}/>
+    return <DisplayButton message={item.message} key={index} maxVal={item.maxVal}
+    data={item.data} value={item.value}/>
   });
   return(
     <div className="display-stats">
@@ -85,7 +96,7 @@ function DisplayButton(props){
       </Button>
       <Collapse in={open} className="stats-data">
         <div className="lightgreen">
-          <ShowProgressBar maxVal={props.maxVal} data={props.data}/>
+          <ShowProgressBar maxVal={props.maxVal} data={props.data} value={props.value}/>
         </div>
       </Collapse>
     </div>
@@ -96,14 +107,37 @@ function ShowProgressBar(props){
   const data = props.data;
   const maxVal = props.maxVal;
   const statsBar = data.map((statData,index)=>{
-    const percent = statData[1];
-    return (
+    console.log("statData=",statData);
+  const percent = statData[1];
+  const range = statData[0];
+  let popover;
+  if(props.value){
+    const names = props.value[range];
+    let users = names.join('\n')
+
+     popover = (
+      <Popover>
+       <Popover.Title as="h6">Users</Popover.Title>
+       <Popover.Content>
+        {users}
+       </Popover.Content>
+      </Popover>
+    );
+  }
+  else{
+   popover = (
+     <Popover> </Popover>
+   );
+ }
+ return (
       <div className="row">
         <div className="col-sm-4 white">
         <label className="data-label"> {statData[0]} </label>
         </div>
         <div className="col-sm-8 white">
+        <OverlayTrigger overlay={popover}>
         <ProgressBar className="progress" now={percent} label={`${percent} `} key={index} max={maxVal} min='0'/>
+        </OverlayTrigger>
         </div>
       </div>
     );
@@ -209,4 +243,55 @@ function getUniqueWordsCount(data){
     }
   }
   return {"uniqueCount":uniqueCount, "mostCommonResponse":mostCommonResponse}
+}
+
+function getResponseHist(userData, totalWords) {
+  console.log("getResponseHist");
+  console.log(userData);
+  const divisions = [0, 0.25, 0.5, 0.75, 1];
+  let userDivisionData = {};
+  let userResponseCount =[]
+  //answerDivisions contains split up of word count
+  const answerDivisions = divisions.map((value,index) =>{
+    return `${Math.round(divisions[index] * totalWords)}`
+  });
+  //ansdivpercent = ["0 - 24", "25 - 49", "50 - 74", "75 - 99", "100"]
+  const ansdivpercent = divisions.map((value,index) =>{
+    if(parseInt(value) === 1){
+      return `100%`;
+    }
+    else{
+      return `${value * 100}-${divisions[index + 1]*100 -1}%`
+    }
+  });
+  for(const [key, value] of Object.entries(userData)){
+    if(value === totalWords){
+      const centPercent = ansdivpercent[ansdivpercent.length - 1];
+      if(centPercent in userDivisionData){
+        userDivisionData[centPercent].push(key)
+      }
+      else{
+        userDivisionData[centPercent] = [key]
+      }
+    }
+    else{
+      for(var i = 0; i < answerDivisions.length-1; i++){
+        if((value >= answerDivisions[i]) && ((value < answerDivisions[i+1]))){
+          const percent = ansdivpercent[i];
+          if(percent in userDivisionData){
+            userDivisionData[percent].push(key);
+          }
+          else{
+            userDivisionData[percent] = [key];
+          }
+        }
+      }
+    }
+  }
+  console.log("ansdivpercent=",ansdivpercent);
+  for(var i=0; i < ansdivpercent.length; i++){
+    const range = ansdivpercent[i]
+    userResponseCount.push([range, userDivisionData[range].length]);
+  }
+  return {"userDivisionData":userDivisionData, "userResponseCount":userResponseCount};
 }
