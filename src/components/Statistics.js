@@ -116,8 +116,9 @@ function ShowProgressBar(props){
     let users = names.join('\n')
 
      popover = (
+       
       <Popover>
-       <Popover.Title as="h6">Users</Popover.Title>
+       <Popover.Title as="h6  ">Users</Popover.Title>
        <Popover.Content>
         {users}
        </Popover.Content>
