@@ -5,7 +5,7 @@ function usePost(url, dataText, defaultResponse) {
   const [data, setData] = useState(defaultResponse);
   const  requestOptions = {
     method: 'POST',
-    headers: {'Content-Type': 'application/json', Custom_Referer':referrer},
+    headers: {'Content-Type': 'application/json', 'Custom_Referer':referrer},
     body: JSON.stringify(dataText)
   };
   async function postDataToAPI() {
