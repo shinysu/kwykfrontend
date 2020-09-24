@@ -168,7 +168,7 @@ function GetWord(props){
   const useremail = sessionStorage.getItem('useremail');
   session = sessionStorage.getItem('session');
 
-  const dataText = { "text": text, "username": useremail, "session":session};
+  const dataText = { "text": text, "username": useremail, "session":session, "referrer":window.location.href};
   console.log("here=",dataText);
   const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
   if (!fetchResponse.data || fetchResponse.isLoading) {
