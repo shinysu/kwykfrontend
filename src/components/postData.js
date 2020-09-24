@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 function usePost(url, dataText, defaultResponse) {
   console.log("usePost=",dataText);
   const [data, setData] = useState(defaultResponse);
+  const referrer = window.location.href;
   const  requestOptions = {
     method: 'POST',
-    headers: {'Content-Type': 'application/json', 'Custom_Referer':referrer},
+    headers: {'Content-Type': 'application/json', 'custom_referrer':referrer},
     body: JSON.stringify(dataText)
   };
   async function postDataToAPI() {
