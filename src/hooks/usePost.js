@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
 function usePost(url, dataText, defaultResponse) {
-  console.log("usePost=",dataText);
   const [data, setData] = useState(defaultResponse);
+  const referrer = window.location.href;
   const  requestOptions = {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},

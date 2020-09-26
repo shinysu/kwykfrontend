@@ -1,20 +1,20 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { useHistory } from "react-router-dom";
-import Header from "./components/kwykHeader";
-import TimerHeader from "./components/timerHeader";
-import useTimer from "./components/timer";
-import knowbotSVG from './static/images/knowbotSVG.svg';
-import avatar from './static/images/avatar.png';
-import ideapng from './static/images/idea.png';
-import sendlogo from './static/images/send.png';
-import './static/css/chat.css';
-import * as constant from './components/constants'
-import usePost from "./components/postData";
+import Header from "../headers/KwykHeader";
+import TimerHeader from "../headers/TimerHeader";
+import useTimer from "../hooks/useTimer";
+import knowbotSVG from '../static/images/knowbotSVG.svg';
+import avatar from '../static/images/avatar.png';
+import ideapng from '../static/images/idea.png';
+import sendlogo from '../static/images/send.png';
+import '../static/css/chat.css';
+import * as constant from '../utils/Constants'
+import usePost from "../hooks/usePost";
+import TextareaAutosize from 'react-textarea-autosize';
 var time;
 var currentWord = '';
 var is_retry = false;
 function ChatBot(props){
-  console.log("ChatBot");
   let history = useHistory();
   if(sessionStorage.getItem('useremail') == null){
     history.push({
@@ -27,6 +27,8 @@ function ChatBot(props){
   }
 }
 
+export default ChatBot;
+
 function DisplayTest() {
   let chatMessages = '';
   let history = useHistory();
@@ -37,7 +39,6 @@ function DisplayTest() {
   if(history.location.state.retry){
     is_retry = true;
     chatMessages=["retry"];
-    console.log("retry");
   }
   else{
     chatMessages=["welcome","first"];
@@ -61,10 +62,7 @@ function DisplayTest() {
   );
 }
 
-export default ChatBot;
-
 function ShowTimeHeader(props){
-  console.log("ShowTimeHeader=",ShowTimeHeader);
   const minutes = parseInt(sessionStorage.getItem('minutes'));
   const seconds = parseInt(sessionStorage.getItem('seconds'));
   time=useTimer(minutes, seconds);
@@ -74,15 +72,12 @@ function ShowTimeHeader(props){
 }
 
 function DisplayChat(props){
-  console.log("DisplayChat");
   const [chatMessages, setChatMessages] = useState(props.chatMessages);
   const [userInput, setUserInput] = useState("");
-  const actions = ["welcome","first","next","skip","hint","afterinput","retry"]
-
+  const actions = ["welcome","first","next","skip","hint","afterinput","retry"];
   function getUserInput(input){
     setUserInput(input);
   }
-
   function addChat(message){
     if(actions.includes(message)){
       setChatMessages([...chatMessages,message]);
@@ -91,33 +86,15 @@ function DisplayChat(props){
       setChatMessages([...chatMessages,message,"afterinput"]);
     }
   }
-
   const chatList = chatMessages.map((message,index) => {
-    //console.log("words=",words);
-    console.log("chatMessages=",chatMessages);
-    if(message ==="welcome"){
-      return <ShowWelcomeChat key={index} />;
-    }else if(message ==="first" || message ==="next" || message ==="skip" ||message ==="retry"){
-      return <GetWord key={index} addChat={addChat} message={message} prevWords={props.prevWords}
-      topic={props.topic} subtopic={props.subtopic} />
-    }
-    else if(message ==="hint"){
-      return <ShowHint addChat={addChat} key={index}/>
-    }
-    else if(message ==="afterinput"){
-      return <GetWord key={index} addChat={addChat} message={userInput} prevWords={props.prevWords}
-      topic={props.topic} subtopic={props.subtopic} />
-    }
-    else{
-      return <DisplayUserInput key={index} input={message}/>
-    }
+    return <GetChatMessages message={message} key={index} topic={props.topic}
+    subtopic={props.subtopic} prevWords={props.prevWords} userInput={userInput} addChat={addChat}/>
   }
  );
  const messagesEndRef = useRef(null);
  useEffect(() => {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
   },[chatList]);
- console.log(chatList);
  return(
     <div className="chatcolor">
       <div className="chatarea">
@@ -131,17 +108,36 @@ function DisplayChat(props){
   );
 }
 
+function GetChatMessages(props) {
+  const message = props.message;
+  if(message ==="welcome"){
+    return <ShowWelcomeChat />;
+  }else if(message ==="first" || message ==="next" || message ==="skip" ||message ==="retry"){
+    return <GetWord addChat={props.addChat} message={message} prevWords={props.prevWords}
+    topic={props.topic} subtopic={props.subtopic} />
+  }
+  else if(message ==="hint"){
+    return <ShowHint addChat={props.addChat} />
+  }
+  else if(message ==="afterinput"){
+    return <GetWord addChat={props.addChat} message={props.userInput} prevWords={props.prevWords}
+    topic={props.topic} subtopic={props.subtopic} />
+  }
+  else{
+    return <DisplayUserInput input={message}/>
+  }
+}
+
 
 function ShowWelcomeChat(props){
-  console.log("ShowWelcomeChat");
-  const textArea = document.querySelector('textarea')
+  const textArea = document.querySelector('textarea');
   const textRowCount = textArea ? textArea.value.split("\n").length : 0;
   const rows = textRowCount + 3;
   return(
     <li>
     <div className="row bot">
         <img src={knowbotSVG} className="knowbot" alt="logo" />
-        <textarea className="botmessage" rows={rows} value={constant.welcomeMessage} disabled></textarea>
+        <TextareaAutosize className="botmessage" rows={rows} value={constant.welcomeMessage} rowsMin={3} disabled/>
   </div>
   </li>
 );
@@ -149,33 +145,19 @@ function ShowWelcomeChat(props){
 
 
 function GetWord(props){
-  console.log("GetWord");
   let history = useHistory();
   const url = constant.postURL;
-  let text, session='';
-  switch(props.message){
-    case 'skip':
-      text = '/skip'; break;
-    case 'first':
-    case 'next':
-      text = '/new'; break;
-    case 'retry':
-      text = '/retry';
-      break;
-    default:
-      text = props.message; break;
-  }
+  let session='';
+  let text = getCommand(props.message);
   const useremail = sessionStorage.getItem('useremail');
   session = sessionStorage.getItem('session');
 
-  const dataText = { "text": text, "username": useremail, "session":session};
-  console.log("here=",dataText);
+  const dataText = { "text": text, "username": useremail, "session":session, "referrer":window.location.href};
   const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
   if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
   }
-  const word = fetchResponse.data.text
-  console.log(word);
+  const word = fetchResponse.data.text;
   if(word === 'finish_topic'){
     sessionStorage.setItem('minutes', time[0]);
     sessionStorage.setItem('seconds', time[1]);
@@ -189,7 +171,6 @@ function GetWord(props){
       }
     });
   }
-  console.log("word here is: ",word);
   currentWord = word;
   if(word in props.prevWords){
     return <Test word={word} addChat={props.addChat}/>
@@ -197,42 +178,36 @@ function GetWord(props){
   else{
   const messageNoun = props.message==='first' ? 'first' : 'next';
   const messageText = "Your " + messageNoun + " word is '"+word + "'";
-  console.log(word);
   return (<BotReply message={messageText} dsableSkipButton={false} addChat={props.addChat} />);
 }
 }
 
 function Test(props) {
   useEffect(()=>{
-    props.addChat("next")
+    props.addChat("next");
   },[props.word])
   return <div></div>
 }
 
 function ShowHint(props){
-  console.log("ShowHint");
   const url = constant.postURL;
   const text = '/explain';
   let session = '';
   const useremail = sessionStorage.getItem('useremail');
   session = sessionStorage.getItem('session');
 
-  const dataText = { "text": text, "username": useremail, "session": session}
-  console.log(dataText);
+  const dataText = { "text": text, "username": useremail, "session": session, "referrer":window.location.href}
   const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
   if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
   }
   const hint = fetchResponse.data.text;
 
-  console.log(hint);
   return( <BotReply message={hint} addChat={props.addChat} dsableSkipButton={false}/>
   );
 }
 
 function DisplayForm(props){
-  console.log("DisplayForm");
-  console.log("sessionStorage=",sessionStorage);
   const [userInput, setUserInput] = useState("");
   function handleClick(){
     if(userInput.length > 0){
@@ -246,7 +221,6 @@ function DisplayForm(props){
       if(is_retry){
         updateSkippedCount('reduce');
       }
-      console.log(sessionStorage);
     }
   }
   function handleChange(e){
@@ -276,31 +250,26 @@ function DisplayForm(props){
 }
 
 function DisplayUserInput(props){
-  console.log("DisplayUserInput");
-  console.log(props.input);
   return(
     <UserReply message={props.input} />
   )
 }
 
 function BotReply(props){
-  console.log("BotReply");
   const [buttonText, setButtonText] = useState("Skip");
   function handleClick(e){
     e.target.setAttribute("disabled", "disabled");
     setButtonText("");
-    props.addChat("skip")
+    props.addChat("skip");
     if(!is_retry){
       updateSkippedCount('add');
     }
-    console.log(sessionStorage);
   }
   return(
     <li>
     <div className="row bot">
         <img src={knowbotSVG} className="knowbot" alt="logo" />
-        <textarea className="botmessage" value={props.message} id="bottext" disabled>
-        </textarea>
+        <TextareaAutosize className="botmessage" value={props.message} id="bottext" rowsMin={3} disabled />
         <button className="skipbutton fixed-bottom" value="start" disabled={props.dsableSkipButton}
           onClick={handleClick}>{buttonText}</button>
     </div></li>
@@ -311,8 +280,7 @@ function  UserReply(props){
   return(
   <li>
     <div className="row bot">
-      <textarea className="usermessage" value={props.message} disabled>
-      </textarea>
+      <TextareaAutosize className="usermessage" value={props.message} rowsMin={3} disabled />
       <button className="skipbutton fixed-bottom" value="start" >
         <img src={avatar} className="avatar" alt="logo" />
       </button>
@@ -330,4 +298,24 @@ function updateAttemptedCount() {
   let attemptedCount=parseInt(sessionStorage.getItem('attempted'));
   attemptedCount++;
   sessionStorage.setItem('attempted', attemptedCount);
+}
+
+function getCommand(message){
+  let text;
+  switch(message){
+    case 'skip':
+      text = '/skip';
+      break;
+    case 'first':
+    case 'next':
+      text = '/new';
+      break;
+    case 'retry':
+      text = '/retry';
+      break;
+    default:
+      text = message;
+      break;
+  }
+  return text;
 }

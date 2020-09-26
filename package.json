@@ -2,7 +2,7 @@
   "name": "kwyk",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://shinysu.github.io/kwykfrontend",
+  "homepage": "http://shinysu.github.io/kwykadmin",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -10,10 +10,16 @@
     "bootstrap": "^4.5.0",
     "bootstrap-material-design-icons": "^2.2.0",
     "emailjs-com": "^2.6.3",
+    "re-resizable": "^6.5.5",
     "react": "^16.13.1",
+    "react-autosize-textarea": "^7.1.0",
     "react-bootstrap": "^1.2.2",
+    "react-chart-histogram": "^0.2.4",
     "react-dom": "^16.13.1",
+    "react-jqcloud": "^1.0.5",
     "react-scripts": "3.4.1",
+    "react-textarea-autosize": "^8.2.0",
+    "react-wordcloud": "^1.2.7",
     "styled-components": "^5.1.1"
   },
   "scripts": {

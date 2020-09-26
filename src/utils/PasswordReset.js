@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import { useHistory } from "react-router-dom";
-import Header from "./components/kwykHeader";
-import * as constant from './components/constants'
-import usePost from "./components/postData";
+import Header from "../headers/KwykHeader";
+import * as constant from '../utils/Constants'
+import usePost from "../hooks/usePost";
 function PasswordReset() {
   return(
     <div className="container">

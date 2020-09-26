@@ -1,15 +1,13 @@
 import React, {useState} from 'react';
 import { useHistory } from "react-router-dom";
-import Header from "./components/kwykHeader";
-import TimerHeader from "./components/timerHeader";
-import Timer from "./components/timer";
-import './static/css/stats.css';
-import * as constant from './components/constants'
-import usePost from "./components/postData";
-import useFetch from "./components/getData"
+import Header from "../headers/KwykHeader";
+import TimerHeader from "../headers/TimerHeader";
+import '../static/css/stats.css';
+import * as constant from '../utils/Constants'
+import usePost from "../hooks/usePost";
+import useFetch from "../hooks/useFetch"
 
 function UserStats(props){
-  console.log("DisplayTopic");
   let history = useHistory();
   if(sessionStorage.getItem('useremail') == null){
     history.push({
@@ -28,7 +26,6 @@ function StatsPage(props){
   const seconds = history.location.state.seconds;
   const topic = history.location.state.topic;
   const subtopic = history.location.state.subtopic;
-  console.log("UserStats");
   return(
     <div className="container">
       <div className="row">
@@ -57,7 +54,6 @@ function DisplayStats(props){
   const useremail = sessionStorage.getItem('useremail');
   const attemptedCount = parseInt(sessionStorage.getItem('attempted'));
   const skippedCount = parseInt(sessionStorage.getItem('skipped'));
-  console.log(useremail);
   return(
     <div className="stats-area">
       <DisplayScore minutes={props.minutes} seconds={props.seconds}
@@ -74,7 +70,6 @@ function RetrySkips(props){
   let history = useHistory();
   if(props.skippedCount !== 0){
     function handleClick(){
-      console.log("clicked");
       history.push({
         pathname:'/test/'+props.topic+'/'+props.subtopic,
         state:{

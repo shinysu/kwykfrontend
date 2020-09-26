@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
-import Header from "./components/kwykHeader";
-import UserHeader from "./components/UserHeader";
+import Header from "../headers/KwykHeader";
+import UserHeader from "../headers/UserHeader";
 import { useHistory } from "react-router-dom";
-import * as constant from './components/constants'
-//import history from './components/history';
-import useFetch from "./components/getData";
-import './static/css/contents.css';
+import * as constant from '../utils/Constants'
+import useFetch from "../hooks/useFetch";
+import '../static/css/contents.css';
 
 function DisplayTopic(props){
-  console.log("DisplayTopic");
   let history = useHistory();
   if(sessionStorage.getItem('useremail') == null){
     history.push({
@@ -76,8 +74,6 @@ function DisplayStartButton(props){
     buttonDisplay ="none";
   }
   function handleClick(e){
-      console.log("topic=",props.topic);
-      console.log("subtopic=",props.subtopic);
       props.returnTopic(props.topic);
       props.returnSubtopic(props.subtopic);
       sessionStorage.setItem('attempted', 0);
@@ -109,7 +105,6 @@ function DisplayTopics(props){
     return 'Loading...';
   }
   const topics = fetchResponse.data
-  console.log(topics);
   return <ShowTopicsButtons topics={topics} getSelectedTopic={props.getSelectedTopic} styling={props.styling}/>;
 }
 

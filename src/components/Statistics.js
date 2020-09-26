@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import TopicSelectHeader from "./TopicSelectHeader";
+import TopicSelectHeader from "../headers/TopicSelectHeader";
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
-import Histogram from 'react-chart-histogram'
+import ReactWordcloud from 'react-wordcloud';
+import { Resizable } from "re-resizable";
 import '../static/css/admin.css';
 
 
@@ -17,7 +18,6 @@ function Statistics(props){
   }
   const topics = props.data["topics"];
   const userData = props.data["topic_answers"];
-  console.log("useRData=",userData);
   return(
     <div >
       <TopicSelectHeader getSelectedValue={getSelectedValue} selectedValue={selectedValue} topics={topics}/>
@@ -33,7 +33,7 @@ function DisplayStats(props) {
   let uniqueResponse =[];
   let leastResponse =[];
   let mostSkips =[];
-  let commonResponse =[];
+  let commonResponseCount =[];
   let userResponseCount =[];
   let userResponseData;
   //let leastResponseUser =[];
@@ -42,38 +42,38 @@ function DisplayStats(props) {
     const stats = getStats(props.userData,props.selectedValue);
     const answeredCount =stats["answeredCount"];
     const skipsCount = stats["skipsCount"];
-    const uniqueResponseCount = stats["uniqueWordsCount"];
-    const commonResponseCount = stats["commonResponseCount"];
+    //const uniqueResponseCount = stats["uniqueWordsCount"];
+    commonResponseCount = stats["commonResponseCount"];
     const userAnswerCount = stats["userAnswerCount"];
-    console.log("userAnswerCount=",userAnswerCount);
     totalUsers = stats["totalUsers"];
     totalWords = stats["totalWords"];
     mostSkips = getSortedData(skipsCount,1); //second arg 1 to sort desc
     leastResponse = getSortedData(answeredCount,0);
-    uniqueResponse = getSortedData(uniqueResponseCount,1);
-    commonResponse = getSortedData(commonResponseCount,1);
-    console.log(uniqueResponse);
+    //uniqueResponse = getSortedData(uniqueResponseCount,1);
+    //commonResponse = getSortedData(commonResponseCount,1);
     const userResponse = getResponseHist(userAnswerCount, totalWords);
     userResponseData = userResponse["userDivisionData"];
     userResponseCount = userResponse["userResponseCount"];
-    console.log("userResponse=",userResponseData);
-    console.log("userResponseCount=",userResponseCount);
   //  mostResponseUser = getSortedData(userAnswerCount, 1);
   //  leastResponseUser = getSortedData(userAnswerCount, 0);
   }
-
-  const displayItems = [{message:'Key terms with most unique responses',data:uniqueResponse,maxVal:totalUsers},
-                  {message:'Key terms with least responses',data:leastResponse,maxVal:totalUsers},
-                  {message:'Key terms with most skips',data:mostSkips,maxVal:totalUsers},
-                  {message:'Key terms with most common responses',data:commonResponse,maxVal:totalUsers},
-                  {message:'Users responses',data:userResponseCount,maxVal:totalUsers,value:userResponseData}
+  //const commonResponse = getSortedData(commonResponseCount,1,100)
+  const displayItems = [
+                  {message:'Common user responses',data:commonResponseCount, maxVal:totalWords,
+                  type:'cloud'},
+                  {message:'Key terms with least responses',data:leastResponse,maxVal:totalUsers,
+                    type:'progress'},
+                  {message:'Key terms with most skips',data:mostSkips,maxVal:totalUsers,
+                type:'progress'},
+                  {message:'Key terms attempted by users',data:userResponseCount,maxVal:totalUsers,
+                  value:userResponseData,type:'progress'}
                 ]
   const statButtons = displayItems.map((item,index)=>{
     return <DisplayButton message={item.message} key={index} maxVal={item.maxVal}
-    data={item.data} value={item.value}/>
+    data={item.data} value={item.value} type={item.type}/>
   });
   return(
-    <div className="display-stats">
+    <div className="display-stats lightgreen">
     {statButtons}
     </div>
   );
@@ -82,6 +82,7 @@ function DisplayStats(props) {
 function DisplayButton(props){
   console.log("DisplayButton");
   const [open, setOpen] = useState(false);
+  console.log("OPEN=",open);
   //console.log(props.data);
   return(
     <div className="display-btn">
@@ -96,41 +97,84 @@ function DisplayButton(props){
       </Button>
       <Collapse in={open} className="stats-data">
         <div className="lightgreen">
-          <ShowProgressBar maxVal={props.maxVal} data={props.data} value={props.value}/>
+          <DisplatData maxVal={props.maxVal} data={props.data} value={props.value} type={props.type}/>
         </div>
       </Collapse>
     </div>
   );
 }
 
+function DisplatData(props) {
+  if(props.type === 'progress'){
+    return <ShowProgressBar maxVal={props.maxVal} data={props.data} value={props.value}/>
+  }
+  else{
+    return <ShowWordCloud maxVal={props.maxVal} data={props.data} />
+  }
+}
+
+function ShowWordCloud(props) {
+  console.log("ShowWordCloud");
+  console.log("props.data=",props.data.l);
+  if(props.data.length > 0){
+  const words = props.data;
+  const options = {
+    fontSizes: [5, 60],
+    rotations: 3,
+    rotationAngles: [0, 0],
+    padding: 3,
+  }
+  const resizeStyle = {
+    background: "#E3F0D9",
+    width:'100%',
+    height: '100%',
+  }
+  console.log("WORDS=", words);
+  return (
+    <Resizable className="lightgreen"
+     defaultSize={{
+      width: '100%',
+      height: '40vh',
+    }}
+     style={resizeStyle}
+      >
+    <ReactWordcloud className="wordcloud" options={options} words={words} style={resizeStyle}/>
+    </Resizable>
+  );
+}
+else {
+return <div></div>
+}
+}
+
 function ShowProgressBar(props){
+  console.log("ShowProgressBar");
   const data = props.data;
   const maxVal = props.maxVal;
   const statsBar = data.map((statData,index)=>{
     console.log("statData=",statData);
-  const percent = statData[1];
-  const range = statData[0];
-  let popover;
-  if(props.value){
-    const names = props.value[range];
-    let users = names.join('\n')
-
-     popover = (
-       
-      <Popover>
-       <Popover.Title as="h6  ">Users</Popover.Title>
-       <Popover.Content>
-        {users}
-       </Popover.Content>
-      </Popover>
-    );
-  }
-  else{
-   popover = (
-     <Popover> </Popover>
-   );
- }
- return (
+    const percent = statData[1];
+    console.log("percent=",percent);
+    const range = statData[0];
+    let popover;
+    if(props.value){
+      const names = props.value[range];
+      let users = names.join('\n');
+      popover = (
+        <Popover>
+          <Popover.Title >Users</Popover.Title>
+          <Popover.Content>
+          { users}
+          </Popover.Content>
+        </Popover>
+      );
+    }
+    else{
+        popover = (
+          <Popover> </Popover>
+        );
+    }
+    return (
       <div className="row">
         <div className="col-sm-4 white">
         <label className="data-label"> {statData[0]} </label>
@@ -155,7 +199,7 @@ function getStats(data, topic){
   let skipsCount = {};
   let answeredCount = {};
   let totalSkips = 0;
-  let wordResponses ={};
+  let wordResponses =[];
   let uniqueWordsCount = {};
   let commonResponseCount = {};
   let userAnswerCount = {};
@@ -168,9 +212,8 @@ function getStats(data, topic){
       const word = words[i];
       skipsCount[word] = 0;
       answeredCount[word] = 0;
-      wordResponses[word] = [];
+      //wordResponses[word] = [];
   }
-
   for (i=0; i < words.length; i++){
       const word = words[i];
       for(const [key, value] of Object.entries(userWords)){
@@ -181,16 +224,19 @@ function getStats(data, topic){
         else{
           userAnswerCount[key] = (userAnswerCount[key]||0)+1;
           answeredCount[word] +=1;
-          wordResponses[word]=wordResponses[word].concat(userEntries[word].split(","))
+          wordResponses=wordResponses.concat(userEntries[word].split(","))
+        //  wordResponses[word]=wordResponses[word].concat(userEntries[word].split(","))
         }
       }
-      wordResponses[word] = getWordFrequency(wordResponses[word]);
+      /*wordResponses[word] = getWordFrequency(wordResponses[word]);
       const counts = getUniqueWordsCount(wordResponses[word]);
       uniqueWordsCount[word] = counts["uniqueCount"];
-      commonResponseCount[word] = counts["mostCommonResponse"];
+      commonResponseCount[word] = counts["mostCommonResponse"];*/
     }
-    return {"answeredCount": answeredCount, "skipsCount": skipsCount, "uniqueWordsCount":uniqueWordsCount,
-    "commonResponseCount":commonResponseCount, "totalUsers":totalUsers, "userAnswerCount":userAnswerCount,
+    wordResponses = getWordFrequency(wordResponses);
+    //const counts = getUniqueWordsCount(wordResponses[word]);
+    return {"answeredCount": answeredCount, "skipsCount": skipsCount, "commonResponseCount":wordResponses,
+    "totalUsers":totalUsers, "userAnswerCount":userAnswerCount,
     "totalWords":totalWords}
 }
 
@@ -199,14 +245,16 @@ function getWordFrequency(wordArray) {
   obj[index] = (obj[index] || 0) + 1;
   return obj;
   }, {});
-  return occurrences;
+  let words = [];
+  for(const [key, value] of Object.entries(occurrences)){
+    words.push({text:key,value:value})
+  }
+  return words;
 }
 
-function getSortedData(data,type){
+function getSortedData(data,type,count=5){
   console.log("getMostSkips");
-  console.log("skips=",data);
   let sortedData = [];
-  let count = 5;
   for (var word in data) {
     sortedData.push([word, data[word]]);
   }
@@ -218,9 +266,8 @@ function getSortedData(data,type){
       return b[1] - a[1];
     }
   });
-  console.log("sortedSkips=",sortedData);
   for(var n=count; n < sortedData.length; n++){
-    if(sortedData[n-1][1] == sortedData[n][1]){
+    if(sortedData[n-1][1] === sortedData[n][1]){
       count++;
     }
     else {
@@ -231,6 +278,7 @@ function getSortedData(data,type){
   }
 
 function getUniqueWordsCount(data){
+  console.log("getUniqueWordsCount");
   let uniqueCount = 0;
   let mostCommonResponse = 1;
   for(const [key, value] of Object.entries(data)){
@@ -248,7 +296,6 @@ function getUniqueWordsCount(data){
 
 function getResponseHist(userData, totalWords) {
   console.log("getResponseHist");
-  console.log(userData);
   const divisions = [0, 0.25, 0.5, 0.75, 1];
   let userDivisionData = {};
   let userResponseCount =[]
@@ -256,43 +303,47 @@ function getResponseHist(userData, totalWords) {
   const answerDivisions = divisions.map((value,index) =>{
     return `${Math.round(divisions[index] * totalWords)}`
   });
+  console.log("answerDivisions=",answerDivisions);
   //ansdivpercent = ["0 - 24", "25 - 49", "50 - 74", "75 - 99", "100"]
   const ansdivpercent = divisions.map((value,index) =>{
+    let valRange;
     if(parseInt(value) === 1){
-      return `100%`;
+      valRange = `100%`;
     }
     else{
-      return `${value * 100}-${divisions[index + 1]*100 -1}%`
+      valRange = `${value * 100}-${divisions[index + 1]*100 -1}%`
     }
+    userDivisionData[valRange] =[];
+    return valRange;
   });
   for(const [key, value] of Object.entries(userData)){
     if(value === totalWords){
       const centPercent = ansdivpercent[ansdivpercent.length - 1];
-      if(centPercent in userDivisionData){
-        userDivisionData[centPercent].push(key)
-      }
-      else{
-        userDivisionData[centPercent] = [key]
-      }
+      userDivisionData[centPercent].push(key)
+
     }
     else{
       for(var i = 0; i < answerDivisions.length-1; i++){
         if((value >= answerDivisions[i]) && ((value < answerDivisions[i+1]))){
           const percent = ansdivpercent[i];
-          if(percent in userDivisionData){
-            userDivisionData[percent].push(key);
-          }
-          else{
-            userDivisionData[percent] = [key];
-          }
+          userDivisionData[percent].push(key);
+
         }
       }
     }
   }
   console.log("ansdivpercent=",ansdivpercent);
+  let count = 0;
   for(var i=0; i < ansdivpercent.length; i++){
-    const range = ansdivpercent[i]
-    userResponseCount.push([range, userDivisionData[range].length]);
+    const range = ansdivpercent[i];
+    console.log("range=",range);
+    if(userDivisionData[range]){
+      console.log(userDivisionData[range]);
+      count=userDivisionData[range].length;
+    }
+    userResponseCount.push([range, count]);
   }
+  console.log("userDivisionData=",userDivisionData);
+  console.log("userResponseCount=",userResponseCount);
   return {"userDivisionData":userDivisionData, "userResponseCount":userResponseCount};
 }

@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { Tabs, Tab, Content } from "./components/tab";
-import Header from "./components/kwykHeader";
-import './static/css/header.css';
-import './static/css/stats.css';
+import { Tabs, Tab, Content } from "../utils/Tab";
+import Header from "../headers/KwykHeader";
+import '../static/css/header.css';
+import '../static/css/stats.css';
 import { useHistory } from "react-router-dom";
-import useFetch from "./components/getData";
-import * as constant from './components/constants'
+import useFetch from "../hooks/useFetch";
+import * as constant from '../utils/Constants'
 
 function Responses() {
   let history = useHistory();
   const topic = history.location.state.topic;
   const subtopic = history.location.state.subtopic;
-  console.log("subtopic here=",subtopic);
 
   return (
     <div className="container">
@@ -42,7 +41,6 @@ function ResponsesTab(props){
     return 'Loading...';
   }
   const data = fetchResponse.data
-  console.log(data)
   const topicUserWords = JSON.parse(sessionStorage.getItem('userResponses'));
   return(
     <div className="tab-color">

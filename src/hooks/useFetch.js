@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 function useFetch(url, defaultResponse) {
   const [data, setData] = useState(defaultResponse);
-  console.log("url=",url);
   async function getDataFromAPI() {
     try {
       const res = await fetch(url);

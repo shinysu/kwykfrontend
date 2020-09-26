@@ -4,7 +4,6 @@ import clock from '../static/images/clock.png';
 
 
 function TimerHeader(props){
-  console.log("TimerHeader");
   const time = props.time;
   const username = sessionStorage.getItem('username');
   return(

@@ -1,9 +1,12 @@
+
 .display-stats{
   background-color: #E3F0D9;
   height: 72vh;
   display: block;
   text-align: center;
+  padding-top: 3vh;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .display-btn{
@@ -18,15 +21,14 @@
 
 table {
   border-collapse: collapse;
-  border: 1px solid black;
+  border: 1px solid #ccc;
   background-color: #ffffff;
 }
 
 
 th, td{
-  border: 1px solid black;
+  border: 1px solid #787774;
   text-align: center;
-
 }
 
 th.user{
@@ -106,19 +108,46 @@ thead th {
   position: sticky;
   top: 0;
   z-index: 1;
-  border: 1px solid black;
-
+  border: 1px solid #787774;
+  box-shadow: 0 0 0 1px #787774;
 }
 
 tbody th {
   position: -webkit-sticky; /* for Safari */
   position: sticky;
   left: 0;
-  border: 1px solid black;
-   box-shadow: 1px black;
+  border: 1px solid #787774;
+  box-shadow: 0 0 0 1px #787774;
 }
 
 thead th:first-child {
   left: 0;
   z-index: 2;
+
+}
+
+.rowheader{
+  text-align: left;
+  padding-left: 1vw;
+}
+
+.wordcloud{
+  background-color: #E3F0D9;
+  padding-left: 2vw;
+  padding-right: 2vw;
+
+}
+
+.clouddiv{
+  background-color: #E3F0D9;
+  width: 90%;
+  margin-left: 5%;
+}
+
+.topic-select{
+  color: black;
+}
+
+.view-select{
+  color: black;
 }

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Tabs, Tab, Content } from "./components/tab";
-import Header from "./components/kwykHeader";
-import './static/css/header.css';
-import './static/css/admin.css';
-import useFetch from "./components/getData";
-import * as constant from './components/constants'
-import TopicSelectHeader from "./components/TopicSelectHeader";
-import Statistics from "./components/Statistics";
+import { Tabs, Tab, Content } from "../utils/Tab";
+import Header from "../headers/KwykHeader";
+import '../static/css/header.css';
+import '../static/css/admin.css';
+import useFetch from "../hooks/useFetch";
+import * as constant from '../utils/Constants'
+import TopicSelectHeader from "../headers/TopicSelectHeader";
+import Statistics from "./Statistics";
 
 function Insights() {
   return (
@@ -38,7 +38,7 @@ function StatisticsTab(props){
   if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
   }
-  const data = fetchResponse.data
+  const data = fetchResponse.data;
   console.log("data=",data);
 
   return(
@@ -87,7 +87,6 @@ function ShowInsights(props){
 }
 
 function DisplayUserData(props){
-  let words;
   let headerWords, limits;
   console.log("DisplayUserData");
   const data = props.userData[props.selectedValue];
@@ -98,7 +97,7 @@ function DisplayUserData(props){
   }
   return(
     <div className="display-data">
-      <table class="container">
+      <table className="container">
         <GetTableHeader selectedView={props.selectedView} headerWords={headerWords}/>
         <GetTableData data={data} selectedView={props.selectedView} limits={limits}/>
       </table>
@@ -109,14 +108,21 @@ function DisplayUserData(props){
 function GetTableHeader(props){
   console.log("GetTableHeader");
   console.log(props.headerWords);
+  let titleWord;
    if(props.headerWords){
+     if(props.selectedView === "user"){
+       titleWord = "Username";
+     }
+     else{
+       titleWord = "Key Terms";
+     }
      const header = props.headerWords.map((word,index)=>{
        return <th className="data" key={index}>{word}</th>
      });
      return(
        <thead>
          <tr>
-           <th style={{"minWidth":"200px"}}>Username</th>
+           <th style={{"minWidth":"200px"}}>{titleWord}</th>
            {header}
          </tr>
       </thead>
@@ -196,7 +202,7 @@ function ViewByUsers(props){
       });
       return(
         <tr key={index}>
-          <th>{user}</th>
+          <th className="rowheader">{user}</th>
           {userInput}
         </tr>
       );
@@ -229,7 +235,7 @@ function ViewByResponses(props) {
 
     return (
       <tr key={index}>
-        <th>{word}</th>
+        <th className='rowheader'>{word}</th>
         {wordRow}
       </tr>
     );
@@ -254,7 +260,7 @@ function getLimits(totalUsers, userDivisions){
   let limits = [];
   if(totalUsers < 5){
     for(var i=0; i<=totalUsers; i++ ){
-      limits.push([i,i])
+      limits.push([i,i]);
       headerWords.push(i);
     }
   }
@@ -272,16 +278,16 @@ function getLimits(totalUsers, userDivisions){
       }
       if(begin === end){
         headerWords.push(end);
-        limits.push([end, end])
+        limits.push([end, end]);
       }
       else{
         headerWords.push(`${begin} - ${end}` );
-        limits.push([begin, end])
+        limits.push([begin, end]);
       }
 
     }
     headerWords.push(totalUsers);
-    limits.push([totalUsers, totalUsers])
+    limits.push([totalUsers, totalUsers]);
   }
   return {"headerWords":headerWords, "limits":limits};
 }

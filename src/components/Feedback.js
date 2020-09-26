@@ -1,8 +1,9 @@
 import React,{useState} from "react";
-import Header from "./components/kwykHeader";
-import UserHeader from "./components/UserHeader";
-import './static/css/feedback.css';
-import * as constant from './components/constants'
+import { useHistory } from "react-router-dom";
+import Header from "../headers/KwykHeader";
+import UserHeader from "../headers/UserHeader";
+import '../static/css/feedback.css';
+import * as constant from '../utils/Constants'
 function Feedback() {
   return(
     <div className="container">
@@ -23,22 +24,28 @@ export default Feedback;
 function ShowTemplate() {
   const [userInput, setUserInput] = useState("");
   const username = sessionStorage.getItem('username');
+  let history = useHistory();
   function handleChange(e){
     setUserInput(e.target.value);
   }
 
   function handleSubmit(e) {
-    e.preventDefault()
+    console.log("clicked");
+    e.preventDefault();
     const serviceID = 'default_service';
     const templateId = 'template_09oi0b1';
-    sendFeedback(serviceID,templateId, {message: userInput, from_name:username, reply_to: constant.fbToEmail})
+    sendFeedback(serviceID,templateId, {message: userInput, from_name:username, reply_to: constant.fbToEmail});
+    setUserInput("");
+    history.push({
+      pathname:`/`
+    });
   }
   return(
     <div className = "fbarea">
     <form className="white" onSubmit={handleSubmit}>
     <div className="fblabel">{constant.feedbackMessage}</div>
     <div className="fblabel blank"> Feedback / Issue / Query</div>
-    <textarea className="fbtext" placeholder="Type your response here..." onChange={handleChange}></textarea>
+    <textarea className="fbtext" value={userInput} placeholder="Type your response here..." onChange={handleChange}></textarea>
     <input type="submit" value="Submit" className="fbsubmitbtn"/>
     </form>
     </div>

@@ -1,10 +1,10 @@
 import React,{useState} from 'react';
-import knowbotSVG from './static/images/knowbotSVG.svg';
-import './static/css/login.css';
-import { Tabs, Tab, Content } from "./components/tab";
-import * as constant from './components/constants'
-import usePost from "./components/postData";
-import useFetch from "./components/getData"
+import knowbotSVG from '../static/images/knowbotSVG.svg';
+import '../static/css/login.css';
+import { Tabs, Tab, Content } from "../utils/Tab";
+import * as constant from '../utils/Constants'
+import usePost from "../hooks/usePost";
+import useFetch from "../hooks/useFetch"
 import { useHistory, useLocation } from "react-router-dom";
 var session = ""
 function Login(){
@@ -84,19 +84,16 @@ function LoginTab(props){
 }
 
 function SignInForm() {
-  console.log("SignInForm");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginMessage,setLoginMessage] = useState("");
   let history = useHistory();
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("going");
     const message = <ValidateUser email={email} password={password}/>
     setLoginMessage(message);
     setEmail("")
     setPassword("")
-    console.log("loginMessage=",loginMessage);
   }
   function handleEmail(e){
     setEmail(e.target.value);
@@ -124,13 +121,11 @@ function SignInForm() {
 }
 
 function SignUpForm() {
-  console.log("SignUpForm");
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginMessage,setLoginMessage] = useState("");
   function handleSubmit(e) {
-    console.log("handleSubmit");
     e.preventDefault();
     const message = <CreateNewUser username={userName} email={email} password={password}/>
     setLoginMessage(message);
@@ -162,7 +157,6 @@ function SignUpForm() {
 }
 
 function ValidateUser(props) {
-  console.log("ValidateUser");
   const url = constant.loginURL;
   let loginMessage = '';
   let sessionName = '';
@@ -181,12 +175,9 @@ function ValidateUser(props) {
   }
   else{
     loginMessage = "Signed in Successfully!";
-    console.log(response);
     sessionName = response['session_name'];
     const userName = response['username'];
-    console.log(userName);
     setSessionStorage(userName, props.email, session, sessionName);
-    console.log("sessionStorage=",sessionStorage);
     history.push({
       pathname:`/topics`,
       state:{
@@ -195,12 +186,10 @@ function ValidateUser(props) {
       }
     });
   }
-  console.log("here=",loginMessage);
   return(`${loginMessage}`)
 }
 
 function CreateNewUser(props) {
-  console.log("CreateNewUser");
   const url = constant.loginURL;
   let loginMessage ='';
   let sessionName = '';

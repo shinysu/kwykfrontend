@@ -13,8 +13,8 @@ function TopicSelectHeader(props){
   return(
     <div className="row green">
     <label className="green topic-label"> TOPIC: </label>
-    <select className="topic-select" onChange={handleChange} defaultValue={'default'} value={selectedValue}>
-      <option value="default">Choose a topic..</option>
+    <select className="topic-select" onChange={handleChange} defaultValue={''} value={selectedValue}>
+      <option value="">Choose a topic..</option>
       {topics.map((topic,index) => <option key={index} > {topic} </option>)}
     </select>
     </div>
