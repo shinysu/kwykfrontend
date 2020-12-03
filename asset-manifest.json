@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/kwykfrontend/static/css/main.f9475f4e.chunk.css",
-    "main.js": "/kwykfrontend/static/js/main.9c992e9f.chunk.js",
-    "main.js.map": "/kwykfrontend/static/js/main.9c992e9f.chunk.js.map",
+    "main.js": "/kwykfrontend/static/js/main.e5b5066e.chunk.js",
+    "main.js.map": "/kwykfrontend/static/js/main.e5b5066e.chunk.js.map",
     "runtime-main.js": "/kwykfrontend/static/js/runtime-main.c8876517.js",
     "runtime-main.js.map": "/kwykfrontend/static/js/runtime-main.c8876517.js.map",
     "static/js/2.1593c119.chunk.js": "/kwykfrontend/static/js/2.1593c119.chunk.js",
     "static/js/2.1593c119.chunk.js.map": "/kwykfrontend/static/js/2.1593c119.chunk.js.map",
     "index.html": "/kwykfrontend/index.html",
-    "precache-manifest.f28cddaa915dced0b239f252bfad000e.js": "/kwykfrontend/precache-manifest.f28cddaa915dced0b239f252bfad000e.js",
+    "precache-manifest.a6acdb4aedc1e80d2f6eda4ee751090a.js": "/kwykfrontend/precache-manifest.a6acdb4aedc1e80d2f6eda4ee751090a.js",
     "service-worker.js": "/kwykfrontend/service-worker.js",
     "static/css/main.f9475f4e.chunk.css.map": "/kwykfrontend/static/css/main.f9475f4e.chunk.css.map",
     "static/js/2.1593c119.chunk.js.LICENSE.txt": "/kwykfrontend/static/js/2.1593c119.chunk.js.LICENSE.txt",
@@ -21,6 +21,6 @@
     "static/js/runtime-main.c8876517.js",
     "static/js/2.1593c119.chunk.js",
     "static/css/main.f9475f4e.chunk.css",
-    "static/js/main.9c992e9f.chunk.js"
+    "static/js/main.e5b5066e.chunk.js"
   ]
 }
