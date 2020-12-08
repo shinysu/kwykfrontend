@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "27643cb0777416fdd327eb269aed0c1c",
+    "revision": "895c32cfd88b6642d3b2c9dfec9725a2",
     "url": "/kwykfrontend/index.html"
   },
   {
-    "revision": "8f390a39202a3d02b0f6",
-    "url": "/kwykfrontend/static/css/main.c35194e1.chunk.css"
+    "revision": "8ba0e0a9935c7a22de35",
+    "url": "/kwykfrontend/static/css/main.e767deb7.chunk.css"
   },
   {
     "revision": "47f9f5923d5ddd06baff",
@@ -16,12 +16,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/kwykfrontend/static/js/2.1593c119.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8f390a39202a3d02b0f6",
-    "url": "/kwykfrontend/static/js/main.e259ccaa.chunk.js"
+    "revision": "8ba0e0a9935c7a22de35",
+    "url": "/kwykfrontend/static/js/main.52428616.chunk.js"
   },
   {
     "revision": "d9c4785ea1e9ed29cd20",
     "url": "/kwykfrontend/static/js/runtime-main.c8876517.js"
+  },
+  {
+    "revision": "97a55c954a18d2daae22c5f9114794d5",
+    "url": "/kwykfrontend/static/media/LucidaConsoleRegular.97a55c95.ttf"
   },
   {
     "revision": "2dea87fd5d47090ecc87f51144a48e8e",
