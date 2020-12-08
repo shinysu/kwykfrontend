@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/kwykfrontend/static/css/main.e767deb7.chunk.css",
+    "main.css": "/kwykfrontend/static/css/main.ef5976ce.chunk.css",
     "main.js": "/kwykfrontend/static/js/main.52428616.chunk.js",
     "main.js.map": "/kwykfrontend/static/js/main.52428616.chunk.js.map",
     "runtime-main.js": "/kwykfrontend/static/js/runtime-main.c8876517.js",
@@ -8,9 +8,9 @@
     "static/js/2.1593c119.chunk.js": "/kwykfrontend/static/js/2.1593c119.chunk.js",
     "static/js/2.1593c119.chunk.js.map": "/kwykfrontend/static/js/2.1593c119.chunk.js.map",
     "index.html": "/kwykfrontend/index.html",
-    "precache-manifest.41399c9eb4ca29525824ea3db1308e61.js": "/kwykfrontend/precache-manifest.41399c9eb4ca29525824ea3db1308e61.js",
+    "precache-manifest.a69e6d8ee096b0d0baef23c2f5968918.js": "/kwykfrontend/precache-manifest.a69e6d8ee096b0d0baef23c2f5968918.js",
     "service-worker.js": "/kwykfrontend/service-worker.js",
-    "static/css/main.e767deb7.chunk.css.map": "/kwykfrontend/static/css/main.e767deb7.chunk.css.map",
+    "static/css/main.ef5976ce.chunk.css.map": "/kwykfrontend/static/css/main.ef5976ce.chunk.css.map",
     "static/js/2.1593c119.chunk.js.LICENSE.txt": "/kwykfrontend/static/js/2.1593c119.chunk.js.LICENSE.txt",
     "static/media/chat.css": "/kwykfrontend/static/media/LucidaConsoleRegular.97a55c95.ttf",
     "static/media/avatar.png": "/kwykfrontend/static/media/avatar.2dea87fd.png",
@@ -21,7 +21,7 @@
   "entrypoints": [
     "static/js/runtime-main.c8876517.js",
     "static/js/2.1593c119.chunk.js",
-    "static/css/main.e767deb7.chunk.css",
+    "static/css/main.ef5976ce.chunk.css",
     "static/js/main.52428616.chunk.js"
   ]
 }
