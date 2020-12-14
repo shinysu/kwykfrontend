@@ -1,11 +1,8 @@
-import React, {useState} from 'react';
+import React from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../headers/KwykHeader";
 import TimerHeader from "../headers/TimerHeader";
 import '../static/css/stats.css';
-import * as constant from '../utils/Constants'
-import usePost from "../hooks/usePost";
-import useFetch from "../hooks/useFetch"
 
 function UserStats(props){
   let history = useHistory();
@@ -21,11 +18,10 @@ function UserStats(props){
 }
 
 function StatsPage(props){
-  let history = useHistory()
-  const minutes = history.location.state.minutes;
-  const seconds = history.location.state.seconds;
-  const topic = history.location.state.topic;
-  const subtopic = history.location.state.subtopic;
+  const minutes = parseInt(sessionStorage.getItem('minutes'));
+  const seconds = parseInt(sessionStorage.getItem('seconds'));
+  const topic = sessionStorage.getItem('topic');
+  const subtopic = sessionStorage.getItem('subtopic');
   return(
     <div className="container">
       <div className="row">
@@ -51,7 +47,7 @@ function ShowTimeHeader(props){
 }
 
 function DisplayStats(props){
-  const useremail = sessionStorage.getItem('useremail');
+  //const useremail = sessionStorage.getItem('useremail');
   const attemptedCount = parseInt(sessionStorage.getItem('attempted'));
   const skippedCount = parseInt(sessionStorage.getItem('skipped'));
   return(
@@ -70,13 +66,9 @@ function RetrySkips(props){
   let history = useHistory();
   if(props.skippedCount !== 0){
     function handleClick(){
+      sessionStorage.setItem('retry', true);
       history.push({
-        pathname:'/test/'+props.topic+'/'+props.subtopic,
-        state:{
-          topic: props.topic,
-          subtopic: props.subtopic,
-          retry: true
-        }
+        pathname:'/test/'+props.topic+'/'+props.subtopic
       });
     }
     return(
@@ -97,12 +89,8 @@ function ViewResponses(props){
   let history = useHistory();
   function handleClick(){
     history.push({
-    pathname:`/view_responses/${props.topic}/${props.subtopic}`,
+    pathname:`/view_responses/${props.topic}/${props.subtopic}`
     //pathname:`/view_responses/python/flask`,
-      state:{
-        topic: props.topic,
-        subtopic: props.subtopic,
-        }
     });
   }
   return(
@@ -164,7 +152,7 @@ function DisplayScore(props){
       </div>
       <div className = "row ">
         <div className="col topic-text right">
-        #Time Taken :
+        #Time Taken:
         </div>
         <div className="col topic-text left">
           {props.minutes} mins : {props.seconds} secs

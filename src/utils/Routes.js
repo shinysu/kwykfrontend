@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import DisplayTopic from '../components/DisplayTopic';
 import ChatBot from '../components/ChatBot'
 import UserStats from '../components/UserStats'
@@ -8,6 +8,7 @@ import Insights from '../components/Insights'
 import Login from "../components/Login";
 import Feedback from "../components/Feedback";
 import PasswordReset from './PasswordReset';
+import Page404 from './Page404';
 
 function Routes(){
     const [topic, setTopic] = useState("");
@@ -30,6 +31,7 @@ function Routes(){
       <Route path="/view_responses/:topic/:subtopic" render={() => <Responses/>} />
       <Route path="/feedback" render={() => <Feedback/>} />
       <Route path="/admin" exact render={() => <Insights/>} />
+      <Route render={() => <Page404/>} />
 
       </Switch>
       </Router>

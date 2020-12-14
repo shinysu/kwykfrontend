@@ -12,10 +12,9 @@ function useFetch(url, defaultResponse) {
         data: dataList
       });
     } catch (e) {
-      console.error(e);
       setData({
         isLoading: false,
-        data: e
+        error: e
       });
     }
   }
@@ -23,7 +22,6 @@ function useFetch(url, defaultResponse) {
   useEffect(() => {
     getDataFromAPI()
   }, [url]);
-
   return data;
 }
 

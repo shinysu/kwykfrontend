@@ -11,9 +11,11 @@ import '../static/css/chat.css';
 import * as constant from '../utils/Constants'
 import usePost from "../hooks/usePost";
 import TextareaAutosize from 'react-textarea-autosize';
+import DisplayAlert from '../utils/DisplayAlert'
+
 var time;
 var currentWord = '';
-var is_retry = false;
+var is_retry;
 function ChatBot(props){
   let history = useHistory();
   if(sessionStorage.getItem('useremail') == null){
@@ -32,18 +34,17 @@ export default ChatBot;
 function DisplayTest() {
   let chatMessages = '';
   let history = useHistory();
-  const topic = history.location.state.topic;
-  const subtopic = history.location.state.subtopic;
+  const topic = sessionStorage.getItem('useremail');
+  const subtopic = sessionStorage.getItem('useremail');
   const prevWords = JSON.parse(sessionStorage.getItem('userResponses'));
-
-  if(history.location.state.retry){
+  is_retry = false;
+  if(sessionStorage.getItem('retry') === 'true'){
     is_retry = true;
     chatMessages=["retry"];
   }
   else{
     chatMessages=["welcome","first"];
   }
-
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   return(
@@ -153,8 +154,11 @@ function GetWord(props){
   session = sessionStorage.getItem('session');
 
   const dataText = { "text": text, "username": useremail, "session":session, "referrer":window.location.href};
-  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
-  if (!fetchResponse.data || fetchResponse.isLoading) {
+  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null, error: null});
+  if (fetchResponse.error){
+    return <DisplayAlert message={fetchResponse.error} />
+  }
+  else if ( fetchResponse.isLoading) {
     return 'Loading...';
   }
   const word = fetchResponse.data.text;
@@ -162,13 +166,7 @@ function GetWord(props){
     sessionStorage.setItem('minutes', time[0]);
     sessionStorage.setItem('seconds', time[1]);
     history.push({
-      pathname:`/user_stats/${props.topic}/${props.subtopic}`,
-      state:{
-        topic: props.topic,
-        subtopic: props.subtopic,
-        minutes: time[0],
-        seconds: time[1]
-      }
+      pathname:`/user_stats/${props.topic}/${props.subtopic}`
     });
   }
   currentWord = word;
@@ -178,7 +176,8 @@ function GetWord(props){
   else{
   const messageNoun = props.message==='first' ? 'first' : 'next';
   const messageText = "Your " + messageNoun + " word is '"+word + "'";
-  return (<BotReply message={messageText} dsableSkipButton={false} addChat={props.addChat} />);
+  return (<BotReply message={messageText} dsableSkipButton={false} addChat={props.addChat}
+    skipButtonText="Skip" />);
 }
 }
 
@@ -197,14 +196,17 @@ function ShowHint(props){
   session = sessionStorage.getItem('session');
 
   const dataText = { "text": text, "username": useremail, "session": session, "referrer":window.location.href}
-  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
-  if (!fetchResponse.data || fetchResponse.isLoading) {
+  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null, error: null});
+  if (fetchResponse.error){
+    return <DisplayAlert message={fetchResponse.error} />
+  }
+  else if ( fetchResponse.isLoading) {
     return 'Loading...';
   }
   const hint = fetchResponse.data.text;
 
-  return( <BotReply message={hint} addChat={props.addChat} dsableSkipButton={false}/>
-  );
+  return( <BotReply message={hint} addChat={props.addChat} dsableSkipButton={true}
+    skipButtonText="" />);
 }
 
 function DisplayForm(props){
@@ -256,11 +258,12 @@ function DisplayUserInput(props){
 }
 
 function BotReply(props){
-  const [buttonText, setButtonText] = useState("Skip");
+  const [buttonText, setButtonText] = useState(props.skipButtonText);
+
   function handleClick(e){
     e.target.setAttribute("disabled", "disabled");
     setButtonText("");
-    props.addChat("skip");
+    props.addChat("skip")
     if(!is_retry){
       updateSkippedCount('add');
     }
@@ -269,7 +272,7 @@ function BotReply(props){
     <li>
     <div className="row bot">
         <img src={knowbotSVG} className="knowbot" alt="logo" />
-        <TextareaAutosize className="botmessage" value={props.message} id="bottext" rowsMin={3} disabled />
+        <TextareaAutosize className="botmessage" value={props.message} id="bottext" disabled />
         <button className="skipbutton fixed-bottom" value="start" disabled={props.dsableSkipButton}
           onClick={handleClick}>{buttonText}</button>
     </div></li>
@@ -281,9 +284,7 @@ function  UserReply(props){
   <li>
     <div className="row bot">
       <TextareaAutosize className="usermessage" value={props.message} rowsMin={3} disabled />
-      <button className="skipbutton fixed-bottom" value="start" >
-        <img src={avatar} className="avatar" alt="logo" />
-      </button>
+      <img src={avatar} className="avatar" alt="logo" />
     </div>
   </li>);
 }

@@ -17,10 +17,9 @@ function usePost(url, dataText, defaultResponse) {
         data: result
       });
     } catch (e) {
-      console.error(e);
       setData({
         isLoading: false,
-        data: e
+        error: e
       });
     }
   }
@@ -28,7 +27,6 @@ function usePost(url, dataText, defaultResponse) {
   useEffect(() => {
     postDataToAPI()
   }, [url]);
-
   return data;
 }
 

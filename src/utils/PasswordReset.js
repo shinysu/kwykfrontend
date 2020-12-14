@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import Header from "../headers/KwykHeader";
 import * as constant from '../utils/Constants'
 import usePost from "../hooks/usePost";
+import DisplayAlert from '../utils/DisplayAlert'
+
 function PasswordReset() {
   return(
     <div className="container">
@@ -56,7 +58,7 @@ function ResetArea() {
     setConfirmPassword(e.target.value);
   }
   function handleClick(e) {
-    if(e.target.value == 'Home'){
+    if(e.target.value === 'Home'){
       history.push({
           pathname:`/`,
       });
@@ -82,11 +84,12 @@ function ResetArea() {
 function ChangePwd(props) {
   const url = constant.pwdResetURL;
   let message = '';
-  let btnValue = '';
-  let history = useHistory();
   const dataText = { "email": props.email, "password": props.password}
-  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
-  if (!fetchResponse.data || fetchResponse.isLoading) {
+  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null, error: null});
+  if (fetchResponse.error){
+    return <DisplayAlert message={fetchResponse.error} />
+  }
+  else if ( fetchResponse.isLoading) {
     return 'Loading...';
   }
   const response = fetchResponse.data;
@@ -97,8 +100,4 @@ function ChangePwd(props) {
      message = constant.pwdResetFailedMsg;
   }
   return(`${message}`);
-}
-
-function getMessages() {
-  return "hello";
 }

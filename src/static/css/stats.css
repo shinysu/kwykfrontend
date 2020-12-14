@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Lucida Console";
+  src: url('https://allfont.net/allfont.css?fonts=lucida-console');
+}
+
 .stats-area{
   background-color: #E3F0D9;
   height: 85vh;

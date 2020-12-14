@@ -21,7 +21,7 @@
 
 .title {
   font-family: 'Montserrat Alternates';
-  font-size:30px;
+  font-size:1.3em;
   font-weight: bolder;
   color: #7bc143;
   text-align: center;
@@ -38,7 +38,7 @@
 }
 
 .signin{
-  font-size:24px;
+  font-size:1.2em;
   color: #ffffff;
   background-color: #7bc143;
   display: block;
@@ -52,7 +52,7 @@
 
 }
 .pwdbtn{
-  font-size:24px;
+  font-size:1.2em;
   color: #ffffff;
   background-color: #7bc143;
   display: block;
@@ -72,7 +72,7 @@
   border: 0px;
   border-radius: 5px;
   color: black;
-  font-size: 18px;
+  font-size: 1.1em;
 }
 
 .loginform{
@@ -84,7 +84,7 @@
   color: #7bc143;
   background-color: #ffffff;
   text-align:center;
-  font-size: 18px;
+  font-size: 1.1em;
   font-family: "Lucida Console", Monaco, monospace;
 }
 
@@ -97,11 +97,8 @@
 label{
   color: #7bc143;
   background-color: #ffffff;
-  font-size: 18px;
   font-family: "Lucida Console", Monaco, monospace;
-  padding: 1vh;
   margin-left: 20%;
-  height: 10%;
 }
 
 .pwdreset{
@@ -111,13 +108,13 @@ label{
 }
 .pwdtext{
   font-family: "Lucida Console", Monaco, monospace;
-  font-size: 20px;
+  font-size: 1.2em;
   padding-top: 2vh;
 }
 
 .pwdmessage{
   height: 15vh;
   font-family: "Lucida Console", Monaco, monospace;
-  font-size: 18px;
+  font-size: 1.1em;
   padding-top: 7vh;
 }

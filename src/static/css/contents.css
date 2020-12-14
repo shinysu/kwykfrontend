@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Lucida Console";
+  src: url('https://allfont.net/allfont.css?fonts=lucida-console');
+}
+
 .topic-btn{
   width: 30%;
   margin: 2% 1%;
@@ -6,14 +11,14 @@
   color: #7bc143;
   border: none;
   font-family: "Lucida Console", Monaco, monospace;
-  font-size: 100%;
+  font-size: 0.8em;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .topics-area{
   background-color: #ffffff;
-  height: 35vh;
+  height: 30vh;
   overflow-y: auto;
 }
 
@@ -31,4 +36,24 @@ button:focus{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     -webkit-border-radius: 10px;
     border-radius: 10px;
+}
+
+@media (min-width: 768px){
+  .topic-btn{
+    width: 30%;
+    margin: 2% 1%;
+    height: 7vh;
+    background-color: #edeff2;
+    color: #7bc143;
+    border: none;
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 1.1em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .topics-area{
+    background-color: #ffffff;
+    height: 35vh;
+    overflow-y: auto;
+  }
 }

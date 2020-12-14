@@ -9,11 +9,10 @@ export const loginTabColor = "#ffffff";
 export const adminTabColor = "#F6E262";
 
 ///URL changes
-export const kwykURL = "http://localhost:3001/";
-//export const kwykURL = "https://shiny.kwyk.in/";
+//export const kwykURL = "http://localhost:3001/";
+export const kwykURL = "https://shiny.kwyk.in/";
 //export const kwykURL = "http://ac7c1f0d2149.ngrok.io/"
 export const postURL= kwykURL + "input_custom";
-//export const postURL="https://shiny.kwyk.in/input_custom";
 export const loginURL = kwykURL + "login_custom";
 export const pwdResetURL = kwykURL + "pwd_reset";
 export const pwdResetSuccessMsg = 'Your password has been changed! SignIn to continue';

@@ -11,7 +11,6 @@ import '../static/css/admin.css';
 
 
 function Statistics(props){
-  console.log("Statistics");
   const [selectedValue, setSelectedValue] = useState("");
   function getSelectedValue(value){
     setSelectedValue(value);
@@ -30,7 +29,6 @@ export default Statistics;
 
 function DisplayStats(props) {
   let totalUsers = 0, totalWords = 0;
-  let uniqueResponse =[];
   let leastResponse =[];
   let mostSkips =[];
   let commonResponseCount =[];
@@ -198,10 +196,7 @@ function getStats(data, topic){
   console.log("GetMostSkips");
   let skipsCount = {};
   let answeredCount = {};
-  let totalSkips = 0;
   let wordResponses =[];
-  let uniqueWordsCount = {};
-  let commonResponseCount = {};
   let userAnswerCount = {};
   const topicData = data[topic];
   const words = topicData["topic_words"];

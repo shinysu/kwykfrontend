@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import * as constant from '../utils/Constants'
 import useFetch from "../hooks/useFetch";
 import '../static/css/contents.css';
+import DisplayAlert from '../utils/DisplayAlert'
 
 function DisplayTopic(props){
   let history = useHistory();
@@ -76,17 +77,9 @@ function DisplayStartButton(props){
   function handleClick(e){
       props.returnTopic(props.topic);
       props.returnSubtopic(props.subtopic);
-      sessionStorage.setItem('attempted', 0);
-      sessionStorage.setItem('skipped', 0);
-      sessionStorage.setItem('minutes', 0);
-      sessionStorage.setItem('seconds', 0);
-      sessionStorage.setItem('userResponses', JSON.stringify({}));
+      initializeSessionStorage(props.topic, props.subtopic)
       history.push({
         pathname:'/test/'+props.topic+'/'+props.subtopic,
-        state:{
-          topic: props.topic,
-          subtopic: props.subtopic
-        }
       });
       //history.push('/'+props.topic+'/'+props.subtopic);
   }
@@ -97,11 +90,23 @@ function DisplayStartButton(props){
     </div>
   );
 }
-
+function initializeSessionStorage(topic, subtopic) {
+  sessionStorage.setItem('topic', topic);
+  sessionStorage.setItem('subtopic', subtopic);
+  sessionStorage.setItem('attempted', 0);
+  sessionStorage.setItem('skipped', 0);
+  sessionStorage.setItem('minutes', 0);
+  sessionStorage.setItem('seconds', 0);
+  sessionStorage.setItem('userResponses', JSON.stringify({}));
+  sessionStorage.setItem('retry', false);
+}
 function DisplayTopics(props){
   const url = constant.kwykURL+"get/topics/custom";
-  const fetchResponse = useFetch(url, {isLoading: true, data: null});
-  if (!fetchResponse.data || fetchResponse.isLoading) {
+  const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
+  if (fetchResponse.error){
+    return <DisplayAlert message={fetchResponse.error} />
+  }
+  else if ( fetchResponse.isLoading) {
     return 'Loading...';
   }
   const topics = fetchResponse.data
@@ -133,8 +138,11 @@ function DisplaySubTopics(props){
 function GetSubTopics(props){
   const url = constant.kwykURL+"/get/"+props.topic+"/subtopics";
 
-  const fetchResponse = useFetch(url, {isLoading: true, data: null});
-  if (!fetchResponse.data || fetchResponse.isLoading) {
+  const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
+  if (fetchResponse.error){
+    return <DisplayAlert message={fetchResponse.error}/>
+  }
+  else if ( fetchResponse.isLoading) {
     return 'Loading...';
   }
   const subtopics = fetchResponse.data

@@ -37,7 +37,7 @@ function ShowTemplate() {
     sendFeedback(serviceID,templateId, {message: userInput, from_name:username, reply_to: constant.fbToEmail});
     setUserInput("");
     history.push({
-      pathname:`/`
+      pathname:`/topics`
     });
   }
   return(

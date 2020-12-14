@@ -3,14 +3,13 @@ import { Tabs, Tab, Content } from "../utils/Tab";
 import Header from "../headers/KwykHeader";
 import '../static/css/header.css';
 import '../static/css/stats.css';
-import { useHistory } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
-import * as constant from '../utils/Constants'
+import * as constant from '../utils/Constants';
+import DisplayAlert from '../utils/DisplayAlert';
 
 function Responses() {
-  let history = useHistory();
-  const topic = history.location.state.topic;
-  const subtopic = history.location.state.subtopic;
+  const topic = sessionStorage.getItem('topic');
+  const subtopic = sessionStorage.getItem('subtopic');
 
   return (
     <div className="container">
@@ -36,8 +35,11 @@ function ResponsesTab(props){
   };
   const useremail = sessionStorage.getItem('useremail');
   const url = constant.kwykURL+"user_stats_custom/"+useremail+"/"+props.topic+"/"+props.subtopic;
-  const fetchResponse = useFetch(url, {isLoading: true, data: null});
-  if (!fetchResponse.data || fetchResponse.isLoading) {
+  const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
+  if (fetchResponse.error){
+    return <DisplayAlert message={fetchResponse.error} />
+  }
+  else if ( fetchResponse.isLoading) {
     return 'Loading...';
   }
   const data = fetchResponse.data
@@ -72,7 +74,6 @@ function ShowResponses(props){
   }
   const data = props.data;
   const topicWordsResponses = data["topic_answers"];
-  const words = topicWordsResponses;
   const topicWords = topicWordsResponses["topic_words"];
   const topicTopWords = topicWordsResponses["top_words"];
   const topicUserWords = props.topicUserWords;
@@ -97,7 +98,6 @@ function ShowResponses(props){
 
 function TopicHeader(props){
   const [selectedValue, setSelectedValue] = useState(props.selectedValue);
-  const options = props.topics
   function handleChange(e){
     setSelectedValue(e.target.value);
     props.getSelectedValue(e.target.value);

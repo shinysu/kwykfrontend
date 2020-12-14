@@ -7,6 +7,7 @@ import useFetch from "../hooks/useFetch";
 import * as constant from '../utils/Constants'
 import TopicSelectHeader from "../headers/TopicSelectHeader";
 import Statistics from "./Statistics";
+import DisplayAlert from '../utils/DisplayAlert'
 
 function Insights() {
   return (
@@ -34,8 +35,11 @@ function StatisticsTab(props){
     }
   };
   const url = constant.kwykURL+"/admin/user_data_custom/";
-  const fetchResponse = useFetch(url, {isLoading: true, data: null});
-  if (!fetchResponse.data || fetchResponse.isLoading) {
+  const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
+  if (fetchResponse.error){
+    return <DisplayAlert message={fetchResponse.error} />
+  }
+  else if ( fetchResponse.isLoading) {
     return 'Loading...';
   }
   const data = fetchResponse.data;

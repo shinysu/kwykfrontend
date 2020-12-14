@@ -5,23 +5,9 @@ import { Tabs, Tab, Content } from "../utils/Tab";
 import * as constant from '../utils/Constants'
 import usePost from "../hooks/usePost";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import Alert from 'react-bootstrap/Alert'
 var session = ""
-function Login() {
-  let history = useHistory();
-  if(sessionStorage.getItem('useremail') != null){
-    history.push({
-      pathname:`/topics`
-    });
-    return null;
-  }
-  else{
-    return <DisplayLogin />
-  }
-}
-
-function DisplayLogin(){
-  //sessionStorage.clear()
+function Login(){
+  sessionStorage.clear()
   const location = useLocation();
   session = location.search.split('=')[1]
   return(
@@ -29,7 +15,6 @@ function DisplayLogin(){
       <DisplayIcon />
       <DisplayTitle />
       <LoginTab />
-      <DisplayAlert />
     </div>
   );
 }
@@ -120,11 +105,12 @@ function SignInForm() {
       value={email} onChange={handleEmail} required/><br/>
       <input type="password" name="password" className="text" placeholder="password"
         value={password} onChange={handlePassword} required/><br/>
+        <Link to='/reset'>
+        <div className='link reset'>Forgot password?</div>
+        </Link>
+      <div style={{backgroundColor:"#ffffff"}} className="text" visible="false"></div>
       <label >{loginMessage}</label>
       <input type="submit" value="Sign In" className="signin"/>
-      <Link to='/reset'>
-      <div className='link reset'>Forgot password?</div>
-      </Link>
     </form>
   );
 }
@@ -171,23 +157,16 @@ function ValidateUser(props) {
   let sessionName = '';
   let history = useHistory();
   const dataText = { "email": props.email, "password": props.password, "session": session, "action": "signin"}
-  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null, error: null});
-  if (fetchResponse.error){
-    return <DisplayAlert message={fetchResponse.error} />
-  }
-  else if ( fetchResponse.isLoading) {
+  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
+  if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
   }
   const response = fetchResponse.data;
   if(response['status'] === "password mismatch"){
     loginMessage = "Incorrect Password";
-    sessionStorage.setItem('loginmessage', loginMessage);
-    window.location.reload();
   }
   else if(response['status'] === "user not found"){
     loginMessage = "Email id is not registered!";
-    sessionStorage.setItem('loginmessage', loginMessage);
-    window.location.reload();
   }
   else{
     loginMessage = "Signed in Successfully!";
@@ -198,7 +177,7 @@ function ValidateUser(props) {
       pathname:`/topics`
     });
   }
-  return(``);
+  return(`${loginMessage}`)
 }
 
 function CreateNewUser(props) {
@@ -207,12 +186,9 @@ function CreateNewUser(props) {
   let sessionName = '';
   const dataText = { "username":props.username, "email": props.email, "password": props.password,
     "session": session, "action": "signup"}
-  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null, error: null});
+  const fetchResponse = usePost(url, dataText, {isLoading: true, data: null});
   let history = useHistory();
-  if (fetchResponse.error){
-    return <DisplayAlert message={fetchResponse.error} />
-  }
-  else if ( fetchResponse.isLoading) {
+  if (!fetchResponse.data || fetchResponse.isLoading) {
     return 'Loading...';
   }
   const response = fetchResponse.data;
@@ -226,10 +202,8 @@ function CreateNewUser(props) {
   }
   else if(response['status'] === 'duplicate'){
     loginMessage = "Email id is already registered"
-    sessionStorage.setItem('loginmessage', loginMessage);
-    window.location.reload();
   }
-  return(``)
+  return(`${loginMessage}`)
 }
 
 function setSessionStorage(username, useremail, session, session_name) {
@@ -238,28 +212,5 @@ function setSessionStorage(username, useremail, session, session_name) {
   if(typeof(session) !== 'undefined'){
     sessionStorage.setItem('session', session);
     sessionStorage.setItem('session_name', session_name);
-  }
-  sessionStorage.removeItem('loginmessage');
-}
-
-function DisplayAlert() {
-  if(sessionStorage.getItem('loginmessage') != null){
-    let message = sessionStorage.getItem('loginmessage')
-    return(
-      <div className="row ">
-        <div className="col-sm-2 "></div>
-        <div className="col-sm-8 window-color">
-        <Alert variant='danger' className='alert'>
-          {message}
-          </Alert>
-        </div>
-        <div className="col-sm-2 "></div>
-      </div>
-    );
-  }
-  else {
-    return(
-      <div></div>
-    );
   }
 }
