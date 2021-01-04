@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/kwykfrontend/static/css/main.49823800.chunk.css",
+    "main.css": "/kwykfrontend/static/css/main.9f701554.chunk.css",
     "main.js": "/kwykfrontend/static/js/main.b55b62cf.chunk.js",
     "main.js.map": "/kwykfrontend/static/js/main.b55b62cf.chunk.js.map",
     "runtime-main.js": "/kwykfrontend/static/js/runtime-main.c8876517.js",
@@ -8,9 +8,9 @@
     "static/js/2.d7ae7bdf.chunk.js": "/kwykfrontend/static/js/2.d7ae7bdf.chunk.js",
     "static/js/2.d7ae7bdf.chunk.js.map": "/kwykfrontend/static/js/2.d7ae7bdf.chunk.js.map",
     "index.html": "/kwykfrontend/index.html",
-    "precache-manifest.f9382334187441e45cdf9defa5ced79e.js": "/kwykfrontend/precache-manifest.f9382334187441e45cdf9defa5ced79e.js",
+    "precache-manifest.f935a7c1a2f42fc57a69bbc0298531c1.js": "/kwykfrontend/precache-manifest.f935a7c1a2f42fc57a69bbc0298531c1.js",
     "service-worker.js": "/kwykfrontend/service-worker.js",
-    "static/css/main.49823800.chunk.css.map": "/kwykfrontend/static/css/main.49823800.chunk.css.map",
+    "static/css/main.9f701554.chunk.css.map": "/kwykfrontend/static/css/main.9f701554.chunk.css.map",
     "static/js/2.d7ae7bdf.chunk.js.LICENSE.txt": "/kwykfrontend/static/js/2.d7ae7bdf.chunk.js.LICENSE.txt",
     "static/media/feedback.css": "/kwykfrontend/static/media/Helvetica.1b580d98.ttf",
     "static/media/avatar.png": "/kwykfrontend/static/media/avatar.2dea87fd.png",
@@ -21,7 +21,7 @@
   "entrypoints": [
     "static/js/runtime-main.c8876517.js",
     "static/js/2.d7ae7bdf.chunk.js",
-    "static/css/main.49823800.chunk.css",
+    "static/css/main.9f701554.chunk.css",
     "static/js/main.b55b62cf.chunk.js"
   ]
 }
