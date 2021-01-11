@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f4ec0d469dea0bce9edf23d1f7114d05",
+    "revision": "e6a62b09cc5f7e1ddf81ff293a10891d",
     "url": "/kwykfrontend/index.html"
   },
   {
-    "revision": "96cfc1a6e341bec6f7f8",
-    "url": "/kwykfrontend/static/css/main.d3ab02db.chunk.css"
+    "revision": "62904ffeb9b47a4e9aa2",
+    "url": "/kwykfrontend/static/css/main.5cf9cb21.chunk.css"
   },
   {
     "revision": "42f54146bf387dfb97ea",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/kwykfrontend/static/js/2.d7ae7bdf.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "96cfc1a6e341bec6f7f8",
-    "url": "/kwykfrontend/static/js/main.b55b62cf.chunk.js"
+    "revision": "62904ffeb9b47a4e9aa2",
+    "url": "/kwykfrontend/static/js/main.8c167143.chunk.js"
   },
   {
     "revision": "d9c4785ea1e9ed29cd20",
@@ -36,11 +36,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/kwykfrontend/static/media/clock.195b3e8e.png"
   },
   {
+    "revision": "8c35f5e800488e2b967453e84353e357",
+    "url": "/kwykfrontend/static/media/idea.8c35f5e8.png"
+  },
+  {
     "revision": "ae02fd801b69396a2e368d2d635f4c78",
     "url": "/kwykfrontend/static/media/knowbotSVG.ae02fd80.svg"
   },
   {
-    "revision": "522d945ad54478ac016d6d63bae479fb",
-    "url": "/kwykfrontend/static/media/send.522d945a.png"
+    "revision": "caef97a4b4ff711e8c7f889ab8356d19",
+    "url": "/kwykfrontend/static/media/send.caef97a4.png"
   }
 ]);
