@@ -6,11 +6,25 @@
   color: red
 }
 
+.adminerror{
+  width: 100%;
+  height: 80vh;
+  background-color: #e4dcd4;
+}
+
+.adminmessage{
+  background-color: #e4dcd4;
+  font-family: "Helvetica";
+  font-style: bold;
+  margin-top: 10vh;
+  padding-left: 5vh;
+}
+
 .message{
   background-color: #ffffff;
   padding-bottom: 5vh;
   color: 'red';
-  font-family: "Lucida Console", Monaco, monospace;
+  font-family: "Helvetica";
   font-style: bold;
 }
 

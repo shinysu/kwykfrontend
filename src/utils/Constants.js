@@ -6,7 +6,9 @@ export const whiteColor = "#ffffff";
 export const welcomeMessage="You will be given a term (a word or a phrase). Please enter as many terms as possible that come to you mind. Separate multiple terms with commas."
 export const tableColors = ['#740000', '#c55b11','#f8aa73', '#b2de83', '#7bc143', '#02b150' ]
 export const loginTabColor = "#ffffff";
-export const adminTabColor = "#F6E262";
+export const adminTabColor = "#ffffff";
+export const blackColor = "#000000";
+export const darkGrey = "#959595";
 
 ///URL changes
 //export const kwykURL = "http://localhost:3001/";

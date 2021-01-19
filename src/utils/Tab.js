@@ -2,7 +2,7 @@ import styled from "styled-components";
 export const Tabs = styled.div`
   overflow: hidden;
   background: ${props => props.tabcolor};
-  font-family: "Lucida Console", Monaco, monospace;
+  font-family: "Helvetica";
   height: 3em;
   width:100%;
 `;
@@ -18,12 +18,12 @@ export const Tab = styled.button`
   font-size: 1em;
   border: ${props => (props.active ? "1px solid #ccc" : "")};
   border-bottom: ${props => (props.active ? "none" : "")};
-  color: ${props => (props.active ? "#7bc143" : "black")};
+  color: ${props => (props.active ? "#000000" : "#959595")};
   height: ${props => (props.active ? "2.6em" : "2.6em; top:.4em")};
   transition: background-color 0.5s ease-in-out;
 
   :hover {
-    color: #7bc143;
+    color: #000000;
   }
 `;
 export const Content = styled.div`

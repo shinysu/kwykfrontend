@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Tabs, Tab, Content } from "../utils/Tab";
 import Header from "../headers/KwykHeader";
 import '../static/css/header.css';
@@ -8,18 +9,31 @@ import * as constant from '../utils/Constants';
 import DisplayAlert from '../utils/DisplayAlert';
 
 function Responses() {
+  let history = useHistory();
+  if(sessionStorage.getItem('topic') == null){
+    history.push({
+      pathname:`/404`
+    });
+    return null;
+  }
+  else {
+    return <ShowResponsePage />
+  }
+}
+
+function ShowResponsePage() {
   const topic = sessionStorage.getItem('topic');
   const subtopic = sessionStorage.getItem('subtopic');
 
   return (
     <div className="container">
       <div className="row">
-        <div className="col-sm-2"></div>
-        <div className="col-sm-8 lightgreen">
+        <div className="col-md-2"></div>
+        <div className="col-md-8">
             <Header />
             <ResponsesTab topic={topic} subtopic={subtopic} />
         </div>
-        <div className="col-sm-2"></div>
+        <div className="col-md-2"></div>
       </div>
     </div>
   );
@@ -68,7 +82,7 @@ function ResponsesTab(props){
 export default Responses;
 
 function ShowResponses(props){
-  const [selectedValue, setSelectedValue] = useState(props.subtopic);
+  const [selectedValue, setSelectedValue] = useState(convertToCamelCase(props.subtopic));
   function getSelectedValue(value){
     setSelectedValue(value);
   }
@@ -86,7 +100,7 @@ function ShowResponses(props){
   return(
     <div >
       <TopicHeader topics={props.subtopic} getSelectedValue={getSelectedValue} selectedValue={selectedValue}/>
-      <div className="responses-area">
+      <div className= "responses-area">
       <ul>
         {wordResponses}
       </ul>
@@ -97,22 +111,15 @@ function ShowResponses(props){
 }
 
 function TopicHeader(props){
-  const [selectedValue, setSelectedValue] = useState(props.selectedValue);
-  function handleChange(e){
-    setSelectedValue(e.target.value);
-    props.getSelectedValue(e.target.value);
-  }
   const username = sessionStorage.getItem('username');
   return(
-    <div className="row green">
-    <div className="col-sm-5 user green">
+    <div className="row headercontainer grey">
+    <div className="col-5 user grey">
     {username}
     </div>
-    <div className="col-sm-7 green">
-    <label className="green topic-label"> TOPIC: </label>
-    <select className="topic-select" onChange={handleChange} value={selectedValue}>
-    <option > {props.selectedValue} </option>)}
-    </select>
+    <div className="col-7 grey">
+    <span className="grey topic-label"> Topic:</span>
+    <span className="grey topic-label"> {props.selectedValue} </span>
     </div>
     </div>
   );
@@ -124,7 +131,7 @@ function DisplayWordResponses(props){
   return(
     <div className="word-response">
     <label className="topicname">{props.word}</label>
-    <div className="row padding-right lightgreen">
+    <div className="row padding-right white">
       <div className="col-sm-6 white">
         <label className="titlelabel">Your Responses </label><br />
         <DisplayWord words={userWords} />
@@ -155,7 +162,7 @@ function DisplayWord(props){
 }
 
 function ShowExplanation(props) {
-  const [selectedValue, setSelectedValue] = useState(props.subtopic);
+  const [selectedValue, setSelectedValue] = useState(convertToCamelCase(props.subtopic));
   function getSelectedValue(value){
     setSelectedValue(value);
   }
@@ -196,4 +203,14 @@ function DisplayExplanation(props) {
     </div>
 
   );
+}
+
+function convertToCamelCase(name) {
+  const words = name.split(" ");
+  let convertedName = "";
+  for (let i = 0; i < words.length; i++) {
+    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+    convertedName = convertedName + " " +words[i]
+  }
+  return convertedName;
 }

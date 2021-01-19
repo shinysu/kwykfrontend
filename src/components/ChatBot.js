@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Header from "../headers/KwykHeader";
 import TimerHeader from "../headers/TimerHeader";
 import useTimer from "../hooks/useTimer";
@@ -17,10 +17,15 @@ var time;
 var currentWord = '';
 var is_retry;
 function ChatBot(props){
+  console.log("ChatBot");
   let history = useHistory();
+  const location = useLocation();
   if(sessionStorage.getItem('useremail') == null){
+    const destinationPath = location.pathname
+    console.log("destinationPath=",destinationPath);
     history.push({
-      pathname:`/`
+      pathname:`/`,
+      query: {destinationPath}
     });
     return null;
   }
@@ -32,11 +37,13 @@ function ChatBot(props){
 export default ChatBot;
 
 function DisplayTest() {
+  console.log("DisplayTest");
   let chatMessages = '';
   let history = useHistory();
-  const topic = sessionStorage.getItem('useremail');
-  const subtopic = sessionStorage.getItem('useremail');
-  const prevWords = JSON.parse(sessionStorage.getItem('userResponses'));
+  let prevWords = {};
+  if(sessionStorage.getItem('userResponses')){
+    prevWords = JSON.parse(sessionStorage.getItem('userResponses'));
+  }
   is_retry = false;
   if(sessionStorage.getItem('retry') === 'true'){
     is_retry = true;
@@ -49,16 +56,19 @@ function DisplayTest() {
   const [seconds, setSeconds] = useState(0);
   return(
     <div className="container">
-      <div className="row">
-        <div className="col-sm-2"></div>
-        <div className="col-sm-8 chatcolor">
-            <Header />
-            <ShowTimeHeader/>
-            <DisplayChat topic={topic} subtopic={subtopic} minutes={minutes} seconds={seconds}
-            chatMessages={chatMessages} prevWords={prevWords}/>
-        </div>
-        <div className="col-sm-2"></div>
+    <div className="row">
+      <div className="col-lg-2"></div>
+      <div className="col-lg-8 non-header">
+        <Header />
+        <ShowTimeHeader/>
+        <DisplayChat minutes={minutes}
+                     seconds={seconds}
+                     chatMessages={chatMessages}
+                     prevWords={prevWords}
+                     />
       </div>
+      <div className="col-lg-2"></div>
+    </div>
     </div>
   );
 }
@@ -88,8 +98,8 @@ function DisplayChat(props){
     }
   }
   const chatList = chatMessages.map((message,index) => {
-    return <GetChatMessages message={message} key={index} topic={props.topic}
-    subtopic={props.subtopic} prevWords={props.prevWords} userInput={userInput} addChat={addChat}/>
+    return <GetChatMessages message={message} key={index}
+         prevWords={props.prevWords} userInput={userInput} addChat={addChat}/>
   }
  );
  const messagesEndRef = useRef(null);
@@ -114,15 +124,13 @@ function GetChatMessages(props) {
   if(message ==="welcome"){
     return <ShowWelcomeChat />;
   }else if(message ==="first" || message ==="next" || message ==="skip" ||message ==="retry"){
-    return <GetWord addChat={props.addChat} message={message} prevWords={props.prevWords}
-    topic={props.topic} subtopic={props.subtopic} />
+    return <GetWord addChat={props.addChat} message={message} prevWords={props.prevWords}/>
   }
   else if(message ==="hint"){
     return <ShowHint addChat={props.addChat} />
   }
   else if(message ==="afterinput"){
-    return <GetWord addChat={props.addChat} message={props.userInput} prevWords={props.prevWords}
-    topic={props.topic} subtopic={props.subtopic} />
+    return <GetWord addChat={props.addChat} message={props.userInput} prevWords={props.prevWords}/>
   }
   else{
     return <DisplayUserInput input={message}/>
@@ -137,7 +145,6 @@ function ShowWelcomeChat(props){
   return(
     <li>
     <div className="row bot">
-        <img src={knowbotSVG} className="knowbot" alt="logo" />
         <TextareaAutosize className="botmessage" rows={rows} value={constant.welcomeMessage} rowsMin={3} disabled/>
   </div>
   </li>
@@ -151,6 +158,8 @@ function GetWord(props){
   let session='';
   let text = getCommand(props.message);
   const useremail = sessionStorage.getItem('useremail');
+  const topic = sessionStorage.getItem('topic');
+  const subtopic = sessionStorage.getItem('subtopic');
   session = sessionStorage.getItem('session');
 
   const dataText = { "text": text, "username": useremail, "session":session, "referrer":window.location.href};
@@ -166,7 +175,12 @@ function GetWord(props){
     sessionStorage.setItem('minutes', time[0]);
     sessionStorage.setItem('seconds', time[1]);
     history.push({
-      pathname:`/user_stats/${props.topic}/${props.subtopic}`
+      pathname:`/user_stats/${topic}/${subtopic}`
+    });
+  }
+  if (word === 'wrong_command'){
+    history.push({
+      pathname:`/error`
     });
   }
   currentWord = word;
@@ -176,8 +190,7 @@ function GetWord(props){
   else{
   const messageNoun = props.message==='first' ? 'first' : 'next';
   const messageText = "Your " + messageNoun + " word is '"+word + "'";
-  return (<BotReply message={messageText} dsableSkipButton={false} addChat={props.addChat}
-    skipButtonText="Skip" />);
+  return (<BotReply message={messageText}  addChat={props.addChat} />);
 }
 }
 
@@ -205,12 +218,12 @@ function ShowHint(props){
   }
   const hint = fetchResponse.data.text;
 
-  return( <BotReply message={hint} addChat={props.addChat} dsableSkipButton={true}
-    skipButtonText="" />);
+  return( <BotReply message={hint} addChat={props.addChat} />);
 }
 
 function DisplayForm(props){
   const [userInput, setUserInput] = useState("");
+  const buttonText = "Skip"
   function handleClick(){
     if(userInput.length > 0){
       let userResponses = JSON.parse(sessionStorage.getItem('userResponses'));
@@ -237,14 +250,24 @@ function DisplayForm(props){
         handleClick();
     }
   }
+    function handleSkip(e){
+      //e.target.setAttribute("disabled", "disabled");
+      props.addChat("skip")
+      if(!is_retry){
+        updateSkippedCount('add');
+      }
+    }
+
   return(
     <div className="row input-area chatcolor">
-    <button className="ideabutton fixed-bottom" value="start" onClick={handleHint}>
+      <button className="ideabutton" value="start" onClick={handleHint}>
         <img src={ideapng} className="idealogo" alt="logo" />
       </button>
-      <textarea className="input-text" value={userInput} onChange={handleChange}
-        onKeyPress={handleKeyPress} required></textarea>
-      <button className="ideabutton fixed-bottom" value="start" onClick={handleClick}>
+      <button className="skipbutton"
+        onClick={handleSkip}>{buttonText}</button>
+      <TextareaAutosize className="input-text" value={userInput} onChange={handleChange}
+        onKeyPress={handleKeyPress} required/>
+      <button className="sendbutton" value="start" onClick={handleClick}>
         <img src={sendlogo} className="idealogo" alt="logo" />
       </button>
     </div>
@@ -258,25 +281,17 @@ function DisplayUserInput(props){
 }
 
 function BotReply(props){
-  const [buttonText, setButtonText] = useState(props.skipButtonText);
-
-  function handleClick(e){
-    e.target.setAttribute("disabled", "disabled");
-    setButtonText("");
-    props.addChat("skip")
-    if(!is_retry){
-      updateSkippedCount('add');
-    }
-  }
+  const textArea = document.querySelector('textarea');
+  const textRowCount = textArea ? textArea.value.split("\n").length : 0;
+  const rows = textRowCount + 3;
   return(
     <li>
     <div className="row bot">
-        <img src={knowbotSVG} className="knowbot" alt="logo" />
-        <TextareaAutosize className="botmessage" value={props.message} id="bottext" disabled />
-        <button className="skipbutton fixed-bottom" value="start" disabled={props.dsableSkipButton}
-          onClick={handleClick}>{buttonText}</button>
-    </div></li>
-  );
+        <TextareaAutosize className="botmessage" rows={rows} value={props.message}
+        rowsMin={3} id="bottext" disabled/>
+  </div>
+  </li>
+ );
 }
 
 function  UserReply(props){
@@ -284,7 +299,6 @@ function  UserReply(props){
   <li>
     <div className="row bot">
       <TextareaAutosize className="usermessage" value={props.message} rowsMin={3} disabled />
-      <img src={avatar} className="avatar" alt="logo" />
     </div>
   </li>);
 }

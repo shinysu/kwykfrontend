@@ -1,15 +1,20 @@
+@font-face {
+  font-family: "Helvetica";
+  src: url('../fonts/Helvetica.ttf');
+}
+
 .fblabel{
   font-size: 1.1em;
-  font-family: "Lucida Console", Monaco, monospace;
-  color: #7bc143;
+  font-family: "Helvetica";
+  color: #000000;
   padding: 2vh;
   margin-left: 3vh;
   margin-right: 3vh;
-  background-color: #ffffff;
+  background-color: #e4dcd4;
 }
 
 .fbarea{
-  background-color: #ffffff;
+  background-color: #e4dcd4;
   height: 75vh;
 }
 
@@ -26,18 +31,21 @@
   width: 80%;
   height: 30vh;
   background-color: #ffffff;
+  font-family: "Helvetica";
 }
 
 .fbsubmitbtn{
   font-size:24px;
   color: #ffffff;
-  background-color: #7bc143;
+  background-color: #959595;
   display: block;
   width: 100%;
   text-align: center;
-  margin-top: 20%;
+  display: block;
+  position: relative;
   height: auto;
-  bottom: 10%;
-  font-family: "Lucida Console", Monaco, monospace;
+  margin-top: 15%;
+  margin-bottom: 0;
+  font-family: "Helvetica";
 
 }

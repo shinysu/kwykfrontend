@@ -24,7 +24,6 @@ function PasswordReset() {
 export default PasswordReset;
 
 function ResetArea() {
-  console.log("ResetArea");
   const [email, setEmail] = useState("");
   const [btnValue, setBtnValue] = useState("Reset Password");
   const [newPassword, setNewPassword] = useState("");

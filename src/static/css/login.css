@@ -3,6 +3,11 @@
   background-color: #edeff2;
 }
 
+@font-face {
+  font-family: "Helvetica";
+  src: url('../fonts/Helvetica.ttf');
+}
+
 .login-logo{
   height: 150px;
   background-color: #ffffff;
@@ -20,10 +25,10 @@
 }
 
 .title {
-  font-family: 'Montserrat Alternates';
+  font-family: 'Helvetica';
   font-size:1.3em;
   font-weight: bolder;
-  color: #7bc143;
+  color: 0;
   text-align: center;
   background-color: #ffffff;
   padding-bottom: 3vh;
@@ -40,7 +45,7 @@
 .signin{
   font-size:1.2em;
   color: #ffffff;
-  background-color: #7bc143;
+  background-color: #959595;
   display: block;
   width: 70%;
   text-align: center;
@@ -48,13 +53,13 @@
   margin-top: 5%;
   height: auto;
   bottom: 10%;
-  font-family: "Lucida Console", Monaco, monospace;
+  font-family: "Helvetica";
 
 }
 .pwdbtn{
   font-size:1.2em;
   color: #ffffff;
-  background-color: #7bc143;
+  background-color: #959595;
   display: block;
   width: 60%;
   text-align: center;
@@ -62,7 +67,7 @@
   margin-top: 5%;
   height: auto;
   bottom: 10%;
-  font-family: "Lucida Console", Monaco, monospace;
+  font-family: "Helvetica";
 }
 .text{
   background-color: #edeff2;
@@ -71,8 +76,9 @@
   margin-left: 20%;
   border: 0px;
   border-radius: 5px;
-  color: black;
+  color: #000000;
   font-size: 1.1em;
+  font-family: "Helvetica";
 }
 
 .loginform{
@@ -81,11 +87,11 @@
 }
 
 .reset{
-  color: #7bc143;
+  color: #000000;
   background-color: #ffffff;
   text-align:center;
   font-size: 1.1em;
-  font-family: "Lucida Console", Monaco, monospace;
+  font-family: "Helvetica";
 }
 
 .link{
@@ -95,9 +101,9 @@
 }
 
 label{
-  color: #7bc143;
+  color: #959595;
   background-color: #ffffff;
-  font-family: "Lucida Console", Monaco, monospace;
+  font-family: "Helvetica";
   margin-left: 20%;
 }
 
@@ -107,14 +113,14 @@ label{
   margin: 4vh;
 }
 .pwdtext{
-  font-family: "Lucida Console", Monaco, monospace;
+  font-family: "Helvetica";
   font-size: 1.2em;
   padding-top: 2vh;
 }
 
 .pwdmessage{
   height: 15vh;
-  font-family: "Lucida Console", Monaco, monospace;
+  font-family: "Helvetica";
   font-size: 1.1em;
   padding-top: 7vh;
 }

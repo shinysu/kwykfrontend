@@ -8,13 +8,13 @@ function Feedback() {
   return(
     <div className="container">
       <div className="row">
-        <div className="col-sm-2"></div>
-        <div className="col-sm-8 lightgreen">
+        <div className="col-lg-2"></div>
+        <div className="col-lg-8">
           <Header />
           <UserHeader />
           <ShowTemplate />
         </div>
-      <div className="col-sm-2"></div>
+      <div className="col-lg-2"></div>
     </div>
   </div>
   );
@@ -41,12 +41,12 @@ function ShowTemplate() {
     });
   }
   return(
-    <div className = "fbarea">
-    <form className="white" onSubmit={handleSubmit}>
+    <div >
+    <form className = "fbarea" onSubmit={handleSubmit}>
     <div className="fblabel">{constant.feedbackMessage}</div>
     <div className="fblabel blank"> Feedback / Issue / Query</div>
     <textarea className="fbtext" value={userInput} placeholder="Type your response here..." onChange={handleChange}></textarea>
-    <input type="submit" value="Submit" className="fbsubmitbtn"/>
+    <input type="submit" value="Submit" className="fbsubmitbtn "/>
     </form>
     </div>
   );

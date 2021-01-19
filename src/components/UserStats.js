@@ -25,14 +25,14 @@ function StatsPage(props){
   return(
     <div className="container">
       <div className="row">
-        <div className="col-sm-2"></div>
-        <div className="col-sm-8 chatcolor">
+        <div className="col-lg-2"></div>
+        <div className="col-lg-8 chatcolor">
             <Header />
             <ShowTimeHeader minutes={minutes} seconds={seconds}/>
             <DisplayStats minutes={minutes} seconds={seconds} topic={topic}
             subtopic={subtopic} />
         </div>
-        <div className="col-sm-2"></div>
+        <div className="col-lg-2"></div>
       </div>
     </div>
   );
@@ -56,7 +56,6 @@ function DisplayStats(props){
       skippedCount={skippedCount} attemptedCount={attemptedCount}/>
       <RetrySkips topic={props.topic} subtopic={props.subtopic} skippedCount={skippedCount}/>
       <ViewResponses topic={props.topic} subtopic={props.subtopic}/>
-      <SwitchTopic />
       <FeedBack />
     </div>
   );
@@ -68,7 +67,7 @@ function RetrySkips(props){
     function handleClick(){
       sessionStorage.setItem('retry', true);
       history.push({
-        pathname:'/test/'+props.topic+'/'+props.subtopic
+        pathname:'/chat/'+props.topic+'/'+props.subtopic
       });
     }
     return(
@@ -82,7 +81,6 @@ function RetrySkips(props){
       <div></div>
     );
   }
-
 }
 
 function ViewResponses(props){
@@ -120,7 +118,7 @@ function FeedBack(){
   }
   return(
     <div className= "button-area">
-    <button className="retry-button" value="retry" onClick={handleClick}>Get Feedback</button>
+    <button className="retry-button" value="retry" onClick={handleClick}>Feedback</button>
     </div>
   );
 }
@@ -135,27 +133,30 @@ function DisplayScore(props){
       </div>
       </div>
       <div className = "row">
-        <div className="col-6 topic-text right">
-        #Attempted:
+        <div className="col-2 darkgrey"></div>
+        <div className="col-4 stat-text left">
+        #Attempted
         </div>
         <div className="col-6 topic-text left">
-        {props.attemptedCount}
+        : {props.attemptedCount}
         </div>
       </div>
       <div className = "row ">
-        <div className="col-6 topic-text right">
-        #Skipped:
+        <div className="col-2 darkgrey"></div>
+        <div className="col-4 stat-text left">
+        #Skipped
         </div>
         <div className="col-6 topic-text left">
-        {props.skippedCount}
+        : {props.skippedCount}
         </div>
       </div>
       <div className = "row ">
-        <div className="col topic-text right">
-        #Time Taken:
+        <div className="col-2 darkgrey"></div>
+        <div className="col-4 stat-text left">
+        #Time Taken
         </div>
-        <div className="col topic-text left">
-          {props.minutes} mins : {props.seconds} secs
+        <div className="col-6 topic-text left">
+          : {props.minutes} mins : {props.seconds} secs
         </div>
       </div>
     </div>

@@ -1,47 +1,76 @@
 * {
   box-sizing: border-box;
-  background-color: #edeff2;
+  background-color: #e4dcd4;
 }
 @font-face {
-  font-family: "Lucida Console";
-  src: url('../fonts/LucidaConsoleRegular.ttf');
+  font-family: "Helvetica";
+  src: url('../fonts/Helvetica.ttf');
 }
 
 .knowbotlogo{
-  height: 8vh;
-  width: 8vh;
-  padding: 1vh;
-  margin-left: 2vw;
-  margin-top: 2vh;
-  background-color: #ffffff;
+  height: 5vh;
+  width: 5vh;
+  margin-right: 2vw;
+  background-color: #ededed;
+
+}
+
+.headercontainer  {
+  border: thin solid #d5d1ca;
+  border-bottom: 0;
+  border-radius: 1px;
+  background-color: #ededed;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+.headercolor{
+  background-color: #ededed !important;
 }
 
 .headerfont {
-  font-family: 'Montserrat Alternates';
-  font-size:1.8em;
-  font-weight: bold;
-  color: #7bc143;
-  text-align: center;
+  font-family: "Helvetica";
+  font-size:1.4em;
+  color: #070707;
   padding-top: 1vh;
   padding-bottom: 1vh;
-  width:80%;
+  width:100%;
+  display: block;
+  text-align: center;
 }
 
 .white{
-  background-color: #ffffff;
+  background-color: #ededed !important;
 }
 
-.green{
-  background-color: #7bc143;
+.non-header{
+  background-color: #e4dcd4 !important;
+  width: 100%;
 }
 
+.darktheme{
+  background-color: #959595;
+}
+.black{
+  background-color: #000000;
+}
+.header{
+  background-color: #ededed !important;
+  display: block;
+  text-align: center;
+}
 .ellipsislogo{
   padding-top: 1vh;
   width: 1.8vh;
   height: auto;
-  background-color: #ffffff;
+  background-color: #ededed;
 }
 
+.btndropdown{
+  background-color: #ededed;
+  color: #000000;
+  width:100%
+}
 .header-row{
   height: 10%;
   background-color: #ffffff;
@@ -50,24 +79,24 @@
 }
 
 .clock-img{
-  background-color: #7bc143;
+  background-color: #ededed;
   height: 1.5em;
-  display: block;
-  padding-left: 30vw;
-  padding-right: 2vw;
-  text-align: right;
+  padding-left: 5vw;
+  padding-right: 1vw;
+  text-align: left;
+  padding-bottom: 0.5vh;
 }
 .timer{
-  background-color: #7bc143;
+  background-color: #ededed;
   text-align: left;
   font-size:1.2em;
-  color: #ffffff;
+  color: 0;
 }
 
 .info-text{
-  font-family: "Lucida Console", Monaco, monospace;
-  background-color: #ffffff;
-  color: #7bc143;
+  font-family: "Helvetica";
+  background-color: #e4dcd4;
+  color: #000000;
   font-size:1.3em;
   display: block;
   text-align: center;
@@ -83,14 +112,14 @@ ul, li{
 .start-button{
   font-size:1.5em;
   color: #ffffff;
-  background-color: #7bc143;
+  background-color: #959595;
   display: block;
   width: 100%;
-  height: auto;
-  bottom: 5%;
+  height: 6vh;
   position: relative;
-  font-family: "Lucida Console", Monaco, monospace;
+  font-family: "Helvetica";
   font-weight: bold;
+  margin-bottom: 0;
 }
 
 .display-row{
@@ -102,36 +131,34 @@ ul, li{
   padding-top: 0.5vh;
   padding-left: 1vh;
   height: auto;
-  background-color:#ffffff;
+  background-color:#ededed;
   border: 0;
+  position: relative;
   boxShadow: 'none'
 }
 .ellipsisbutton:hover{
-  background-color:#ffffff;
+  background-color:#ededed;
 }
 
 .timer-row{
-  background-color: #7bc143;
-  color: #ffffff;
-  font-family: "Lucida Console", Monaco, monospace;
+  background-color: #ededed;
+  color: #868686 !important;
+  font-family: "Helvetica";
   font-size: 1.1em;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
-  padding-left: 3vh;
-
+  border: thin solid #d5d1ca;
+  border-top: 0;
 }
 
 .user{
   color: #ffffff;
-  font-family: "Lucida Console", Monaco, monospace;
+  font-family: "Helvetica";
   font-size: 1.1em;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
   padding-left: 3vh;
 }
 .userheader{
-  color: #ffffff;
-  font-family: "Lucida Console", Monaco, monospace;
+  background-color: #ededed;
+  color: #868686 !important;
+  font-family: "Helvetica";
   font-size: 1.1em;
   padding-left: 3vh;
 }
@@ -146,45 +173,76 @@ ul, li{
   text-align: left;
 }
 .kwykheader{
-  display: block;
-  text-align: center;
-  background-color: #ffffff;
-
+  background-color: #ededed;
+  position: relative;
+  display: inline-block;
+  padding-left: 1vw;
 }
 
 .sessionname{
   display: block;
   text-align: center;
-  font-family: "Lucida Console", Monaco, monospace;
-  font-size: 1.1em;
-  background-color: #ffffff;
+  font-family: "Helvetica";
+  font-size: 0.8em;
+  background-color: #ededed;
+  color: #868686;
 }
 .ellipsismenu{
-  font-family: "Lucida Console", Monaco, monospace;
-  color: #7bc143;
-  font-size: 1.2em;
+  font-family: "Helvetica";
+  color: 0;
+  font-size: 1em;
 }
 @media (max-width: 500px){
   .headerfont {
-    font-family: 'Montserrat Alternates';
-    font-size:1.2em;
+    font-family: "Helvetica";
+    font-size:1.1em;
     font-weight: bold;
-    color: #7bc143;
-    text-align: center;
+    color: 0;
     padding-top: 1vh;
-    width:70%;
+    width:100%;
+    display: block;
+    text-align: center;
+  }
+  .header{
+    background-color: #ededed !important;
+    display: block;
+    text-align: left;
   }
   .sessionname{
     display: block;
     text-align: center;
-    font-family: "Lucida Console", Monaco, monospace;
+    font-family: "Helvetica";
     font-size: 1em;
     background-color: #ffffff;
   }
   .knowbotlogo{
-    height: 7vh;
-    width: 7vh;
-    padding: 1vh;
-    background-color: #ffffff;
+    background-color: #ededed;
+    width: 10%;
+    height: auto;
+    margin-right: 5vw;
   }
+  .clock-img{
+    background-color: #ededed;
+    height: 1.5em;
+    text-align: left;
+    padding-bottom: 0.5vh;
+  }
+
+  .ellipsisbutton{
+    padding-top: 0.5vh;
+    height: auto;
+    background-color:#ededed;
+    border: 0;
+    position: relative;
+    padding-right: 0.5vh;
+  }
+  .ellipsisbutton:hover{
+    background-color:#ededed;
+  }
+  .kwykheader{
+    background-color: #ededed;
+    position: relative;
+
+  }
+
 }

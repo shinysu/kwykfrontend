@@ -7,13 +7,11 @@ import usePost from "../hooks/usePost";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert'
 var session = ""
+
 function Login() {
-  let history = useHistory();
+  const location = useLocation()
   if(sessionStorage.getItem('useremail') != null){
-    history.push({
-      pathname:`/topics`
-    });
-    return null;
+    return <Redirect />;
   }
   else{
     return <DisplayLogin />
@@ -23,7 +21,10 @@ function Login() {
 function DisplayLogin(){
   //sessionStorage.clear()
   const location = useLocation();
-  session = location.search.split('=')[1]
+  const sessionPath = window.location.href.split('?session=')[1]
+  if(typeof(sessionPath) !== 'undefined'){
+    session = sessionPath.split('/')[0]
+  }
   return(
     <div className="container">
       <DisplayIcon />
@@ -39,11 +40,11 @@ export default Login;
 function DisplayIcon() {
   return(
     <div className="row ">
-        <div className="col-sm-2 "></div>
-        <div className="col-sm-8 window-color">
+        <div className="col-md-2 "></div>
+        <div className="col-md-8 window-color">
           <img src={knowbotSVG} className="login-logo center" alt="logo" />
         </div>
-        <div className="col-sm-2 "></div>
+        <div className="col-md-2 "></div>
     </div>
   );
 }
@@ -51,11 +52,11 @@ function DisplayIcon() {
 function DisplayTitle() {
   return(
     <div className="row ">
-        <div className="col-sm-2 "></div>
-        <div className="col-sm-8 window-color title">
+        <div className="col-md-2 "></div>
+        <div className="col-md-8 window-color title">
             KWYK - Know what you know !
         </div>
-        <div className="col-sm-2 "></div>
+        <div className="col-md-2 "></div>
     </div>
   );
 }
@@ -71,8 +72,8 @@ function LoginTab(props){
 
   return(
     <div className="row ">
-      <div className="col-sm-2 "></div>
-        <div className="col-sm-8 window-color logintab">
+      <div className="col-md-2 "></div>
+        <div className="col-md-8 window-color logintab">
     <div className="tab-color">
       <Tabs tabcolor={constant.loginTabColor}>
         <Tab onClick={handleClick} active={active === 0} id={0} tabcolor={constant.loginTabColor}>
@@ -92,7 +93,7 @@ function LoginTab(props){
       </>
     </div>
     </div>
-    <div className="col-sm-2 "></div>
+    <div className="col-md-2 "></div>
 </div>
   );
 }
@@ -120,7 +121,7 @@ function SignInForm() {
       value={email} onChange={handleEmail} required/><br/>
       <input type="password" name="password" className="text" placeholder="password"
         value={password} onChange={handlePassword} required/><br/>
-      <label >{loginMessage}</label>
+      <label className="text">{loginMessage}</label>
       <input type="submit" value="Sign In" className="signin"/>
       <Link to='/reset'>
       <div className='link reset'>Forgot password?</div>
@@ -159,7 +160,7 @@ function SignUpForm() {
       value={email} onChange={handleEmail} required/><br/>
       <input type="password" name="password" className="text" placeholder="password"
       value={password} onChange={handlePassword} required/><br/>
-      <label >{loginMessage}</label>
+      <label className="text">{loginMessage}</label>
       <input type="submit" value="Sign Up" className="signin"/>
     </form>
   );
@@ -169,7 +170,6 @@ function ValidateUser(props) {
   const url = constant.loginURL;
   let loginMessage = '';
   let sessionName = '';
-  let history = useHistory();
   const dataText = { "email": props.email, "password": props.password, "session": session, "action": "signin"}
   const fetchResponse = usePost(url, dataText, {isLoading: true, data: null, error: null});
   if (fetchResponse.error){
@@ -179,6 +179,7 @@ function ValidateUser(props) {
     return 'Loading...';
   }
   const response = fetchResponse.data;
+
   if(response['status'] === "password mismatch"){
     loginMessage = "Incorrect Password";
     sessionStorage.setItem('loginmessage', loginMessage);
@@ -193,10 +194,9 @@ function ValidateUser(props) {
     loginMessage = "Signed in Successfully!";
     sessionName = response['session_name'];
     const userName = response['username'];
-    setSessionStorage(userName, props.email, session, sessionName);
-    history.push({
-      pathname:`/topics`
-    });
+    const is_admin = response['is_admin'];
+    setSessionStorage(userName, props.email, session, sessionName, is_admin);
+    return <Redirect />
   }
   return(``);
 }
@@ -208,7 +208,6 @@ function CreateNewUser(props) {
   const dataText = { "username":props.username, "email": props.email, "password": props.password,
     "session": session, "action": "signup"}
   const fetchResponse = usePost(url, dataText, {isLoading: true, data: null, error: null});
-  let history = useHistory();
   if (fetchResponse.error){
     return <DisplayAlert message={fetchResponse.error} />
   }
@@ -218,11 +217,10 @@ function CreateNewUser(props) {
   const response = fetchResponse.data;
   if (response['status'] === 'inserted'){
     sessionName = response['session_name'];
+    const is_admin = false;
     loginMessage = "Signed Up Successfully!";
-    setSessionStorage(props.username, props.email, session, sessionName);
-    history.push({
-      pathname:`/topics`
-    });
+    setSessionStorage(props.username, props.email, session, sessionName, is_admin);
+    return <Redirect />
   }
   else if(response['status'] === 'duplicate'){
     loginMessage = "Email id is already registered"
@@ -232,10 +230,11 @@ function CreateNewUser(props) {
   return(``)
 }
 
-function setSessionStorage(username, useremail, session, session_name) {
-  sessionStorage.setItem('username', username)
-  sessionStorage.setItem('useremail', useremail)
-  if(typeof(session) !== 'undefined'){
+function setSessionStorage(username, useremail, session, session_name, is_admin) {
+  sessionStorage.setItem('username', username);
+  sessionStorage.setItem('useremail', useremail);
+  sessionStorage.setItem('is_admin', is_admin);
+  if(session){
     sessionStorage.setItem('session', session);
     sessionStorage.setItem('session_name', session_name);
   }
@@ -247,13 +246,13 @@ function DisplayAlert() {
     let message = sessionStorage.getItem('loginmessage')
     return(
       <div className="row ">
-        <div className="col-sm-2 "></div>
-        <div className="col-sm-8 window-color">
+        <div className="col-md-2 "></div>
+        <div className="col-md-8 window-color">
         <Alert variant='danger' className='alert'>
           {message}
           </Alert>
         </div>
-        <div className="col-sm-2 "></div>
+        <div className="col-md-2 "></div>
       </div>
     );
   }
@@ -262,4 +261,59 @@ function DisplayAlert() {
       <div></div>
     );
   }
+}
+
+function initializeSessionStorage(topic, subtopic) {
+  sessionStorage.setItem('topic', topic);
+  sessionStorage.setItem('subtopic', subtopic);
+  sessionStorage.setItem('attempted', 0);
+  sessionStorage.setItem('skipped', 0);
+  sessionStorage.setItem('minutes', 0);
+  sessionStorage.setItem('seconds', 0);
+  sessionStorage.setItem('userResponses', JSON.stringify({}));
+  sessionStorage.setItem('retry', false);
+}
+
+function getTopicFromURL(destination) {
+  let topic, subtopic;
+  const urlSplit = destination.split('/');
+  if(urlSplit[urlSplit.length - 3] === 'chat'){
+    topic = urlSplit[urlSplit.length - 2]
+    subtopic = urlSplit[urlSplit.length - 1]
+  }
+  return {'topic':topic, 'subtopic': subtopic}
+}
+
+function getDestinationScreen(destination) {
+  const urlSplit = destination.split('/');
+  if(urlSplit[urlSplit.length - 1] === 'admin'){
+    return 'admin';
+  }
+  else if(urlSplit[urlSplit.length - 3] === 'chat') {
+    return 'chat';
+  }
+  return null;
+}
+
+function Redirect() {
+  let history = useHistory();
+  const location = useLocation()
+  let destination;
+  if(location.query){
+    destination = location.query.destinationPath;
+    const screenname = getDestinationScreen(destination);
+    if (screenname == 'chat'){
+      const topicDetail = getTopicFromURL(destination);
+      const topic = topicDetail['topic'];
+      const subtopic = topicDetail['subtopic'];
+      initializeSessionStorage(topic, subtopic);
+    }
+  }
+  else{
+    destination = `/topics`;
+  }
+  history.push({
+      pathname:destination
+  });
+  return null;
 }

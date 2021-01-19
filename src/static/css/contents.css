@@ -1,35 +1,43 @@
 @font-face {
-  font-family: "Lucida Console";
-  src: url('https://allfont.net/allfont.css?fonts=lucida-console');
+  font-family: "Helvetica";
+  src: url('../fonts/Helvetica.ttf');
 }
 
 .topic-btn{
-  width: 30%;
-  margin: 2% 1%;
-  height: 7vh;
+  margin: 2% 3%;
+  height: 5vh;
   background-color: #edeff2;
-  color: #7bc143;
+  color: #000000;
   border: none;
-  font-family: "Lucida Console", Monaco, monospace;
-  font-size: 0.8em;
+  font-family: "Helvetica";
+  font-size: 0.7em;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-left: 1vw;
+  padding-right: 1vw;
 }
 
 .topics-area{
-  background-color: #ffffff;
-  height: 30vh;
+  background-color: #e4dcd4;
   overflow-y: auto;
+  padding-left: 1vw;
 }
 
 .subtopics-area{
-  background-color: #ffffff;
-  height: 15vh;
-  overflow-x: auto;
+  background-color: #e4dcd4;
+  padding-left: 1vw;
+  overflow-y: auto;
+}
+
+.sessions-area{
+  background-color: #e4dcd4;
+  overflow-y: auto;
+  padding-left: 1vw;
+  height: 40vh !important;
 }
 
 button:focus{
-  outline-color: #7bc143;
+  outline-color: #959595;
 }
 
 ::-webkit-scrollbar-track {
@@ -37,23 +45,48 @@ button:focus{
     -webkit-border-radius: 10px;
     border-radius: 10px;
 }
+.topics-subtopics{
+  background-color: #e4dcd4;
+  width: 100%;
+}
+
+.sessions{
+  background-color: #e4dcd4 !important;
+  overflow-y: auto;
+  height: 85vh !important;
+}
+
+.topics-div{
+  background-color: #e4dcd4;
+  overflow-y: auto;
+}
+
+.subtopics-div{
+  background-color: #e4dcd4;
+  overflow-y: auto;
+}
+
+.subtopics{
+  width: 100%;
+  overflow-y: auto;
+}
 
 @media (min-width: 768px){
   .topic-btn{
-    width: 30%;
     margin: 2% 1%;
     height: 7vh;
     background-color: #edeff2;
-    color: #7bc143;
+    color: #000000;
     border: none;
-    font-family: "Lucida Console", Monaco, monospace;
-    font-size: 1.1em;
+    font-family: "Helvetica";
+    font-size: 0.9em;
     overflow: hidden;
     text-overflow: ellipsis;
+    padding-left: 1vw;
   }
   .topics-area{
-    background-color: #ffffff;
-    height: 35vh;
+    background-color: #e4dcd4;
     overflow-y: auto;
+    padding-left: 1vw;
   }
 }

@@ -2,7 +2,7 @@
   "name": "kwyk",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://shinysu.github.io/kwykfrontend",
+  "homepage": "http://kwyk.buildskills.in/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -15,6 +15,7 @@
     "react-autosize-textarea": "^7.1.0",
     "react-bootstrap": "^1.2.2",
     "react-chart-histogram": "^0.2.4",
+    "react-copy-to-clipboard": "^5.0.3",
     "react-dom": "^16.13.1",
     "react-jqcloud": "^1.0.5",
     "react-scripts": "3.4.1",

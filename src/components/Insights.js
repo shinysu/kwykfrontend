@@ -5,23 +5,36 @@ import '../static/css/header.css';
 import '../static/css/admin.css';
 import useFetch from "../hooks/useFetch";
 import * as constant from '../utils/Constants'
-import TopicSelectHeader from "../headers/TopicSelectHeader";
 import Statistics from "./Statistics";
-import DisplayAlert from '../utils/DisplayAlert'
+import DisplayAlert from '../utils/DisplayAlert';
+import { useHistory, useLocation } from "react-router-dom";
+import AdminAccessDenied from '../utils/AdminAccessDenied'
 
 function Insights() {
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-sm-2"></div>
-        <div className="col-sm-8 lightgreen">
-            <Header />
-            <StatisticsTab />
+  let history = useHistory();
+  const location = useLocation();
+
+  if((sessionStorage.getItem('useremail') != null) && (sessionStorage.getItem('is_admin') == 'true')){
+    return (
+      <div className="container">
+        <div className="row">
+          <Header />
+          <StatisticsTab />
         </div>
-        <div className="col-sm-2"></div>
       </div>
-    </div>
-  );
+    );
+  }
+  else{
+    if(sessionStorage.getItem('is_admin') == 'false'){
+      return <AdminAccessDenied />
+    }
+    const destinationPath = location.pathname
+    history.push({
+        pathname:`/`,
+        query: {destinationPath}
+      });
+    return null;
+  }
 }
 
 export default Insights;
@@ -34,7 +47,20 @@ function StatisticsTab(props){
       setActive(index);
     }
   };
-  const url = constant.kwykURL+"/admin/user_data_custom/";
+  let urlSplit = window.location.href.split("insights/")[1].split('/')
+  urlSplit = urlSplit.filter(item => item);
+  const topic = urlSplit[0];
+  const subtopic = urlSplit[1];
+  var url = '';
+  if(urlSplit.length > 2){
+    const session = urlSplit[2];
+    url = constant.kwykURL+"admin/user_data_custom/"+topic+"/"+subtopic+"/"+session;
+  }
+  else{
+    url = constant.kwykURL+"admin/user_data_custom/"+topic+"/"+subtopic;
+  }
+
+  //const url = constant.kwykURL+"admin/user_data_custom/";
   const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
   if (fetchResponse.error){
     return <DisplayAlert message={fetchResponse.error} />
@@ -43,7 +69,6 @@ function StatisticsTab(props){
     return 'Loading...';
   }
   const data = fetchResponse.data;
-  console.log("data=",data);
 
   return(
     <div className="tab-color">
@@ -68,32 +93,22 @@ function StatisticsTab(props){
 }
 
 function ShowInsights(props){
-  console.log("ShowInsights");
-  const [selectedValue, setSelectedValue] = useState("");
   const [selectedView, setView] = useState("user");
-  console.log("selectedView=", selectedView);
-  function getSelectedValue(value){
-    setSelectedValue(value);
-  }
   function getView(value){
     setView(value);
   }
-  const topics = props.data["topics"];
-  const userData = props.data["topic_answers"];
-  console.log("userData=",userData);
+  const userData = props.data;
   return(
-    <div className="lightgreen">
-      <TopicSelectHeader getSelectedValue={getSelectedValue} selectedValue={selectedValue} topics={topics}/>
+    <div>
       <ViewSelection getView={getView} view={selectedView}/>
-      <DisplayUserData selectedValue={selectedValue} userData={userData} selectedView={selectedView}/>
+      <DisplayUserData userData={userData} selectedView={selectedView}/>
     </div>
   );
 }
 
 function DisplayUserData(props){
   let headerWords, limits;
-  console.log("DisplayUserData");
-  const data = props.userData[props.selectedValue];
+  const data = props.userData;
   if(data){
     const headerData = getHeaderWords(data, props.selectedView);
     headerWords = headerData["headerWords"];
@@ -110,8 +125,6 @@ function DisplayUserData(props){
 }
 
 function GetTableHeader(props){
-  console.log("GetTableHeader");
-  console.log(props.headerWords);
   let titleWord;
    if(props.headerWords){
      if(props.selectedView === "user"){
@@ -138,7 +151,6 @@ function GetTableHeader(props){
 }
 
 function GetTableData(props){
-  console.log("GetTableData");
   let words, userData;
   if(props.data){
      words=props.data["topic_words"];
@@ -153,7 +165,6 @@ function GetTableData(props){
 }
 
 function ViewSelection(props){
-  console.log("ViewSelection");
   const [view, setView] = useState(props.view);
   function handleChange(e){
     setView(e.target.value);
@@ -176,7 +187,6 @@ function getHeaderWords(data, view) {
   const userDivisions = divisions.map((value,index) =>{
     return `${Math.round(divisions[index] * totalUsers)}`
   });
-  console.log("userDivisions=",userDivisions);
   let headerWords=[];
   let limits = [];
   if(view === "user"){

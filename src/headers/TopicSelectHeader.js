@@ -11,8 +11,8 @@ function TopicSelectHeader(props){
     props.getSelectedValue(e.target.value);
   }
   return(
-    <div className="row green">
-    <label className="green topic-label"> TOPIC: </label>
+    <div className="row darktheme">
+    <label className="topic-label"> TOPIC: </label>
     <select className="topic-select" onChange={handleChange} defaultValue={''} value={selectedValue}>
       <option value="">Choose a topic..</option>
       {topics.map((topic,index) => <option key={index} > {topic} </option>)}

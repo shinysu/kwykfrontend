@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import TopicSelectHeader from "../headers/TopicSelectHeader";
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 import ProgressBar from 'react-bootstrap/ProgressBar';
@@ -11,16 +10,9 @@ import '../static/css/admin.css';
 
 
 function Statistics(props){
-  const [selectedValue, setSelectedValue] = useState("");
-  function getSelectedValue(value){
-    setSelectedValue(value);
-  }
-  const topics = props.data["topics"];
-  const userData = props.data["topic_answers"];
   return(
     <div >
-      <TopicSelectHeader getSelectedValue={getSelectedValue} selectedValue={selectedValue} topics={topics}/>
-      <DisplayStats userData={userData} selectedValue={selectedValue}/>
+      <DisplayStats data={props.data}/>
     </div>
   );
 }
@@ -35,27 +27,18 @@ function DisplayStats(props) {
   let userResponseCount =[];
   let userResponseData;
   //let leastResponseUser =[];
-  console.log("DisplayStats");
-  if(props.selectedValue){
-    const stats = getStats(props.userData,props.selectedValue);
-    const answeredCount =stats["answeredCount"];
-    const skipsCount = stats["skipsCount"];
-    //const uniqueResponseCount = stats["uniqueWordsCount"];
-    commonResponseCount = stats["commonResponseCount"];
-    const userAnswerCount = stats["userAnswerCount"];
-    totalUsers = stats["totalUsers"];
-    totalWords = stats["totalWords"];
-    mostSkips = getSortedData(skipsCount,1); //second arg 1 to sort desc
-    leastResponse = getSortedData(answeredCount,0);
-    //uniqueResponse = getSortedData(uniqueResponseCount,1);
-    //commonResponse = getSortedData(commonResponseCount,1);
-    const userResponse = getResponseHist(userAnswerCount, totalWords);
-    userResponseData = userResponse["userDivisionData"];
-    userResponseCount = userResponse["userResponseCount"];
-  //  mostResponseUser = getSortedData(userAnswerCount, 1);
-  //  leastResponseUser = getSortedData(userAnswerCount, 0);
-  }
-  //const commonResponse = getSortedData(commonResponseCount,1,100)
+  const stats = getStats(props.data);
+  const answeredCount =stats["answeredCount"];
+  const skipsCount = stats["skipsCount"];
+  commonResponseCount = stats["commonResponseCount"];
+  const userAnswerCount = stats["userAnswerCount"];
+  totalUsers = stats["totalUsers"];
+  totalWords = stats["totalWords"];
+  mostSkips = getSortedData(skipsCount,1); //second arg 1 to sort desc
+  leastResponse = getSortedData(answeredCount,0);
+  const userResponse = getResponseHist(userAnswerCount, totalWords);
+  userResponseData = userResponse["userDivisionData"];
+  userResponseCount = userResponse["userResponseCount"];
   const displayItems = [
                   {message:'Common user responses',data:commonResponseCount, maxVal:totalWords,
                   type:'cloud'},
@@ -71,17 +54,14 @@ function DisplayStats(props) {
     data={item.data} value={item.value} type={item.type}/>
   });
   return(
-    <div className="display-stats lightgreen">
+    <div className="display-stats">
     {statButtons}
     </div>
   );
 }
 
 function DisplayButton(props){
-  console.log("DisplayButton");
   const [open, setOpen] = useState(false);
-  console.log("OPEN=",open);
-  //console.log(props.data);
   return(
     <div className="display-btn">
       <Button
@@ -94,7 +74,7 @@ function DisplayButton(props){
         {props.message}
       </Button>
       <Collapse in={open} className="stats-data">
-        <div className="lightgreen">
+        <div className="chatcolor">
           <DisplatData maxVal={props.maxVal} data={props.data} value={props.value} type={props.type}/>
         </div>
       </Collapse>
@@ -112,8 +92,6 @@ function DisplatData(props) {
 }
 
 function ShowWordCloud(props) {
-  console.log("ShowWordCloud");
-  console.log("props.data=",props.data.l);
   if(props.data.length > 0){
   const words = props.data;
   const options = {
@@ -123,13 +101,12 @@ function ShowWordCloud(props) {
     padding: 3,
   }
   const resizeStyle = {
-    background: "#E3F0D9",
+    background: "#e4dcd4",
     width:'100%',
     height: '100%',
   }
-  console.log("WORDS=", words);
   return (
-    <Resizable className="lightgreen"
+    <Resizable className="chatcolor"
      defaultSize={{
       width: '100%',
       height: '40vh',
@@ -146,13 +123,10 @@ return <div></div>
 }
 
 function ShowProgressBar(props){
-  console.log("ShowProgressBar");
   const data = props.data;
   const maxVal = props.maxVal;
   const statsBar = data.map((statData,index)=>{
-    console.log("statData=",statData);
     const percent = statData[1];
-    console.log("percent=",percent);
     const range = statData[0];
     let popover;
     if(props.value){
@@ -192,13 +166,12 @@ function ShowProgressBar(props){
   );
 }
 
-function getStats(data, topic){
-  console.log("GetMostSkips");
+function getStats(data){
   let skipsCount = {};
   let answeredCount = {};
   let wordResponses =[];
   let userAnswerCount = {};
-  const topicData = data[topic];
+  const topicData = data;
   const words = topicData["topic_words"];
   const userWords = topicData["user_data"];
   const totalUsers = Object.keys(userWords).length;
@@ -248,7 +221,6 @@ function getWordFrequency(wordArray) {
 }
 
 function getSortedData(data,type,count=5){
-  console.log("getMostSkips");
   let sortedData = [];
   for (var word in data) {
     sortedData.push([word, data[word]]);
@@ -273,7 +245,6 @@ function getSortedData(data,type,count=5){
   }
 
 function getUniqueWordsCount(data){
-  console.log("getUniqueWordsCount");
   let uniqueCount = 0;
   let mostCommonResponse = 1;
   for(const [key, value] of Object.entries(data)){
@@ -290,7 +261,6 @@ function getUniqueWordsCount(data){
 }
 
 function getResponseHist(userData, totalWords) {
-  console.log("getResponseHist");
   const divisions = [0, 0.25, 0.5, 0.75, 1];
   let userDivisionData = {};
   let userResponseCount =[]
@@ -298,7 +268,6 @@ function getResponseHist(userData, totalWords) {
   const answerDivisions = divisions.map((value,index) =>{
     return `${Math.round(divisions[index] * totalWords)}`
   });
-  console.log("answerDivisions=",answerDivisions);
   //ansdivpercent = ["0 - 24", "25 - 49", "50 - 74", "75 - 99", "100"]
   const ansdivpercent = divisions.map((value,index) =>{
     let valRange;
@@ -327,18 +296,13 @@ function getResponseHist(userData, totalWords) {
       }
     }
   }
-  console.log("ansdivpercent=",ansdivpercent);
   let count = 0;
   for(var i=0; i < ansdivpercent.length; i++){
     const range = ansdivpercent[i];
-    console.log("range=",range);
     if(userDivisionData[range]){
-      console.log(userDivisionData[range]);
       count=userDivisionData[range].length;
     }
     userResponseCount.push([range, count]);
   }
-  console.log("userDivisionData=",userDivisionData);
-  console.log("userResponseCount=",userResponseCount);
   return {"userDivisionData":userDivisionData, "userResponseCount":userResponseCount};
 }
