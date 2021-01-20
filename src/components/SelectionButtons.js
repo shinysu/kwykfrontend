@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-import * as constant from '../utils/Constants'
-import useFetch from "../hooks/useFetch";
+import * as constant from '../components/Constants'
 import '../static/css/contents.css';
-import DisplayAlert from '../utils/DisplayAlert'
 
 function SelectionButtons(props){
   const [clickedButton, setClickedButton] = useState("");
@@ -12,8 +10,8 @@ function SelectionButtons(props){
     props.getSelectedTopic(name);
     setClickedButton(name);
   }
-  if (props.styling == "topics-area"){
-    if(clickedButton == ""){
+  if (props.styling === "topics-area"){
+    if(clickedButton === ""){
       height = "50vh";
     }
     else {

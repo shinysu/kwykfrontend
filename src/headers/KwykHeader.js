@@ -1,9 +1,8 @@
 import React from 'react';
 import '../static/css/header.css';
 import knowbotSVG from '../static/images/knowbotSVG.svg';
-import verticalellipsis from '../static/images/verticalellipsis.png';
 import Dropdown from 'react-bootstrap/Dropdown'
-import * as constant from '../utils/Constants'
+import * as constant from '../components/Constants'
 import { useHistory } from "react-router-dom";
 
 function Header(){

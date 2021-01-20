@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import Header from "../headers/KwykHeader";
 import UserHeader from "../headers/UserHeader";
 import '../static/css/feedback.css';
-import * as constant from '../utils/Constants'
+import * as constant from '../components/Constants'
 function Feedback() {
   return(
     <div className="container">

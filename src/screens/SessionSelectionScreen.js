@@ -1,14 +1,14 @@
 import React, {useState, useRef} from 'react';
-import * as constant from '../utils/Constants'
+import * as constant from '../components/Constants'
 import useFetch from "../hooks/useFetch";
 import '../static/css/contents.css';
-import DisplayAlert from '../utils/DisplayAlert';
+import DisplayAlert from '../components/DisplayAlert';
 import { useHistory } from "react-router-dom";
-import SelectionButtons from '../utils/SelectionButtons';
+import SelectionButtons from '../components/SelectionButtons';
 import Header from "../headers/KwykHeader";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
-function SessionSelectionScreen(props) {
+function SessionSelectionScreen() {
   const urlSplit = window.location.href.split("/")
   const topic = urlSplit[urlSplit.length-2]
   const subtopic = urlSplit[urlSplit.length-1]
@@ -20,7 +20,7 @@ function SessionSelectionScreen(props) {
         <div className="sessions">
           <div className="row topics-div">
             <DisplaySessions topic={topic} subtopic={subtopic}
-            getSelectedSession={props.getSelectedSession} styling={"sessions-area"}/>
+              styling={"sessions-area"}/>
           </div>
         </div>
       </div>
@@ -55,7 +55,8 @@ function DisplaySessions(props){
       <DisplayMessage message={message}/>
       <SelectionButtons topics={sessions} getSelectedTopic={getSelectedSession}
         styling={props.styling}/>
-      <ShowTestLink topic={props.topic} subtopic={props.subtopic}  session={getSessionSlug(sessions_details,session)}/>
+      <ShowTestLink topic={props.topic} subtopic={props.subtopic}
+        session={getSessionSlug(sessions_details,session)}/>
       </div>
       <DisplayButton topic={props.topic} subtopic={props.subtopic} sessionname={session}
           sessionslug={getSessionSlug(sessions_details,session)}
@@ -110,7 +111,7 @@ function ShowTestLink(props) {
   const basename = window.location.href.split("admin")[0];
   let url = '';
   if(props.session){
-    url  = basename.split('#')[0]+'?session='+props.session+"/#"+'/chat/'+props.topic+'/'+props.subtopic
+    url  = basename.split('#')[0]+'?session='+props.session+'/#/chat/'+props.topic+'/'+props.subtopic
   }
   else{
     url  = basename+'chat/'+props.topic+'/'+props.subtopic

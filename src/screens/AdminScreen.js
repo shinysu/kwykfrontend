@@ -3,21 +3,17 @@ import Header from "../headers/KwykHeader";
 import '../static/css/contents.css';
 import TopicSelectionScreen from "./TopicSelectionScreen";
 import { useHistory, useLocation } from "react-router-dom";
-import AdminAccessDenied from '../utils/AdminAccessDenied';
+import AdminAccessDenied from '../components/AdminAccessDenied';
 
-function AdminScreen(props) {
-  console.log("AdminScreen");
+function AdminScreen() {
   let history = useHistory();
   const location = useLocation();
 
-  if((sessionStorage.getItem('useremail') != null) && (sessionStorage.getItem('is_admin') == 'true')){
-        const getSelectedTopic = props.getSelectedTopic;
-        const getSelectedSubTopic = props.getSelectedSubTopic;
-        return <TopicSelection getSelectedTopic={getSelectedTopic}
-                getSelectedSubTopic={getSelectedSubTopic}/>
+  if((sessionStorage.getItem('useremail') != null) && (sessionStorage.getItem('is_admin') === 'true')){
+        return <TopicSelection />
   }
   else{
-    if(sessionStorage.getItem('is_admin') == 'false'){
+    if(sessionStorage.getItem('is_admin') === 'false'){
       return <AdminAccessDenied />
     }
     const destinationPath = location.pathname
@@ -30,7 +26,7 @@ function AdminScreen(props) {
 }
 export default AdminScreen;
 
-function TopicSelection(props){
+function TopicSelection(){
     const [topic,setTopic] = useState("");
     const [subtopic,setSubTopic] = useState("");
     function getSelectedTopic(data){
@@ -48,10 +44,7 @@ function TopicSelection(props){
               topic={topic}
               getSelectedSubTopic={getSelectedSubTopic}
               />
-          <DisplayButton topic={topic} subtopic={subtopic}
-              returnTopic={getSelectedTopic}
-              returnSubtopic={getSelectedSubTopic}
-              />
+          <DisplayButton topic={topic} subtopic={subtopic}/>
         </div>
       </div>
     );
@@ -68,12 +61,9 @@ function DisplayButton(props){
     buttonDisplay ="none";
   }
   function handleClick(e){
-      props.returnTopic(props.topic);
-      props.returnSubtopic(props.subtopic);
       history.push({
         pathname:'/admin/'+props.topic+'/'+props.subtopic
       });
-      //history.push('/'+props.topic+'/'+props.subtopic);
   }
   return(
     <button className="start-button fixed-bottom" value="start"

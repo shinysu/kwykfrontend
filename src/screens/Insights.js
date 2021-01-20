@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import { Tabs, Tab, Content } from "../utils/Tab";
+import { Tabs, Tab, Content } from "../components/Tab";
 import Header from "../headers/KwykHeader";
 import '../static/css/header.css';
 import '../static/css/admin.css';
 import useFetch from "../hooks/useFetch";
-import * as constant from '../utils/Constants'
+import * as constant from '../components/Constants'
 import Statistics from "./Statistics";
-import DisplayAlert from '../utils/DisplayAlert';
+import DisplayAlert from '../components/DisplayAlert';
 import { useHistory, useLocation } from "react-router-dom";
-import AdminAccessDenied from '../utils/AdminAccessDenied'
+import AdminAccessDenied from '../components/AdminAccessDenied'
 
 function Insights() {
   let history = useHistory();
   const location = useLocation();
 
-  if((sessionStorage.getItem('useremail') != null) && (sessionStorage.getItem('is_admin') == 'true')){
+  if((sessionStorage.getItem('useremail') != null) &&
+      (sessionStorage.getItem('is_admin') === 'true')){
     return (
       <div className="container">
         <div className="row">
@@ -25,7 +26,7 @@ function Insights() {
     );
   }
   else{
-    if(sessionStorage.getItem('is_admin') == 'false'){
+    if(sessionStorage.getItem('is_admin') === 'false'){
       return <AdminAccessDenied />
     }
     const destinationPath = location.pathname

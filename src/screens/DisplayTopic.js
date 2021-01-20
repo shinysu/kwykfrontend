@@ -5,7 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import '../static/css/contents.css';
 import TopicSelectionScreen from "./TopicSelectionScreen";
 
-function DisplayTopic(props){
+function DisplayTopic(){
   let history = useHistory();
   const location = useLocation();
   if(sessionStorage.getItem('useremail') == null){
@@ -17,13 +17,11 @@ function DisplayTopic(props){
     return null;
   }
   else{
-    const getSelectedTopic = props.getSelectedTopic;
-    const getSelectedSubTopic = props.getSelectedSubTopic;
-    return <TopicSelection getSelectedTopic={getSelectedTopic} getSelectedSubTopic={getSelectedSubTopic}/>
+    return <TopicSelection/>
   }
 }
 
-function TopicSelection(props){
+function TopicSelection(){
     const [topic,setTopic] = useState("");
     const [subtopic,setSubTopic] = useState("");
     function getSelectedTopic(data){
@@ -44,8 +42,7 @@ function TopicSelection(props){
                   topic={topic}
                   getSelectedSubTopic={getSelectedSubTopic}
                   />
-              <DisplayStartButton topic={topic} subtopic={subtopic}
-                        returnTopic={getSelectedTopic} returnSubtopic={getSelectedSubTopic}/>
+              <DisplayStartButton topic={topic} subtopic={subtopic}/>
             </div>
           <div className="col-lg-2"></div>
         </div>
@@ -59,7 +56,6 @@ export default DisplayTopic;
 function DisplayStartButton(props){
   let history = useHistory();
   let buttonDisplay;
-  //const [buttonDisplay, setButtonDisplay] = useState("none");
   if(props.subtopic){
     buttonDisplay ="block";
   }
@@ -67,13 +63,10 @@ function DisplayStartButton(props){
     buttonDisplay ="none";
   }
   function handleClick(e){
-      props.returnTopic(props.topic);
-      props.returnSubtopic(props.subtopic);
       initializeSessionStorage(props.topic, props.subtopic)
       history.push({
         pathname:'/chat/'+props.topic+'/'+props.subtopic,
       });
-      //history.push('/'+props.topic+'/'+props.subtopic);
   }
   return(
     <button className="start-button fixed-bottom" value="start"

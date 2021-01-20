@@ -4,7 +4,7 @@ import Header from "../headers/KwykHeader";
 import TimerHeader from "../headers/TimerHeader";
 import '../static/css/stats.css';
 
-function UserStats(props){
+function UserStats(){
   let history = useHistory();
   if(sessionStorage.getItem('useremail') == null){
     history.push({
@@ -17,7 +17,7 @@ function UserStats(props){
   }
 }
 
-function StatsPage(props){
+function StatsPage(){
   const minutes = parseInt(sessionStorage.getItem('minutes'));
   const seconds = parseInt(sessionStorage.getItem('seconds'));
   const topic = sessionStorage.getItem('topic');
@@ -47,7 +47,6 @@ function ShowTimeHeader(props){
 }
 
 function DisplayStats(props){
-  //const useremail = sessionStorage.getItem('useremail');
   const attemptedCount = parseInt(sessionStorage.getItem('attempted'));
   const skippedCount = parseInt(sessionStorage.getItem('skipped'));
   return(
@@ -88,7 +87,6 @@ function ViewResponses(props){
   function handleClick(){
     history.push({
     pathname:`/view_responses/${props.topic}/${props.subtopic}`
-    //pathname:`/view_responses/python/flask`,
     });
   }
   return(
@@ -98,7 +96,7 @@ function ViewResponses(props){
   );
 }
 
-function SwitchTopic(){
+/*function SwitchTopic(){
   let history = useHistory();
   function handleClick(){
     history.push('/topics')
@@ -109,7 +107,7 @@ function SwitchTopic(){
     </div>
   );
 }
-
+*/
 function FeedBack(){
   let history = useHistory();
   function handleClick(){
@@ -118,7 +116,7 @@ function FeedBack(){
   }
   return(
     <div className= "button-area">
-    <button className="retry-button" value="retry" onClick={handleClick}>Feedback</button>
+      <button className="retry-button" value="retry" onClick={handleClick}>Feedback</button>
     </div>
   );
 }
@@ -128,9 +126,9 @@ function DisplayScore(props){
     <div className= "display-area">
       <br />
       <div className = "row">
-      <div className="col-12 topic-text center">
-      You have completed this topic!
-      </div>
+        <div className="col-12 topic-text center">
+        You have completed this topic!
+        </div>
       </div>
       <div className = "row">
         <div className="col-2 darkgrey"></div>

@@ -1,15 +1,14 @@
 import React,{useState} from 'react';
 import knowbotSVG from '../static/images/knowbotSVG.svg';
 import '../static/css/login.css';
-import { Tabs, Tab, Content } from "../utils/Tab";
-import * as constant from '../utils/Constants'
+import { Tabs, Tab, Content } from "../components/Tab";
+import * as constant from '../components/Constants'
 import usePost from "../hooks/usePost";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert'
 var session = ""
 
 function Login() {
-  const location = useLocation()
   if(sessionStorage.getItem('useremail') != null){
     return <Redirect />;
   }
@@ -20,7 +19,6 @@ function Login() {
 
 function DisplayLogin(){
   //sessionStorage.clear()
-  const location = useLocation();
   const sessionPath = window.location.href.split('?session=')[1]
   if(typeof(sessionPath) !== 'undefined'){
     session = sessionPath.split('/')[0]
@@ -302,7 +300,7 @@ function Redirect() {
   if(location.query){
     destination = location.query.destinationPath;
     const screenname = getDestinationScreen(destination);
-    if (screenname == 'chat'){
+    if (screenname === 'chat'){
       const topicDetail = getTopicFromURL(destination);
       const topic = topicDetail['topic'];
       const subtopic = topicDetail['subtopic'];

@@ -3,26 +3,23 @@ import { useHistory, useLocation } from "react-router-dom";
 import Header from "../headers/KwykHeader";
 import TimerHeader from "../headers/TimerHeader";
 import useTimer from "../hooks/useTimer";
-import knowbotSVG from '../static/images/knowbotSVG.svg';
-import avatar from '../static/images/avatar.png';
 import ideapng from '../static/images/idea.png';
 import sendlogo from '../static/images/send.png';
 import '../static/css/chat.css';
-import * as constant from '../utils/Constants'
+import * as constant from '../components/Constants'
 import usePost from "../hooks/usePost";
 import TextareaAutosize from 'react-textarea-autosize';
-import DisplayAlert from '../utils/DisplayAlert'
+import DisplayAlert from '../components/DisplayAlert'
 
 var time;
 var currentWord = '';
 var is_retry;
-function ChatBot(props){
-  console.log("ChatBot");
+
+function ChatBot(){
   let history = useHistory();
   const location = useLocation();
   if(sessionStorage.getItem('useremail') == null){
     const destinationPath = location.pathname
-    console.log("destinationPath=",destinationPath);
     history.push({
       pathname:`/`,
       query: {destinationPath}
@@ -36,10 +33,9 @@ function ChatBot(props){
 
 export default ChatBot;
 
+
 function DisplayTest() {
-  console.log("DisplayTest");
   let chatMessages = '';
-  let history = useHistory();
   let prevWords = {};
   if(sessionStorage.getItem('userResponses')){
     prevWords = JSON.parse(sessionStorage.getItem('userResponses'));
@@ -56,24 +52,25 @@ function DisplayTest() {
   const [seconds, setSeconds] = useState(0);
   return(
     <div className="container">
-    <div className="row">
-      <div className="col-lg-2"></div>
-      <div className="col-lg-8 non-header">
-        <Header />
-        <ShowTimeHeader/>
-        <DisplayChat minutes={minutes}
+      <div className="row">
+        <div className="col-lg-2"></div>
+        <div className="col-lg-8 non-header">
+          <Header />
+          <ShowTimeHeader/>
+          <DisplayChat minutes={minutes}
                      seconds={seconds}
                      chatMessages={chatMessages}
                      prevWords={prevWords}
                      />
+        </div>
+        <div className="col-lg-2"></div>
       </div>
-      <div className="col-lg-2"></div>
-    </div>
     </div>
   );
 }
 
-function ShowTimeHeader(props){
+
+function ShowTimeHeader(){
   const minutes = parseInt(sessionStorage.getItem('minutes'));
   const seconds = parseInt(sessionStorage.getItem('seconds'));
   time=useTimer(minutes, seconds);
@@ -81,6 +78,7 @@ function ShowTimeHeader(props){
     <TimerHeader time={time}/>
   );
 }
+
 
 function DisplayChat(props){
   const [chatMessages, setChatMessages] = useState(props.chatMessages);
@@ -119,6 +117,7 @@ function DisplayChat(props){
   );
 }
 
+
 function GetChatMessages(props) {
   const message = props.message;
   if(message ==="welcome"){
@@ -144,23 +143,22 @@ function ShowWelcomeChat(props){
   const rows = textRowCount + 3;
   return(
     <li>
-    <div className="row bot">
+      <div className="row bot">
         <TextareaAutosize className="botmessage" rows={rows} value={constant.welcomeMessage} rowsMin={3} disabled/>
-  </div>
-  </li>
-);
+      </div>
+    </li>
+  );
 }
 
 
 function GetWord(props){
   let history = useHistory();
   const url = constant.postURL;
-  let session='';
   let text = getCommand(props.message);
   const useremail = sessionStorage.getItem('useremail');
   const topic = sessionStorage.getItem('topic');
   const subtopic = sessionStorage.getItem('subtopic');
-  session = sessionStorage.getItem('session');
+  const session = sessionStorage.getItem('session');
 
   const dataText = { "text": text, "username": useremail, "session":session, "referrer":window.location.href};
   const fetchResponse = usePost(url, dataText, {isLoading: true, data: null, error: null});
@@ -188,10 +186,10 @@ function GetWord(props){
     return <Test word={word} addChat={props.addChat}/>
   }
   else{
-  const messageNoun = props.message==='first' ? 'first' : 'next';
-  const messageText = "Your " + messageNoun + " word is '"+word + "'";
-  return (<BotReply message={messageText}  addChat={props.addChat} />);
-}
+    const messageNoun = props.message==='first' ? 'first' : 'next';
+    const messageText = "Your " + messageNoun + " word is '"+word + "'";
+    return (<BotReply message={messageText}  addChat={props.addChat} />);
+  }
 }
 
 function Test(props) {
@@ -204,9 +202,8 @@ function Test(props) {
 function ShowHint(props){
   const url = constant.postURL;
   const text = '/explain';
-  let session = '';
   const useremail = sessionStorage.getItem('useremail');
-  session = sessionStorage.getItem('session');
+  const session = sessionStorage.getItem('session');
 
   const dataText = { "text": text, "username": useremail, "session": session, "referrer":window.location.href}
   const fetchResponse = usePost(url, dataText, {isLoading: true, data: null, error: null});
@@ -250,21 +247,19 @@ function DisplayForm(props){
         handleClick();
     }
   }
-    function handleSkip(e){
-      //e.target.setAttribute("disabled", "disabled");
+  function handleSkip(e){
       props.addChat("skip")
       if(!is_retry){
         updateSkippedCount('add');
       }
-    }
+  }
 
   return(
     <div className="row input-area chatcolor">
       <button className="ideabutton" value="start" onClick={handleHint}>
         <img src={ideapng} className="idealogo" alt="logo" />
       </button>
-      <button className="skipbutton"
-        onClick={handleSkip}>{buttonText}</button>
+      <button className="skipbutton" onClick={handleSkip}>{buttonText}</button>
       <TextareaAutosize className="input-text" value={userInput} onChange={handleChange}
         onKeyPress={handleKeyPress} required/>
       <button className="sendbutton" value="start" onClick={handleClick}>
@@ -286,11 +281,11 @@ function BotReply(props){
   const rows = textRowCount + 3;
   return(
     <li>
-    <div className="row bot">
+      <div className="row bot">
         <TextareaAutosize className="botmessage" rows={rows} value={props.message}
         rowsMin={3} id="bottext" disabled/>
-  </div>
-  </li>
+      </div>
+    </li>
  );
 }
 

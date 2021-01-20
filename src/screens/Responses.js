@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Tabs, Tab, Content } from "../utils/Tab";
+import { Tabs, Tab, Content } from "../components/Tab";
 import Header from "../headers/KwykHeader";
 import '../static/css/header.css';
 import '../static/css/stats.css';
 import useFetch from "../hooks/useFetch";
-import * as constant from '../utils/Constants';
-import DisplayAlert from '../utils/DisplayAlert';
+import * as constant from '../components/Constants';
+import DisplayAlert from '../components/DisplayAlert';
 
 function Responses() {
   let history = useHistory();
@@ -114,13 +114,13 @@ function TopicHeader(props){
   const username = sessionStorage.getItem('username');
   return(
     <div className="row headercontainer grey">
-    <div className="col-5 user grey">
-    {username}
-    </div>
-    <div className="col-7 grey">
-    <span className="grey topic-label"> Topic:</span>
-    <span className="grey topic-label"> {props.selectedValue} </span>
-    </div>
+      <div className="col-5 user grey">
+      {username}
+      </div>
+      <div className="col-7 grey">
+        <span className="grey topic-label"> Topic:</span>
+        <span className="grey topic-label"> {props.selectedValue} </span>
+      </div>
     </div>
   );
 }
@@ -196,9 +196,11 @@ function DisplayExplanation(props) {
   const explanations = props.topicExplanation[props.word];
   return(
     <div className="explain-area">
-    <label className="topicname">{props.word}</label>
-    <div className="row explain-text">
-      {explanations}
+      <label className="topicname">
+        {props.word}
+      </label>
+      <div className="row explain-text">
+        {explanations}
       </div>
     </div>
 

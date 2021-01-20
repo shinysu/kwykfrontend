@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Header from "../headers/KwykHeader";
 import UserHeader from "../headers/UserHeader";
 import '../static/css/error.css';

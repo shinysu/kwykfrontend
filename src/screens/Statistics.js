@@ -244,7 +244,7 @@ function getSortedData(data,type,count=5){
   return sortedData.slice(0,count);
   }
 
-function getUniqueWordsCount(data){
+/*function getUniqueWordsCount(data){
   let uniqueCount = 0;
   let mostCommonResponse = 1;
   for(const [key, value] of Object.entries(data)){
@@ -258,7 +258,7 @@ function getUniqueWordsCount(data){
     }
   }
   return {"uniqueCount":uniqueCount, "mostCommonResponse":mostCommonResponse}
-}
+}*/
 
 function getResponseHist(userData, totalWords) {
   const divisions = [0, 0.25, 0.5, 0.75, 1];
@@ -287,7 +287,7 @@ function getResponseHist(userData, totalWords) {
 
     }
     else{
-      for(var i = 0; i < answerDivisions.length-1; i++){
+      for(let i = 0; i < answerDivisions.length-1; i++){
         if((value >= answerDivisions[i]) && ((value < answerDivisions[i+1]))){
           const percent = ansdivpercent[i];
           userDivisionData[percent].push(key);
@@ -297,7 +297,7 @@ function getResponseHist(userData, totalWords) {
     }
   }
   let count = 0;
-  for(var i=0; i < ansdivpercent.length; i++){
+  for(let i=0; i < ansdivpercent.length; i++){
     const range = ansdivpercent[i];
     if(userDivisionData[range]){
       count=userDivisionData[range].length;

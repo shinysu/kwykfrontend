@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import * as constant from '../utils/Constants'
+import React from 'react';
+import * as constant from '../components/Constants'
 import useFetch from "../hooks/useFetch";
 import '../static/css/contents.css';
-import DisplayAlert from '../utils/DisplayAlert';
-import SelectionButtons from '../utils/SelectionButtons';
+import DisplayAlert from '../components/DisplayAlert';
+import SelectionButtons from '../components/SelectionButtons';
 
 function TopicSelectionScreen(props) {
   return(
