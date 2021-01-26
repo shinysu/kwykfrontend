@@ -99,8 +99,10 @@ function DisplayButton(props){
       //history.push('/'+props.topic+'/'+props.subtopic);
   }
   return(
-    <button className="stats-button" value="start"
-      onClick={handleClick} style={{display: buttonDisplay}}>View Statistics</button>
+    <div className='session-btn-div'>
+      <button className="stats-button" value="start"
+        onClick={handleClick} style={{display: buttonDisplay}}>View Statistics</button>
+    </div>
   );
 }
 

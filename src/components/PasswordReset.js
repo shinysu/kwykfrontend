@@ -58,6 +58,7 @@ function ResetArea() {
   }
   function handleClick(e) {
     if(e.target.value === 'Home'){
+      sessionStorage.removeItem('loginmessage');
       history.push({
           pathname:`/`,
       });

@@ -1,18 +1,38 @@
 
 .display-stats{
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
   height: 72vh;
   display: block;
   text-align: center;
   padding-top: 3vh;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-top: 12vh;
+}
+
+.next-button{
+  font-size:1em;
+  color: #959595;
+  background-color: #ffffff;
+  display: block;
+  margin-left: 60%;
+  width: 30%;
+  height: 6vh;
+  position: relative;
+  font-family: "Helvetica";
+  font-weight: bold;
+  margin-bottom: 0;
+  border-radius: 25px;
+  border-color: #959595;
+  border-style: solid;
+  border-width: 2px;
 }
 
 .display-btn{
   display: block;
   text-align: center;
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
+  margin-top: 1vh;
 }
 
 .btn-stats:hover{
@@ -29,6 +49,7 @@ table {
 th, td{
   border: 1px solid #787774;
   text-align: center;
+  font-size: 0.8em;
 }
 
 th.user{
@@ -46,18 +67,22 @@ th.data{
 
 .btn-stats{
   margin: 2vh;
-  background-color: #959595;
-  width: 90%;
+  background-color: #ffffff;
+  width: 80%;
   align-items: center;
-  color: #ffffff;
+  color: #959595;
   font-family: "Helvetica";
-  font-size: 1.2em;
+  font-size: 1em;
+  border-radius: 25px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #959595;
 }
 
 .stats-data{
   display: block;
   text-align: center;
-  background-color: #e4dcd4 !important;
+  background-color: #ede2d5 !important;
 }
 
 .progress-bar{
@@ -74,11 +99,11 @@ th.data{
   .statsBar{
     width: 80%;
     margin-left: 10%;
-    background-color: #e4dcd4;
+    background-color: #ede2d5;
   }
 
 .lightgreen{
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
 }
 
 .data-label{
@@ -90,7 +115,7 @@ th.data{
 }
 
 .display-data{
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
   height: 75vh;
   overflow-x:auto;
 }
@@ -133,14 +158,18 @@ thead th:first-child {
 }
 
 .wordcloud{
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
   padding-left: 2vw;
   padding-right: 2vw;
 
 }
 
+.session-btn-div{
+  background-color: #ede2d5;
+}
+
 .clouddiv{
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
   width: 90%;
   margin-left: 5%;
 }
@@ -158,14 +187,14 @@ thead th:first-child {
 }
 
 .testlink{
-  background-color: #e4dcd4 !important;
+  background-color: #ede2d5 !important;
   color: #000000;
 }
 
 .linklabel{
   text-align: center;
   display: block;
-  background-color: #e4dcd4!important;
+  background-color: #ede2d5!important;
   color: #000000;
   padding-left: 2vh;
   font-family: "Helvetica";
@@ -186,37 +215,99 @@ thead th:first-child {
   font-family: "Helvetica";
   font-size: 0.7em;
   padding-left: 0.5vw;
-  background-color: #e4dcd4!important;
+  background-color: #ede2d5!important;
 }
 
 .stats-button{
-  font-size:1.5em;
-  color: #ffffff;
-  background-color: #959595;
+  font-size:1.2em;
+  color: #959595;
+  background-color: #ffffff;
   display: block;
-  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1vw;
+  padding-right: 1vw;
   height: 6vh;
   position: relative;
   font-family: "Helvetica";
-  font-weight: bold;
   margin-bottom: 0;
+  border-radius: 25px;
+  border-color: #959595;
+  border-style: solid;
+  border-width: 2px;
 }
 
 .admin-session{
   height: 78vh !important;
-  background-color: #e4dcd4!important;
+  background-color: #ede2d5!important;
 }
 
 @media (min-width: 768px){
+  th, td{
+    border: 1px solid #787774;
+    text-align: center;
+    font-size: 1em;
+  }
+
+  .btn-stats{
+    margin: 2vh;
+    background-color: #ffffff;
+    width: 30%;
+    align-items: center;
+    color: #959595;
+    font-family: "Helvetica";
+    font-size: 1.2em;
+    border-radius: 25px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #959595;
+
+  }
+
+  .stats-button{
+    font-size:1.3em;
+    color: #959595;
+    background-color: #ffffff;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    height: 6vh;
+    position: relative;
+    font-family: "Helvetica";
+    margin-bottom: 0;
+    border-radius: 25px;
+    border-color: #959595;
+    border-style: solid;
+    border-width: 2px;
+  }
+  .next-button{
+    font-size:1.2em;
+    color: #959595;
+    background-color: #ffffff;
+    display: block;
+    margin-left: 80%;
+    width: 10%;
+    height: 6vh;
+    position: relative;
+    font-family: "Helvetica";
+    font-weight: bold;
+    margin-bottom: 0;
+    border-radius: 25px;
+    border-color: #959595;
+    border-style: solid;
+    border-width: 2px;
+  }
   .testlink{
-    background-color: #e4dcd4 !important;
+    background-color: #ede2d5 !important;
     color: #000000;
   }
 
   .linklabel{
     text-align: center;
     display: block;
-    background-color: #e4dcd4!important;
+    background-color: #ede2d5!important;
     color: #000000;
     padding-left: 2vh;
     font-family: "Helvetica";
@@ -232,11 +323,14 @@ thead th:first-child {
   .linkbutton{
     font-family: "Helvetica";
     font-size: 1em;
+    border-radius: 25px;
+    border-color: #959595;
+    border-style: solid;
   }
   .copytext{
     font-family: "Helvetica";
     font-size: 1em;
     padding-left: 0.5vw;
-    background-color: #e4dcd4!important;
+    background-color: #ede2d5!important;
   }
 }

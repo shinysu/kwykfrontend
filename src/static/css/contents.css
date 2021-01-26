@@ -1,3 +1,12 @@
+.sessions, .subtopics{
+    -ms-overflow-style: none;
+}
+.sessions::-webkit-scrollbar {
+    display: none;
+}
+.subtopics::-webkit-scrollbar {
+    display: none;
+}
 @font-face {
   font-family: "Helvetica";
   src: url('../fonts/Helvetica.ttf');
@@ -18,19 +27,19 @@
 }
 
 .topics-area{
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
   overflow-y: auto;
   padding-left: 1vw;
 }
 
 .subtopics-area{
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
   padding-left: 1vw;
   overflow-y: auto;
 }
 
 .sessions-area{
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
   overflow-y: auto;
   padding-left: 1vw;
   height: 40vh !important;
@@ -46,23 +55,24 @@ button:focus{
     border-radius: 10px;
 }
 .topics-subtopics{
-  background-color: #e4dcd4;
+  height: 85vh;
+  background-color: #ede2d5 !important;
   width: 100%;
 }
 
 .sessions{
-  background-color: #e4dcd4 !important;
+  background-color: #ede2d5 !important;
   overflow-y: auto;
   height: 85vh !important;
 }
 
 .topics-div{
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
   overflow-y: auto;
 }
 
 .subtopics-div{
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
   overflow-y: auto;
 }
 
@@ -85,7 +95,6 @@ button:focus{
     padding-left: 1vw;
   }
   .topics-area{
-    background-color: #e4dcd4;
     overflow-y: auto;
     padding-left: 1vw;
   }

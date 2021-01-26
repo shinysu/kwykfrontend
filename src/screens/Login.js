@@ -9,6 +9,10 @@ import Alert from 'react-bootstrap/Alert'
 var session = ""
 
 function Login() {
+  const location = useLocation();
+  if (location.query){
+    sessionStorage.setItem('destinationPath', location.query.destinationPath)
+  }
   if(sessionStorage.getItem('useremail') != null){
     return <Redirect />;
   }
@@ -52,7 +56,7 @@ function DisplayTitle() {
     <div className="row ">
         <div className="col-md-2 "></div>
         <div className="col-md-8 window-color title">
-            KWYK - Know what you know !
+            Microknowledge - Little bits of knowledge
         </div>
         <div className="col-md-2 "></div>
     </div>
@@ -166,6 +170,7 @@ function SignUpForm() {
 
 function ValidateUser(props) {
   const url = constant.loginURL;
+  const location = useLocation()
   let loginMessage = '';
   let sessionName = '';
   const dataText = { "email": props.email, "password": props.password, "session": session, "action": "signin"}
@@ -201,6 +206,7 @@ function ValidateUser(props) {
 
 function CreateNewUser(props) {
   const url = constant.loginURL;
+  const location = useLocation()
   let loginMessage ='';
   let sessionName = '';
   const dataText = { "username":props.username, "email": props.email, "password": props.password,
@@ -237,6 +243,7 @@ function setSessionStorage(username, useremail, session, session_name, is_admin)
     sessionStorage.setItem('session_name', session_name);
   }
   sessionStorage.removeItem('loginmessage');
+
 }
 
 function DisplayAlert() {
@@ -297,8 +304,9 @@ function Redirect() {
   let history = useHistory();
   const location = useLocation()
   let destination;
-  if(location.query){
-    destination = location.query.destinationPath;
+  if(sessionStorage.getItem('destinationPath')){
+    destination = sessionStorage.getItem('destinationPath');
+    sessionStorage.removeItem('destinationPath');
     const screenname = getDestinationScreen(destination);
     if (screenname === 'chat'){
       const topicDetail = getTopicFromURL(destination);
@@ -313,5 +321,6 @@ function Redirect() {
   history.push({
       pathname:destination
   });
+
   return null;
 }

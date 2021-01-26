@@ -44,12 +44,15 @@
 
 .signin{
   font-size:1.2em;
-  color: #ffffff;
-  background-color: #959595;
+  color: #000000;
+  background-color: #ffffff;
   display: block;
-  width: 70%;
-  text-align: center;
-  margin-left: 15%;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 25px;
+  border-color: #959595;
+  border-style: solid;
   margin-top: 5%;
   height: auto;
   bottom: 10%;
@@ -90,8 +93,8 @@
   color: #000000;
   background-color: #ffffff;
   text-align:center;
-  font-size: 1.1em;
   font-family: "Helvetica";
+  font-style: italic;
 }
 
 .link{

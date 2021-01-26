@@ -1,7 +1,7 @@
-*{
+.chatarea{
     -ms-overflow-style: none;
 }
-::-webkit-scrollbar {
+.chatarea::-webkit-scrollbar {
     display: none;
 }
 
@@ -11,7 +11,7 @@
 }
 .chat{
   height:60vh;
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
 
 }
 
@@ -20,18 +20,18 @@
   height:8%;
   padding-top: 5%;
   margin-right: 2%;
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
 }
 
 .avatar{
   width:8%;
   height:8%;
   padding-top: 1%;
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
 }
 
 .chatcolor{
-  background-color: #e4dcd4 !important;
+  background-color: #ede2d5 !important;
 }
 
 .botmessage{
@@ -57,13 +57,13 @@
 }
 
 .bot{
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
 
 }
 
 ul,li{
   list-style: none;
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
 }
 
 .ideabutton{
@@ -72,7 +72,7 @@ ul,li{
   position: relative;
   height: 100%;
   border: none;
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
   margin-left: 1vh;
 }
 .sendbutton{
@@ -81,7 +81,7 @@ ul,li{
   position: relative;
   height: 90%;
   border: none;
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
 }
 .skipbutton{
   text-align: left;
@@ -90,11 +90,12 @@ ul,li{
   font-size:0.9em;
   height: auto;
   border: none;
+  border-radius: 25%;
   width:10%;
   display: inline;
   text-align: center;
   position: relative;
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
   margin-right: 1vw;
   margin-left: 1vw;
 }
@@ -104,11 +105,11 @@ ul,li{
   width: 100%;
   position: relative;
   padding-bottom: 1vh;
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
 }
 
 .chatarea{
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
   height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
@@ -117,7 +118,7 @@ ul,li{
 .idealogo{
   height: auto;
   width: 100%;
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
 }
 
 .input-text{
@@ -132,7 +133,7 @@ ul,li{
 
 .scroll-div{
   height: 20vh;
-  background-color: #e4dcd4;
+  background-color: #ede2d5;
 }
 
 @media (min-width: 768px){
@@ -140,7 +141,7 @@ ul,li{
     width:8%;
     height:1%;
     padding: 1vh;
-    background-color: #e4dcd4;
+    background-color: #ede2d5;
   }
   .botmessage{
     background-color: #ffffff;
@@ -167,12 +168,12 @@ ul,li{
   .avatar{
     width:8%;
     height:auto;
-    background-color: #e4dcd4;
+    background-color: #ede2d5;
   }
   .ideabutton{
     width:5%;
     padding: 1vh;
-    background-color: #e4dcd4 !important;
+    background-color: #ede2d5 !important;
     border-radius: 20px;
     border-color: #000000;
     border-width: thin;
@@ -180,7 +181,7 @@ ul,li{
   .sendbutton{
     width:6%;
     padding: 1vh;
-    background-color: #e4dcd4 !important;
+    background-color: #ede2d5 !important;
     border-radius: 20px;
     border-color: #000000;
     border-width: thin;
@@ -192,8 +193,7 @@ ul,li{
     text-align: center;
     position: relative;
     height: 100%;
-    border: none;
-    background-color: #e4dcd4 !important;
+    background-color: #ede2d5 !important;
     color: #757575;
     font-weight: bold;
     font-family: "Helvetica";
@@ -208,7 +208,7 @@ ul,li{
     width: 100%;
     position: relative;
     padding-bottom: 1vh;
-    background-color: #e4dcd4;
+    background-color: #ede2d5;
   }
 
   .input-text{
@@ -221,7 +221,7 @@ ul,li{
     padding-bottom: 1vh;
   }
   .chatarea{
-    background-color: #e4dcd4;
+    background-color: #ede2d5;
     height: 75vh;
     overflow-y: auto;
     overflow-x: hidden;

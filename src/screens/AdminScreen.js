@@ -39,12 +39,14 @@ function TopicSelection(){
       <div className="container">
         <div className="row">
           <Header/>
-          <TopicSelectionScreen
+          <div className="topics-subtopics">
+            <TopicSelectionScreen
               getSelectedTopic={getSelectedTopic}
               topic={topic}
               getSelectedSubTopic={getSelectedSubTopic}
               />
-          <DisplayButton topic={topic} subtopic={subtopic}/>
+            <DisplayButton topic={topic} subtopic={subtopic}/>
+          </div>
         </div>
       </div>
     );
@@ -66,7 +68,7 @@ function DisplayButton(props){
       });
   }
   return(
-    <button className="start-button fixed-bottom" value="start"
-      onClick={handleClick} style={{display: buttonDisplay}}>Next</button>
+    <button className="next-button" value="start"
+      onClick={handleClick} style={{display: buttonDisplay}}>Next >> </button>
   );
 }

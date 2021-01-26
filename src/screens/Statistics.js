@@ -11,7 +11,7 @@ import '../static/css/admin.css';
 
 function Statistics(props){
   return(
-    <div >
+    <div className='stats'>
       <DisplayStats data={props.data}/>
     </div>
   );
@@ -26,7 +26,6 @@ function DisplayStats(props) {
   let commonResponseCount =[];
   let userResponseCount =[];
   let userResponseData;
-  //let leastResponseUser =[];
   const stats = getStats(props.data);
   const answeredCount =stats["answeredCount"];
   const skipsCount = stats["skipsCount"];
@@ -123,47 +122,48 @@ return <div></div>
 }
 
 function ShowProgressBar(props){
-  const data = props.data;
-  const maxVal = props.maxVal;
-  const statsBar = data.map((statData,index)=>{
-    const percent = statData[1];
-    const range = statData[0];
-    let popover;
-    if(props.value){
-      const names = props.value[range];
-      let users = names.join('\n');
-      popover = (
-        <Popover>
-          <Popover.Title >Users</Popover.Title>
-          <Popover.Content>
-          { users}
-          </Popover.Content>
-        </Popover>
-      );
-    }
-    else{
-        popover = (
-          <Popover> </Popover>
+    const data = props.data;
+    const maxVal = props.maxVal==0? 100:props.maxVal;
+    const statsBar = data.map((statData,index)=>{
+        console.log("statData=", statData);
+        const percent = statData[1];
+        const range = statData[0];
+        let popover;
+        if(props.value){
+          const names = props.value[range];
+          let users = names.join('\n');
+          popover = (
+            <Popover>
+              <Popover.Title >Users</Popover.Title>
+              <Popover.Content>
+              { users}
+              </Popover.Content>
+            </Popover>
+          );
+        }
+        else{
+            popover = (
+              <Popover> </Popover>
+            );
+        }
+        return (
+          <div className="row">
+            <div className="col-sm-4 white">
+            <label className="data-label"> {statData[0]} </label>
+            </div>
+            <div className="col-sm-8 white">
+            <OverlayTrigger overlay={popover}>
+            <ProgressBar className="progress" now={percent} label={`${percent} `} key={index} max={maxVal} min='0'/>
+            </OverlayTrigger>
+            </div>
+          </div>
         );
-    }
-    return (
-      <div className="row">
-        <div className="col-sm-4 white">
-        <label className="data-label"> {statData[0]} </label>
-        </div>
-        <div className="col-sm-8 white">
-        <OverlayTrigger overlay={popover}>
-        <ProgressBar className="progress" now={percent} label={`${percent} `} key={index} max={maxVal} min='0'/>
-        </OverlayTrigger>
-        </div>
-      </div>
-    );
-  });
-  return(
+      });
+    return(
     <div className="statsBar">
       {statsBar}
     </div>
-  );
+    );
 }
 
 function getStats(data){
@@ -180,7 +180,6 @@ function getStats(data){
       const word = words[i];
       skipsCount[word] = 0;
       answeredCount[word] = 0;
-      //wordResponses[word] = [];
   }
   for (i=0; i < words.length; i++){
       const word = words[i];
@@ -193,16 +192,10 @@ function getStats(data){
           userAnswerCount[key] = (userAnswerCount[key]||0)+1;
           answeredCount[word] +=1;
           wordResponses=wordResponses.concat(userEntries[word].split(","))
-        //  wordResponses[word]=wordResponses[word].concat(userEntries[word].split(","))
         }
       }
-      /*wordResponses[word] = getWordFrequency(wordResponses[word]);
-      const counts = getUniqueWordsCount(wordResponses[word]);
-      uniqueWordsCount[word] = counts["uniqueCount"];
-      commonResponseCount[word] = counts["mostCommonResponse"];*/
     }
     wordResponses = getWordFrequency(wordResponses);
-    //const counts = getUniqueWordsCount(wordResponses[word]);
     return {"answeredCount": answeredCount, "skipsCount": skipsCount, "commonResponseCount":wordResponses,
     "totalUsers":totalUsers, "userAnswerCount":userAnswerCount,
     "totalWords":totalWords}
@@ -243,22 +236,6 @@ function getSortedData(data,type,count=5){
   }
   return sortedData.slice(0,count);
   }
-
-/*function getUniqueWordsCount(data){
-  let uniqueCount = 0;
-  let mostCommonResponse = 1;
-  for(const [key, value] of Object.entries(data)){
-    if(value === 1){
-      uniqueCount += 1;
-    }
-    else{
-      if(value > mostCommonResponse){
-        mostCommonResponse = value
-      }
-    }
-  }
-  return {"uniqueCount":uniqueCount, "mostCommonResponse":mostCommonResponse}
-}*/
 
 function getResponseHist(userData, totalWords) {
   const divisions = [0, 0.25, 0.5, 0.75, 1];

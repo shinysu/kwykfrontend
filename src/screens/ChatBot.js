@@ -50,12 +50,13 @@ function DisplayTest() {
   }
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const topic = sessionStorage.getItem('topic');
   return(
     <div className="container">
       <div className="row">
         <div className="col-lg-2"></div>
         <div className="col-lg-8 non-header">
-          <Header />
+          <Header topic={topic}/>
           <ShowTimeHeader/>
           <DisplayChat minutes={minutes}
                      seconds={seconds}

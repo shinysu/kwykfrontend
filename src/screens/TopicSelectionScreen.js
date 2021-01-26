@@ -7,11 +7,11 @@ import SelectionButtons from '../components/SelectionButtons';
 
 function TopicSelectionScreen(props) {
   return(
-    <div className="topics-subtopics">
-        <div className="row topics-div">
+    <div>
+        <div className="topics-div">
           <DisplayTopics getSelectedTopic={props.getSelectedTopic} styling={"topics-area"}/>
         </div>
-        <div className="row subtopics-div">
+        <div className="subtopics-div">
           <DisplaySubTopics topic={props.topic} getSelectedSubTopic={props.getSelectedSubTopic}/>
         </div>
       </div>

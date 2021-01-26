@@ -100,7 +100,7 @@ function ShowInsights(props){
   }
   const userData = props.data;
   return(
-    <div>
+    <div className='insightsview'>
       <ViewSelection getView={getView} view={selectedView}/>
       <DisplayUserData userData={userData} selectedView={selectedView}/>
     </div>
@@ -172,7 +172,8 @@ function ViewSelection(props){
     props.getView(e.target.value);
   }
   return(
-    <div className="row view-div">
+    <div className="view-div">
+    Choose a view : 
     <select className="view-select" onChange={handleChange} defaultValue={'user'} value={view}>
       <option value="user">View By Users</option>
       <option value="responses"> View By Responses </option>)

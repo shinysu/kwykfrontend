@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import * as constant from '../components/Constants'
 import '../static/css/contents.css';
+import * as utils from '../utils/jsutils'
 
 function SelectionButtons(props){
   const [clickedButton, setClickedButton] = useState("");
@@ -35,15 +36,5 @@ function TopicButton(props){
   }
   return (<button className="rounded-pill topic-btn" value={props.name}
             style={{color: props.textColor, backgroundColor: props.buttonColor}}
-            onClick={handleClick}> {convertToCamelCase(props.name)}</button>);
-}
-
-function convertToCamelCase(name) {
-  const words = name.split(" ");
-  let convertedName = "";
-  for (let i = 0; i < words.length; i++) {
-    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
-    convertedName = convertedName + " " +words[i]
-  }
-  return convertedName;
+            onClick={handleClick}> {utils.convertToCamelCase(props.name)}</button>);
 }
