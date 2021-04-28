@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from "../headers/KwykHeader";
-import UserHeader from "../headers/UserHeader";
+import SessionHeader from "../headers/SessionHeader";
 import '../static/css/error.css';
 
 function Error() {
@@ -10,7 +10,6 @@ function Error() {
         <div className="col-lg-2"></div>
         <div className="col-lg-8 chatcolor">
             <Header />
-            <UserHeader/>
             <DisplayError />
         </div>
         <div className="col-lg-2"></div>

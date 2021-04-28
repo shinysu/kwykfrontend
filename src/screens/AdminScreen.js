@@ -4,6 +4,7 @@ import '../static/css/contents.css';
 import TopicSelectionScreen from "./TopicSelectionScreen";
 import { useHistory, useLocation } from "react-router-dom";
 import AdminAccessDenied from '../components/AdminAccessDenied';
+import * as constant from '../components/Constants';
 
 function AdminScreen() {
   let history = useHistory();
@@ -27,13 +28,14 @@ function AdminScreen() {
 export default AdminScreen;
 
 function TopicSelection(){
-    const [topic,setTopic] = useState("");
+    const [session,setSession] = useState("");
     const [subtopic,setSubTopic] = useState("");
-    function getSelectedTopic(data){
-      setTopic(data);
-    }
+
     function getSelectedSubTopic(data){
       setSubTopic(data);
+    }
+    function getSelectedSession(data){
+      setSession(data);
     }
     return(
       <div className="container">
@@ -41,18 +43,19 @@ function TopicSelection(){
           <Header/>
           <div className="topics-subtopics">
             <TopicSelectionScreen
-              getSelectedTopic={getSelectedTopic}
-              topic={topic}
+              getSelectedSession={getSelectedSession}
+              topic={constant.pySkillsTopic}
+              subtopic={subtopic}
               getSelectedSubTopic={getSelectedSubTopic}
               />
-            <DisplayButton topic={topic} subtopic={subtopic}/>
+
           </div>
         </div>
       </div>
     );
 }
 
-function DisplayButton(props){
+/*function DisplayButton(props){
   let history = useHistory();
   let buttonDisplay;
   //const [buttonDisplay, setButtonDisplay] = useState("none");
@@ -71,4 +74,4 @@ function DisplayButton(props){
     <button className="next-button" value="start"
       onClick={handleClick} style={{display: buttonDisplay}}>Next >> </button>
   );
-}
+}*/

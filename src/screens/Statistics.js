@@ -4,10 +4,8 @@ import Collapse from 'react-bootstrap/Collapse';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
-import ReactWordcloud from 'react-wordcloud';
-import { Resizable } from "re-resizable";
 import '../static/css/admin.css';
-
+import ShowWordCloud from '../components/WordCloud'
 
 function Statistics(props){
   return(
@@ -74,14 +72,14 @@ function DisplayButton(props){
       </Button>
       <Collapse in={open} className="stats-data">
         <div className="chatcolor">
-          <DisplatData maxVal={props.maxVal} data={props.data} value={props.value} type={props.type}/>
+          <DisplayData maxVal={props.maxVal} data={props.data} value={props.value} type={props.type}/>
         </div>
       </Collapse>
     </div>
   );
 }
 
-function DisplatData(props) {
+function DisplayData(props) {
   if(props.type === 'progress'){
     return <ShowProgressBar maxVal={props.maxVal} data={props.data} value={props.value}/>
   }
@@ -90,42 +88,10 @@ function DisplatData(props) {
   }
 }
 
-function ShowWordCloud(props) {
-  if(props.data.length > 0){
-  const words = props.data;
-  const options = {
-    fontSizes: [5, 60],
-    rotations: 3,
-    rotationAngles: [0, 0],
-    padding: 3,
-  }
-  const resizeStyle = {
-    background: "#e4dcd4",
-    width:'100%',
-    height: '100%',
-  }
-  return (
-    <Resizable className="chatcolor"
-     defaultSize={{
-      width: '100%',
-      height: '40vh',
-    }}
-     style={resizeStyle}
-      >
-    <ReactWordcloud className="wordcloud" options={options} words={words} style={resizeStyle}/>
-    </Resizable>
-  );
-}
-else {
-return <div></div>
-}
-}
-
 function ShowProgressBar(props){
     const data = props.data;
     const maxVal = props.maxVal==0? 100:props.maxVal;
     const statsBar = data.map((statData,index)=>{
-        console.log("statData=", statData);
         const percent = statData[1];
         const range = statData[0];
         let popover;

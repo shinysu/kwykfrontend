@@ -26,7 +26,7 @@ function Routes(){
       <Route path="/feedback" render={() => <Feedback/>} />
       <Route path="/admin" exact render={() => <AdminScreen/>} />
       <Route path="/admin/:topic/:subtopic" exact render={() => <SessionSelectionScreen/>} />
-      <Route path="/insights/:topic/:subtopic" render={() =>
+      <Route path="/analytics/:subtopic" render={() =>
                 <Insights />} />
       <Route path="/error" render={() => <Error/>} />
       <Route render={() => <Page404/>} />

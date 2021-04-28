@@ -9,7 +9,8 @@ import '../static/css/chat.css';
 import * as constant from '../components/Constants'
 import usePost from "../hooks/usePost";
 import TextareaAutosize from 'react-textarea-autosize';
-import DisplayAlert from '../components/DisplayAlert'
+import DisplayAlert from '../components/DisplayAlert';
+import SessionHeader from "../headers/SessionHeader";
 
 var time;
 var currentWord = '';
@@ -36,7 +37,7 @@ export default ChatBot;
 
 function DisplayTest() {
   let chatMessages = '';
-  let prevWords = {};
+  let prevWords = [];
   if(sessionStorage.getItem('userResponses')){
     prevWords = JSON.parse(sessionStorage.getItem('userResponses'));
   }
@@ -51,12 +52,13 @@ function DisplayTest() {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const topic = sessionStorage.getItem('topic');
+  const username = sessionStorage.getItem('username');
   return(
     <div className="container">
       <div className="row">
         <div className="col-lg-2"></div>
         <div className="col-lg-8 non-header">
-          <Header topic={topic}/>
+          <Header topic={topic} username={username}/>
           <ShowTimeHeader/>
           <DisplayChat minutes={minutes}
                      seconds={seconds}
@@ -75,9 +77,7 @@ function ShowTimeHeader(){
   const minutes = parseInt(sessionStorage.getItem('minutes'));
   const seconds = parseInt(sessionStorage.getItem('seconds'));
   time=useTimer(minutes, seconds);
-  return (
-    <TimerHeader time={time}/>
-  );
+  return '';
 }
 
 
@@ -183,7 +183,8 @@ function GetWord(props){
     });
   }
   currentWord = word;
-  if(word in props.prevWords){
+  let prevWords =props.prevWords;
+  if(prevWords.includes(word)){
     return <Test word={word} addChat={props.addChat}/>
   }
   else{
@@ -224,16 +225,13 @@ function DisplayForm(props){
   const buttonText = "Skip"
   function handleClick(){
     if(userInput.length > 0){
-      let userResponses = JSON.parse(sessionStorage.getItem('userResponses'));
-      userResponses[currentWord] = userInput;
-      sessionStorage.setItem('userResponses',JSON.stringify(userResponses));
       props.getUserInput(userInput);
       props.addChat(userInput);
       setUserInput("");
-      updateAttemptedCount();
+      /*updateAttemptedCount();
       if(is_retry){
         updateSkippedCount('reduce');
-      }
+      }*/
     }
   }
   function handleChange(e){
@@ -250,9 +248,9 @@ function DisplayForm(props){
   }
   function handleSkip(e){
       props.addChat("skip")
-      if(!is_retry){
+      /*if(!is_retry){
         updateSkippedCount('add');
-      }
+      }*/
   }
 
   return(
@@ -299,7 +297,7 @@ function  UserReply(props){
   </li>);
 }
 
-function updateSkippedCount(action) {
+/*function updateSkippedCount(action) {
   let skippedCount=parseInt(sessionStorage.getItem('skipped'));
   action ==='add' ? skippedCount++ : skippedCount-- ;
   sessionStorage.setItem('skipped', skippedCount);
@@ -310,7 +308,7 @@ function updateAttemptedCount() {
   attemptedCount++;
   sessionStorage.setItem('attempted', attemptedCount);
 }
-
+*/
 function getCommand(message){
   let text;
   switch(message){

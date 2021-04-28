@@ -3,34 +3,76 @@ import { useHistory } from "react-router-dom";
 import Header from "../headers/KwykHeader";
 import TimerHeader from "../headers/TimerHeader";
 import '../static/css/stats.css';
+import useFetch from "../hooks/useFetch";
+import * as constant from '../components/Constants';
+import DisplayAlert from '../components/DisplayAlert';
 
 function UserStats(){
   let history = useHistory();
-  if(sessionStorage.getItem('useremail') == null){
+  const useremail = sessionStorage.getItem('useremail');
+  if(useremail == null){
     history.push({
       pathname:`/`
     });
     return null;
   }
   else{
-    return <StatsPage />
+    return <CheckStatsAndDisplay useremail={useremail}/>
   }
 }
 
-function StatsPage(){
-  const minutes = parseInt(sessionStorage.getItem('minutes'));
-  const seconds = parseInt(sessionStorage.getItem('seconds'));
+function CheckStatsAndDisplay(props) {
   const topic = sessionStorage.getItem('topic');
   const subtopic = sessionStorage.getItem('subtopic');
+  const url = constant.kwykURL+"user_attempts_custom/"+props.useremail+"/"+topic+"/"+subtopic;
+  const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
+  let history = useHistory();
+  if (fetchResponse.error){
+    return <DisplayAlert message={fetchResponse.error} />
+  }
+  else if ( fetchResponse.isLoading) {
+    return 'Loading...';
+  }
+  const data = fetchResponse.data;
+  const attemptedWords = data['attempted_words'];
+  const attemptedCount = attemptedWords.length;
+  const totalWords = data['topic_words'];
+  const totalWordCount = totalWords.length;
+  const skippedWordCount = totalWordCount - attemptedCount;
+  sessionStorage.setItem('userResponses',JSON.stringify(attemptedWords));
+  sessionStorage.setItem('skipped', skippedWordCount);
+  sessionStorage.setItem('attempted', attemptedCount);
+  if(skippedWordCount === 0){
+    history.push({
+        pathname:`/view_responses/${topic}/${subtopic}`
+      });
+    return null;
+  }
+  else if(attemptedCount === 0){
+    sessionStorage.setItem('retry', true);
+    history.push({
+        pathname:`/chat/${topic}/${subtopic}`
+      });
+    return null;
+  }
+  else{
+    return <StatsPage topic={topic} subtopic={subtopic}/>
+  }
+}
+
+function StatsPage(props){
+  const minutes = parseInt(sessionStorage.getItem('minutes'));
+  const seconds = parseInt(sessionStorage.getItem('seconds'));
+  const username = sessionStorage.getItem('username');
   return(
     <div className="container">
       <div className="row">
         <div className="col-lg-2"></div>
         <div className="col-lg-8 chatcolor">
-            <Header />
+            <Header username={username} />
             <ShowTimeHeader minutes={minutes} seconds={seconds}/>
-            <DisplayStats minutes={minutes} seconds={seconds} topic={topic}
-            subtopic={subtopic} />
+            <DisplayStats minutes={minutes} seconds={seconds} topic={props.topic}
+            subtopic={props.subtopic} />
         </div>
         <div className="col-lg-2"></div>
       </div>
@@ -41,9 +83,7 @@ function StatsPage(){
 export default UserStats;
 
 function ShowTimeHeader(props){
-  return (
-    <TimerHeader time={[props.minutes,props.seconds]} />
-  );
+  return '';
 }
 
 function DisplayStats(props){
@@ -55,7 +95,6 @@ function DisplayStats(props){
       skippedCount={skippedCount} attemptedCount={attemptedCount}/>
       <RetrySkips topic={props.topic} subtopic={props.subtopic} skippedCount={skippedCount}/>
       <ViewResponses topic={props.topic} subtopic={props.subtopic}/>
-      <FeedBack />
     </div>
   );
 }

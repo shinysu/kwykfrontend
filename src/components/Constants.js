@@ -11,8 +11,8 @@ export const blackColor = "#000000";
 export const darkGrey = "#959595";
 
 ///URL changes
-//export const kwykURL = "http://localhost:3001/";
-export const kwykURL = "https://shiny.kwyk.in/";
+//export const kwykURL = "http://localhost:3000/";
+export const kwykURL = "https://shinykwyk.infoassistants.com/";
 //export const kwykURL = "http://ac7c1f0d2149.ngrok.io/"
 export const postURL= kwykURL + "input_custom";
 export const loginURL = kwykURL + "login_custom";
@@ -20,4 +20,7 @@ export const pwdResetURL = kwykURL + "pwd_reset";
 export const pwdResetSuccessMsg = 'Your password has been changed! SignIn to continue';
 export const pwdResetFailedMsg = 'Email id is not registered. Signup with your email id';
 export const feedbackMessage = 'Hello! you feedback is important to us. Tell us about your experience, issues faced, ideas and suggestions for improvement'
-export const fbToEmail = 'kwyktest01@gmail.com'
+export const fbToEmail = 'kwyktest01@gmail.com';
+export const TINYMCE_APIKEY = "0h3vsxidv9gzrfe2zafqct55zkg7tfj04dke4pk5j88e3aot";
+export const pySkillsTopic = "python";
+export const pySkillsSubTopic = "python basics";

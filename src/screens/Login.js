@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import knowbotSVG from '../static/images/knowbotSVG.svg';
+import knowbotpng from '../static/images/knowbotpng.png';
 import '../static/css/login.css';
 import { Tabs, Tab, Content } from "../components/Tab";
 import * as constant from '../components/Constants'
@@ -30,7 +30,6 @@ function DisplayLogin(){
   return(
     <div className="container">
       <DisplayIcon />
-      <DisplayTitle />
       <LoginTab />
       <DisplayAlert />
     </div>
@@ -41,12 +40,24 @@ export default Login;
 
 function DisplayIcon() {
   return(
-    <div className="row ">
-        <div className="col-md-2 "></div>
-        <div className="col-md-8 window-color">
-          <img src={knowbotSVG} className="login-logo center" alt="logo" />
+    <div className="row">
+        <div className="col-lg-2"></div>
+        <div className="col-lg-8 window-color center">
+          <div className="row login">
+            <div className="col-4 window-color">
+              <img src={knowbotpng} className="login-logo" alt="logo" />
+            </div>
+            <div className="col-8 window-color">
+              <div className="row logintitle">
+                PySkills (Beta-1)
+              </div>
+              <div className="row loginsubtitle">
+                Improve your Python skills
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="col-md-2 "></div>
+        <div className="col-lg-2"></div>
     </div>
   );
 }
@@ -54,11 +65,11 @@ function DisplayIcon() {
 function DisplayTitle() {
   return(
     <div className="row ">
-        <div className="col-md-2 "></div>
-        <div className="col-md-8 window-color title">
+        <div className="col-lg-2 "></div>
+        <div className="col-lg-8 window-color title">
             Microknowledge - Little bits of knowledge
         </div>
-        <div className="col-md-2 "></div>
+        <div className="col-lg-2 "></div>
     </div>
   );
 }
@@ -74,8 +85,8 @@ function LoginTab(props){
 
   return(
     <div className="row ">
-      <div className="col-md-2 "></div>
-        <div className="col-md-8 window-color logintab">
+      <div className="col-lg-2 "></div>
+        <div className="col-lg-8 window-color logintab">
     <div className="tab-color">
       <Tabs tabcolor={constant.loginTabColor}>
         <Tab onClick={handleClick} active={active === 0} id={0} tabcolor={constant.loginTabColor}>
@@ -95,7 +106,7 @@ function LoginTab(props){
       </>
     </div>
     </div>
-    <div className="col-md-2 "></div>
+    <div className="col-lg-2 "></div>
 </div>
   );
 }
@@ -179,7 +190,7 @@ function ValidateUser(props) {
     return <DisplayAlert message={fetchResponse.error} />
   }
   else if ( fetchResponse.isLoading) {
-    return 'Loading...';
+    return <div className="window-color">Loading...</div>;
   }
   const response = fetchResponse.data;
 
@@ -216,7 +227,7 @@ function CreateNewUser(props) {
     return <DisplayAlert message={fetchResponse.error} />
   }
   else if ( fetchResponse.isLoading) {
-    return 'Loading...';
+    return <div className="window-color">Loading...</div>;
   }
   const response = fetchResponse.data;
   if (response['status'] === 'inserted'){
@@ -269,13 +280,11 @@ function DisplayAlert() {
 }
 
 function initializeSessionStorage(topic, subtopic) {
-  sessionStorage.setItem('topic', topic);
-  sessionStorage.setItem('subtopic', subtopic);
-  sessionStorage.setItem('attempted', 0);
-  sessionStorage.setItem('skipped', 0);
+  sessionStorage.setItem('topic', constant.pySkillsTopic);
+  sessionStorage.setItem('subtopic', constant.pySkillsSubTopic);
   sessionStorage.setItem('minutes', 0);
   sessionStorage.setItem('seconds', 0);
-  sessionStorage.setItem('userResponses', JSON.stringify({}));
+  sessionStorage.setItem('userResponses', JSON.stringify([]));
   sessionStorage.setItem('retry', false);
 }
 
@@ -312,11 +321,13 @@ function Redirect() {
       const topicDetail = getTopicFromURL(destination);
       const topic = topicDetail['topic'];
       const subtopic = topicDetail['subtopic'];
-      initializeSessionStorage(topic, subtopic);
+      //initializeSessionStorage(topic, subtopic);
+      initializeSessionStorage()
     }
   }
   else{
-    destination = `/topics`;
+    initializeSessionStorage()
+    destination = '/chat/'+constant.pySkillsTopic+'/'+constant.pySkillsSubTopic
   }
   history.push({
       pathname:destination

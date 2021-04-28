@@ -8,7 +8,7 @@ import SelectionButtons from '../components/SelectionButtons';
 import Header from "../headers/KwykHeader";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
-function SessionSelectionScreen() {
+/*function SessionSelectionScreen() {
   const urlSplit = window.location.href.split("/")
   const topic = urlSplit[urlSplit.length-2]
   const subtopic = urlSplit[urlSplit.length-1]
@@ -26,9 +26,9 @@ function SessionSelectionScreen() {
       </div>
     </div>
   );
-}
+}*/
 
-export default SessionSelectionScreen;
+
 
 function DisplaySessions(props){
   const [session,setSession] = useState("");
@@ -49,59 +49,36 @@ function DisplaySessions(props){
   for(var k in sessions_details){
     sessions.push(sessions_details[k]['session_name']);
   }
-  return (
-    <div className="subtopics">
-     <div className="admin-session">
-      <DisplayMessage message={message}/>
-      <SelectionButtons topics={sessions} getSelectedTopic={getSelectedSession}
-        styling={props.styling}/>
-      <ShowTestLink topic={props.topic} subtopic={props.subtopic}
-        session={getSessionSlug(sessions_details,session)}/>
+  if(props.subtopic){
+    return (
+      <div className="subtopics">
+        <DisplayMessage message={message}/>
+        <SelectionButtons topics={sessions} getSelectedTopic={getSelectedSession}
+          styling={props.styling}/>
+        <ShowTestLink topic={props.topic} subtopic={props.subtopic}
+          session={getSessionSlug(sessions_details,session)}/>
+        <DisplayButton topic={constant.pySkillsTopic} subtopic={props.subtopic}
+          sessionname={session} sessionslug={getSessionSlug(sessions_details,session)}/>
       </div>
-      <DisplayButton topic={props.topic} subtopic={props.subtopic} sessionname={session}
-          sessionslug={getSessionSlug(sessions_details,session)}
-          />
-    </div>
-  );
+    );
+  }
+  else{
+    return(
+      <div className="subtopics">
+        <DisplayMessage message=""/>
+      </div>
+    );
+  }
+
 }
+
+export default DisplaySessions;
 
 function DisplayMessage(props){
   return(
     <div className="info-text">
     <br />
       {props.message}
-    </div>
-  );
-}
-
-function DisplayButton(props){
-  let history = useHistory();
-  let buttonDisplay;
-  //const [buttonDisplay, setButtonDisplay] = useState("none");
-  if(props.subtopic){
-    buttonDisplay ="block";
-  }
-  else{
-    buttonDisplay ="none";
-  }
-  function handleClick(e){
-    let pathname = '';
-    if (props.sessionslug !== ''){
-      pathname='/insights/'+props.topic+'/'+props.subtopic+'/'+props.sessionslug
-    }
-    else{
-      pathname='/insights/'+props.topic+'/'+props.subtopic
-    }
-    history.push({
-      pathname:pathname
-    });
-
-      //history.push('/'+props.topic+'/'+props.subtopic);
-  }
-  return(
-    <div className='session-btn-div'>
-      <button className="stats-button" value="start"
-        onClick={handleClick} style={{display: buttonDisplay}}>View Statistics</button>
     </div>
   );
 }
@@ -113,10 +90,10 @@ function ShowTestLink(props) {
   const basename = window.location.href.split("admin")[0];
   let url = '';
   if(props.session){
-    url  = basename.split('#')[0]+'?session='+props.session+'/#/chat/'+props.topic+'/'+props.subtopic
+    url  = basename.split('#')[0]+'?session='+props.session
   }
   else{
-    url  = basename+'chat/'+props.topic+'/'+props.subtopic
+    url  = basename
   }
 
   function handleClick(e) {
@@ -136,6 +113,37 @@ function ShowTestLink(props) {
        </CopyToClipboard>
        <span className="copytext">{copySuccess}</span>
       </div>
+    </div>
+  );
+}
+
+function DisplayButton(props){
+  let history = useHistory();
+  let buttonDisplay;
+  if(props.subtopic){
+    buttonDisplay ="block";
+  }
+  else{
+    buttonDisplay ="none";
+  }
+  function handleClick(e){
+    let pathname = '';
+    if (props.sessionslug !== ''){
+      pathname='/analytics/'+props.subtopic+'/'+props.sessionslug
+    }
+    else{
+      pathname='/analytics/'+props.subtopic
+    }
+    history.push({
+      pathname:pathname
+    });
+
+      //history.push('/'+props.topic+'/'+props.subtopic);
+  }
+  return(
+    <div className='session-btn-div'>
+      <button className="stats-button" value="start"
+        onClick={handleClick} style={{display: buttonDisplay}}>View Statistics</button>
     </div>
   );
 }

@@ -4,15 +4,19 @@ import useFetch from "../hooks/useFetch";
 import '../static/css/contents.css';
 import DisplayAlert from '../components/DisplayAlert';
 import SelectionButtons from '../components/SelectionButtons';
+import DisplaySessions from "./SessionSelectionScreen";
 
 function TopicSelectionScreen(props) {
   return(
     <div>
         <div className="topics-div">
-          <DisplayTopics getSelectedTopic={props.getSelectedTopic} styling={"topics-area"}/>
+          <DisplaySubTopics getSelectedSubTopic={props.getSelectedSubTopic}
+            styling={"topics-area"}
+          />
         </div>
         <div className="subtopics-div">
-          <DisplaySubTopics topic={props.topic} getSelectedSubTopic={props.getSelectedSubTopic}/>
+          <DisplaySessions subtopic={props.subtopic}
+          styling={"subtopics-area"}/>
         </div>
       </div>
   );
@@ -29,7 +33,31 @@ function DisplayMessage(props){
   );
 }
 
-function DisplayTopics(props){
+function DisplaySubTopics(props){
+  return(
+      <div className="subtopics">
+      <DisplayMessage message="Please choose a topic ..."/>
+      <GetSubTopics getSelectedSubTopic={props.getSelectedSubTopic}
+                styling={props.styling}/>
+      </div>
+  );
+}
+
+function GetSubTopics(props){
+  const url = constant.kwykURL+"get/"+constant.pySkillsTopic+"/subtopics";
+
+  const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
+  if (fetchResponse.error){
+    return <DisplayAlert message={fetchResponse.error}/>
+  }
+  else if ( fetchResponse.isLoading) {
+    return 'Loading...';
+  }
+  const subtopics = fetchResponse.data
+  return <SelectionButtons topics={subtopics} getSelectedTopic={props.getSelectedSubTopic} styling={props.styling}/>;
+}
+
+/*function DisplayTopics(props){
   const url = constant.kwykURL+"get/topics/custom";
   const message = "Please choose a topic ..."
   const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
@@ -48,15 +76,15 @@ function DisplayTopics(props){
     </div>
   );
 }
+*/
 
-
-function DisplaySubTopics(props){
-  if(props.topic){
+/*function DisplaySubTopics(props){
+  //if(props.topic){
     return(
       <div className="subtopics">
-      <DisplayMessage message="Choose your subtopic"/>
-      <GetSubTopics getSelectedSubTopic={props.getSelectedSubTopic} topic={props.topic}
-                styling={"subtopics-area"}/>
+      <DisplayMessage message="Please choose a topic ..."/>
+      <GetSubTopics getSelectedSubTopic={props.getSelectedSubTopic}
+                styling={props.styling}/>
       </div>
     );
   }
@@ -68,19 +96,4 @@ function DisplaySubTopics(props){
       </div>
     );
   }
-}
-
-
-function GetSubTopics(props){
-  const url = constant.kwykURL+"get/"+props.topic+"/subtopics";
-
-  const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
-  if (fetchResponse.error){
-    return <DisplayAlert message={fetchResponse.error}/>
-  }
-  else if ( fetchResponse.isLoading) {
-    return 'Loading...';
-  }
-  const subtopics = fetchResponse.data
-  return <SelectionButtons topics={subtopics} getSelectedTopic={props.getSelectedSubTopic} styling={props.styling}/>;
-}
+}*/

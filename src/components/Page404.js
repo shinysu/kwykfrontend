@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from "../headers/KwykHeader";
-import UserHeader from "../headers/UserHeader";
+import SessionHeader from "../headers/SessionHeader";
 import '../static/css/error.css';
 
 function Page404() {
@@ -11,7 +11,6 @@ function Page404() {
         <div className="col-sm-2"></div>
         <div className="col-sm-8 chatcolor">
             <Header />
-            <UserHeader/>
             <Display404 />
         </div>
         <div className="col-sm-2"></div>
@@ -23,7 +22,7 @@ function Display404() {
   return(
     <div className='error'>
        <h2><div className='message'>Error: 404 - Page not found</div></h2>
-       <Link to='/topics'>
+       <Link to='/'>
        <div className='link'>Home</div>
        </Link>
     </div>

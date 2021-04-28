@@ -64,6 +64,7 @@ button:focus{
   background-color: #ede2d5 !important;
   overflow-y: auto;
   height: 85vh !important;
+  width: 100%;
 }
 
 .topics-div{
@@ -72,13 +73,14 @@ button:focus{
 }
 
 .subtopics-div{
-  background-color: #ede2d5;
+  background-color: #ede2d5 !important;
   overflow-y: auto;
 }
 
 .subtopics{
   width: 100%;
   overflow-y: auto;
+  background-color: #ede2d5 !important;
 }
 
 @media (min-width: 768px){

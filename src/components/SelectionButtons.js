@@ -13,10 +13,10 @@ function SelectionButtons(props){
   }
   if (props.styling === "topics-area"){
     if(clickedButton === ""){
-      height = "50vh";
+      height = "40vh";
     }
     else {
-      height = "22vh";
+      height = "12vh";
     }
   }
 

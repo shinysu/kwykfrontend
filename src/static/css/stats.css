@@ -96,6 +96,7 @@
   color: #ffffff;
   font-size: 1.2em;
   font-family: "Helvetica";
+  padding-left: 2vw;
 }
 
 .topic-text{
@@ -152,7 +153,16 @@
 .responses-area{
   width: 100%;
   height: 65vh;
-  background-color: #ede2d5;
+  background-color: #ede2d5 !important;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 1vh;
+}
+
+.explanation-area{
+  width: 100%;
+  height: 70vh;
+  background-color: #ffffff !important;
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 1vh;

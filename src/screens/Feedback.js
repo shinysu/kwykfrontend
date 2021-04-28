@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import { useHistory } from "react-router-dom";
 import Header from "../headers/KwykHeader";
-import UserHeader from "../headers/UserHeader";
+import SessionHeader from "../headers/SessionHeader";
 import '../static/css/feedback.css';
 import * as constant from '../components/Constants'
 function Feedback() {
@@ -11,7 +11,6 @@ function Feedback() {
         <div className="col-lg-2"></div>
         <div className="col-lg-8">
           <Header />
-          <UserHeader />
           <ShowTemplate />
         </div>
       <div className="col-lg-2"></div>
@@ -30,14 +29,13 @@ function ShowTemplate() {
   }
 
   function handleSubmit(e) {
-    console.log("clicked");
     e.preventDefault();
     const serviceID = 'default_service';
     const templateId = 'template_09oi0b1';
     sendFeedback(serviceID,templateId, {message: userInput, from_name:username, reply_to: constant.fbToEmail});
     setUserInput("");
     history.push({
-      pathname:`/topics`
+      pathname:`/`
     });
   }
   return(

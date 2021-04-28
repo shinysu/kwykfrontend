@@ -48,13 +48,13 @@ function StatisticsTab(props){
       setActive(index);
     }
   };
-  let urlSplit = window.location.href.split("insights/")[1].split('/')
+  let urlSplit = window.location.href.split("analytics/")[1].split('/')
   urlSplit = urlSplit.filter(item => item);
-  const topic = urlSplit[0];
-  const subtopic = urlSplit[1];
+  const topic = constant.pySkillsTopic;
+  const subtopic = urlSplit[0];
   var url = '';
-  if(urlSplit.length > 2){
-    const session = urlSplit[2];
+  if(urlSplit.length > 1){
+    const session = urlSplit[1];
     url = constant.kwykURL+"admin/user_data_custom/"+topic+"/"+subtopic+"/"+session;
   }
   else{
@@ -75,10 +75,10 @@ function StatisticsTab(props){
     <div className="tab-color">
       <Tabs tabcolor={constant.adminTabColor}>
         <Tab onClick={handleClick} active={active === 0} id={0} tabcolor={constant.adminTabColor}>
-          STATISTICS
+          Statistics
         </Tab>
         <Tab onClick={handleClick} active={active === 1} id={1} tabcolor={constant.adminTabColor}>
-          INSIGHTS
+          Insights
         </Tab>
       </Tabs>
       <>
@@ -173,7 +173,7 @@ function ViewSelection(props){
   }
   return(
     <div className="view-div">
-    Choose a view : 
+    Choose a view :
     <select className="view-select" onChange={handleChange} defaultValue={'user'} value={view}>
       <option value="user">View By Users</option>
       <option value="responses"> View By Responses </option>)

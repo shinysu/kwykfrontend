@@ -8,10 +8,20 @@
   src: url('../fonts/Helvetica.ttf');
 }
 
+.logo-right{
+  display: block;
+  text-align: right;
+}
+
 .login-logo{
-  height: 150px;
+  height: 20vh;
+  padding-top: 10vh;
+  padding-left: 3vh;
   background-color: #ffffff;
-  padding: 20px;
+}
+
+.login{
+  height: 30vh;
 }
 
 .window-color{
@@ -24,15 +34,51 @@
   margin-right: auto;
 }
 
+.left{
+  display: block;
+  text-align: left;
+}
+
 .title {
   font-family: 'Helvetica';
-  font-size:1.3em;
+  font-size:1.1em;
   font-weight: bolder;
   color: 0;
   text-align: center;
   background-color: #ffffff;
-  padding-bottom: 3vh;
+  padding-left: 2vw;
 }
+
+.subtitle {
+  font-family: 'Helvetica';
+  font-size:0.9em;
+  color: 0;
+  text-align: center;
+  background-color: #ffffff;
+  padding-top: 0.5vh;
+  padding-left: 2vw;
+}
+
+.logintitle {
+  font-family: 'Helvetica';
+  font-size:1.1em;
+  font-weight: bolder;
+  color: 0;
+  text-align: center;
+  background-color: #ffffff;
+  padding-top: 12vh;
+}
+
+.loginsubtitle {
+  font-family: 'Helvetica';
+  font-size:0.9em;
+  color: 0;
+  text-align: center;
+  background-color: #ffffff;
+  padding-top: 1vh;
+
+}
+
 
 .logintab{
   padding: 2vh;
@@ -126,4 +172,36 @@ label{
   font-family: "Helvetica";
   font-size: 1.1em;
   padding-top: 7vh;
+}
+
+@media (min-width: 768px){
+  .login-logo{
+    height: 13vh;
+    padding-top: 0vh;
+    padding-left: 1vh;
+    background-color: #ffffff;
+    height: 13vh;
+    background-color: #ffffff;
+    margin: 10vh;
+  }
+
+  .logintitle {
+    font-family: 'Helvetica';
+    font-size:1.4em;
+    font-weight: bolder;
+    color: 0;
+    text-align: center;
+    background-color: #ffffff;
+    padding-top: 12vh;
+  }
+
+  .loginsubtitle {
+    font-family: 'Helvetica';
+    font-size:1.1em;
+    color: 0;
+    text-align: center;
+    background-color: #ffffff;
+    padding-top: 1vh;
+
+  }
 }

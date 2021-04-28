@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Header from "../headers/KwykHeader";
-import UserHeader from "../headers/UserHeader";
+import SessionHeader from "../headers/SessionHeader";
 import { useHistory, useLocation } from "react-router-dom";
 import '../static/css/contents.css';
 import TopicSelectionScreen from "./TopicSelectionScreen";
@@ -36,7 +36,6 @@ function TopicSelection(){
           <div className="col-lg-2"></div>
             <div className="col-lg-8 non-header">
               <Header />
-              <UserHeader />
               <TopicSelectionScreen
                   getSelectedTopic={getSelectedTopic}
                   topic={topic}
@@ -78,10 +77,8 @@ function DisplayStartButton(props){
 function initializeSessionStorage(topic, subtopic) {
   sessionStorage.setItem('topic', topic);
   sessionStorage.setItem('subtopic', subtopic);
-  sessionStorage.setItem('attempted', 0);
-  sessionStorage.setItem('skipped', 0);
   sessionStorage.setItem('minutes', 0);
   sessionStorage.setItem('seconds', 0);
-  sessionStorage.setItem('userResponses', JSON.stringify({}));
+  sessionStorage.setItem('userResponses', JSON.stringify([]));
   sessionStorage.setItem('retry', false);
 }
