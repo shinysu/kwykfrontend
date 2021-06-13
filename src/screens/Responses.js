@@ -12,6 +12,7 @@ import ShowWordCloud from '../components/WordCloud'
 import ShowExplanation from "./Explanations";
 import * as utils from '../utils/jsutils';
 import TopicHeader from "../headers/TopicHeader";
+import useGetAttempted from "../hooks/useGetAttempted";
 
 function Responses() {
   let history = useHistory();
@@ -30,6 +31,8 @@ function ShowResponsePage() {
   const topic = sessionStorage.getItem('topic');
   const subtopic = sessionStorage.getItem('subtopic');
   const username = sessionStorage.getItem('username');
+  const useremail = sessionStorage.getItem('useremail');
+  useGetAttempted(useremail);
   return (
     <div className="container">
       <div className="row">
@@ -60,7 +63,7 @@ function ResponsesTab(props){
     <div className="tab-color">
       <Tabs tabcolor={constant.adminTabColor}>
         <Tab onClick={handleClick} active={active === 0} id={0} tabcolor={constant.adminTabColor}>
-          Responses
+          Popular Responses
         </Tab>
         <Tab onClick={handleClick} active={active === 1} id={1} tabcolor={constant.adminTabColor}>
           Explanation
@@ -90,6 +93,7 @@ function ShowResponses(props){
     return 'Loading...';
   }
   const data = fetchResponse.data
+
   const topicUserWords = JSON.parse(sessionStorage.getItem('userResponses'));
   const topicWordsResponses = data["topic_answers"];
   const topicWords = topicWordsResponses["topic_words"];
@@ -117,10 +121,12 @@ function ShowResponses(props){
 function DisplayWordResponses(props){
   const userWords = props.topicUserWords[props.word];
   const topWords = props.topicTopWords[props.word];
+  const size = topWords.length > 20 ? 20 : topWords.length
+
   return(
     <div className="word-response">
     <label className="topicname">{props.word}</label>
-    <ShowWordCloud data={topWords} />
+    <ShowWordCloud data={topWords.slice(0, size)} />
     </div>
   );
 }

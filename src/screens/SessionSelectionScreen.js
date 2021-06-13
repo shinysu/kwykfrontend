@@ -90,7 +90,7 @@ function ShowTestLink(props) {
   const basename = window.location.href.split("admin")[0];
   let url = '';
   if(props.session){
-    url  = basename.split('#')[0]+'?session='+props.session
+    url  = basename.split('#')[0]+'?session='+props.session+'/';
   }
   else{
     url  = basename

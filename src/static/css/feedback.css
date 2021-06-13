@@ -10,12 +10,21 @@
   padding: 2vh;
   margin-left: 3vh;
   margin-right: 3vh;
-  background-color: #ede2d5;
+  background-color: #ede2d5 !important;
 }
 
+.fbtlabel{
+  font-size: 1.5em;
+  font-family: "Helvetica";
+  color: #000000;
+  padding: 2vh;
+  margin-left: 3vh;
+  margin-right: 3vh;
+  background-color: #ede2d5 !important;
+}
 .fbarea{
-  background-color: #ede2d5;
-  height: 75vh;
+  background-color: #ede2d5 !important;
+  height: 80vh;
 }
 
 .blank{

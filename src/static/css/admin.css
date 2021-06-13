@@ -103,7 +103,7 @@ th.data{
   }
 
 .lightgreen{
-  background-color: #ede2d5;
+  background-color: #ede2d5 !important;
 }
 
 .data-label{
@@ -190,6 +190,7 @@ thead th:first-child {
 .testlink{
   background-color: #ede2d5 !important;
   color: #000000;
+  padding-top: 2vh;
 }
 
 .linklabel{
@@ -242,6 +243,43 @@ thead th:first-child {
 .admin-session{
   height: 78vh !important;
   background-color: #ede2d5!important;
+}
+
+.square{
+  display: flex;
+  width: 8px;
+  height: 8px;
+  margin-right: 1vh;
+  margin-left: 2vw;
+  margin-top: 1vh;
+}
+.red{
+  background-color: red;
+}
+
+.green{
+  background-color: green;
+}
+
+.adminview-div{
+  margin-top: 1vh;
+  margin-right: 1vh;
+  margin-left: 3vh;
+  margin-bottom: 1vh;
+  text-align: left;
+  background-color: #ede2d5 !important;
+  padding-right: 5vw;
+  font-size: 1.2em;
+}
+
+.view{
+  height: 5vh;
+  width: 100%;
+}
+
+.legend{
+  font-size: 0.8em;
+  background-color: #ede2d5;
 }
 
 @media (min-width: 768px){
@@ -304,6 +342,7 @@ thead th:first-child {
   .testlink{
     background-color: #ede2d5 !important;
     color: #000000;
+    padding-top: 2vh;
   }
 
   .linklabel{
@@ -334,5 +373,13 @@ thead th:first-child {
     font-size: 1em;
     padding-left: 0.5vw;
     background-color: #ede2d5!important;
+  }
+  .square{
+    display: flex;
+    width: 10px;
+    height: 10px;
+    margin-right: 1vh;
+    margin-top: 1vh;
+    margin-left: 2vw;
   }
 }

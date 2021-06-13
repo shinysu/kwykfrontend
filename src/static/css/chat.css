@@ -67,7 +67,7 @@ ul,li{
 }
 
 .ideabutton{
-  width:9%;
+  width:8%;
   display: inline;
   position: relative;
   height: 100%;
@@ -87,7 +87,7 @@ ul,li{
   text-align: left;
   color: #757575;
   font-family: "Helvetica";
-  font-size:0.9em;
+  font-size:0.8em;
   height: auto;
   border: none;
   border-radius: 25%;
@@ -96,8 +96,21 @@ ul,li{
   text-align: center;
   position: relative;
   background-color: #ede2d5;
-  margin-right: 1vw;
-  margin-left: 1vw;
+
+}
+.skipallbutton{
+  text-align: left;
+  color: #757575;
+  font-family: "Helvetica";
+  font-size:0.8em;
+  height: auto;
+  border: none;
+  border-radius: 25%;
+  width:14%;
+  display: inline;
+  text-align: center;
+  position: relative;
+  background-color: #ede2d5;
 }
 
 .input-area{
@@ -127,7 +140,7 @@ ul,li{
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
-  width: 60%;
+  width: 50%;
   font-family: "Helvetica";
   padding-top: 1vh;
   padding-bottom: 1vh;
@@ -174,7 +187,6 @@ ul,li{
   }
   .ideabutton{
     width:5%;
-    padding: 1vh;
     background-color: #ede2d5 !important;
     border-radius: 20px;
     border-color: #000000;
@@ -199,9 +211,21 @@ ul,li{
     color: #757575;
     font-weight: bold;
     font-family: "Helvetica";
-    font-size:1.1em;
-    margin-right: 1vh;
-    border-radius: 20px;
+    font-size:1em;
+
+  }
+  .skipallbutton{
+    width:8%;
+    display: inline;
+    text-align: center;
+    position: relative;
+    height: 100%;
+    background-color: #ede2d5 !important;
+    color: #757575;
+    font-weight: bold;
+    font-family: "Helvetica";
+    font-size:0.9em;
+
   }
 
   .input-area{
@@ -219,7 +243,7 @@ ul,li{
     background-color: #ffffff;
     border-radius: 10px;
     position: relative;
-    width: 70%;
+    width: 60%;
     font-family: "Helvetica";
     padding-top: 1vh;
     padding-bottom: 1vh;

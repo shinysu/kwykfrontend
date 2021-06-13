@@ -66,6 +66,11 @@ function DisplayDropDown() {
         pathname:`/feedback`
       });
     }
+  function handleAbout() {
+    history.push({
+      pathname:`/about`
+    });
+  }
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
     href=""
@@ -88,6 +93,7 @@ function DisplayDropDown() {
   <Dropdown style={{backgroundColor: constant.whiteColor}}>
         <Dropdown.Toggle as={CustomToggle} />
         <Dropdown.Menu size="sm" title="">
+          <Dropdown.Item href="#" onClick={handleAbout} className="ellipsismenu">About Us</Dropdown.Item>
           <Dropdown.Item href="#" onClick={handleFeedback} className="ellipsismenu">FeedBack</Dropdown.Item>
           <Dropdown.Item href="#" onClick={handleLogout} className="ellipsismenu">Logout</Dropdown.Item>
         </Dropdown.Menu>

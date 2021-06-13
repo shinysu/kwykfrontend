@@ -32,3 +32,10 @@
   font-size: 1.2em;
   background-color: #ffffff;
 }
+
+.thanks{
+    text-align: center;
+    background-color: #ffffff;
+    height: 80vh;
+    padding-top: 30vh;
+}

@@ -67,7 +67,7 @@ function DisplayTitle() {
     <div className="row ">
         <div className="col-lg-2 "></div>
         <div className="col-lg-8 window-color title">
-            Microknowledge - Little bits of knowledge
+            PySkills - Improve your Python skills
         </div>
         <div className="col-lg-2 "></div>
     </div>
@@ -286,6 +286,7 @@ function initializeSessionStorage(topic, subtopic) {
   sessionStorage.setItem('seconds', 0);
   sessionStorage.setItem('userResponses', JSON.stringify([]));
   sessionStorage.setItem('retry', false);
+  sessionStorage.setItem('skipall', false);
 }
 
 function getTopicFromURL(destination) {

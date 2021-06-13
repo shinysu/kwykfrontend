@@ -3,43 +3,34 @@ import { useHistory } from "react-router-dom";
 import Header from "../headers/KwykHeader";
 import TimerHeader from "../headers/TimerHeader";
 import '../static/css/stats.css';
+import useFetch from "../hooks/useFetch";
 import * as constant from '../components/Constants';
 import DisplayAlert from '../components/DisplayAlert';
-import useGetAttempted from "../hooks/useGetAttempted";
-
 
 function UserStats(){
   let history = useHistory();
+  const topic = sessionStorage.getItem('topic');
+  const subtopic = sessionStorage.getItem('subtopic');
   const useremail = sessionStorage.getItem('useremail');
-  if(useremail == null){
+  const url = constant.kwykURL+"user_attempts_custom/"+useremail+"/"+topic+"/"+subtopic;
+  const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
+  if (fetchResponse.error){
+    return <DisplayAlert message={fetchResponse.error} />
+  }
+  else if ( fetchResponse.isLoading) {
+    return 'Loading...';
+  }
+  const data = fetchResponse.data
+
+  if(sessionStorage.getItem('useremail') == null){
     history.push({
       pathname:`/`
     });
     return null;
   }
-  else{
-    return <CheckStatsAndDisplay useremail={useremail}/>
-  }
-}
-
-function CheckStatsAndDisplay(props) {
-  const topic = sessionStorage.getItem('topic');
-  const subtopic = sessionStorage.getItem('subtopic');
-  const useremail = sessionStorage.getItem('useremail');
-  useGetAttempted(useremail);
-  const attemptedCount = parseInt(sessionStorage.getItem('attempted'));
-  const skippedWordCount = parseInt(sessionStorage.getItem('skipped'));
-  let history = useHistory();
-  if(skippedWordCount === 0){
+  else if(skippedCount === 0){
     history.push({
         pathname:`/view_responses/${topic}/${subtopic}`
-      });
-    return null;
-  }
-  else if(attemptedCount === 0 && (sessionStorage.getItem('skipall') === 'false')){
-    sessionStorage.setItem('retry', true);
-    history.push({
-        pathname:`/chat/${topic}/${subtopic}`
       });
     return null;
   }
@@ -186,4 +177,9 @@ function DisplayScore(props){
       </div>
     </div>
   );
+}
+
+function GetAttemptedCount(props) {
+
+
 }

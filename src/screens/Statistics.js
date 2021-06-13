@@ -80,11 +80,17 @@ function DisplayButton(props){
 }
 
 function DisplayData(props) {
+
+  let data = props.data;
+  data.sort(function(a,b) {
+    return b.value - a.value
+  });
+  const size = data.length > 30 ? 30 : data.length
   if(props.type === 'progress'){
     return <ShowProgressBar maxVal={props.maxVal} data={props.data} value={props.value}/>
   }
   else{
-    return <ShowWordCloud maxVal={props.maxVal} data={props.data} />
+    return <ShowWordCloud maxVal={props.maxVal} data={data.slice(0, size)} />
   }
 }
 

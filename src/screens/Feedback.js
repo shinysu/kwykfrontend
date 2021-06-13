@@ -32,10 +32,11 @@ function ShowTemplate() {
     e.preventDefault();
     const serviceID = 'default_service';
     const templateId = 'template_09oi0b1';
-    sendFeedback(serviceID,templateId, {message: userInput, from_name:username, reply_to: constant.fbToEmail});
+    sendFeedback(serviceID,templateId, {message: userInput, from_name:username, reply_to: "<kwyktest01@gmail.com>, <dorait@gmail.com>, <ashish@imorph.com>, <shiny.suresh@gmail.com>"});
     setUserInput("");
+    //sessionStorage.clear();
     history.push({
-      pathname:`/`
+      pathname:`/thanks`
     });
   }
   return(

@@ -7,11 +7,13 @@ import Responses from '../screens/Responses'
 import Insights from '../screens/Insights'
 import Login from "../screens/Login";
 import Feedback from "../screens/Feedback";
+import About from "../screens/About";
 import PasswordReset from './PasswordReset';
 import Page404 from './Page404';
 import AdminScreen from "../screens/AdminScreen"
 import SessionSelectionScreen from "../screens/SessionSelectionScreen"
 import Error from './Error';
+import FeedbackThanks from './FeedbackThanks';
 
 function Routes(){
     return(
@@ -24,11 +26,13 @@ function Routes(){
       <Route path="/user_stats/:topic/:subtopic" render={() => <UserStats/>} />
       <Route path="/view_responses/:topic/:subtopic" render={() => <Responses/>} />
       <Route path="/feedback" render={() => <Feedback/>} />
+      <Route path="/about" render={() => <About/>} />
       <Route path="/admin" exact render={() => <AdminScreen/>} />
       <Route path="/admin/:topic/:subtopic" exact render={() => <SessionSelectionScreen/>} />
       <Route path="/analytics/:subtopic" render={() =>
                 <Insights />} />
       <Route path="/error" render={() => <Error/>} />
+      <Route path="/thanks" exact render={() => <FeedbackThanks/>} />
       <Route render={() => <Page404/>} />
       </Switch>
       </Router>

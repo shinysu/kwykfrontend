@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "Helvetica";
+  src: url('../fonts/Helvetica.ttf');
+}
+
+
+.aboutarea{
+  background-color: #ede2d5;
+  height: 75vh;
+}
+
+.wrap{
+  white-space: pre-wrap;
+}

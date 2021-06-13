@@ -101,7 +101,14 @@ function ShowInsights(props){
   const userData = props.data;
   return(
     <div className='insightsview'>
-      <ViewSelection getView={getView} view={selectedView}/>
+      <div className="adminview-div row">
+        <div className="col-lg-3 lightgreen">
+          <ViewSelection getView={getView} view={selectedView}/>
+        </div>
+        <div className="col-lg-9 lightgreen">
+          <ShowLegends selectedView={selectedView}/>
+        </div>
+      </div>
       <DisplayUserData userData={userData} selectedView={selectedView}/>
     </div>
   );
@@ -172,12 +179,16 @@ function ViewSelection(props){
     props.getView(e.target.value);
   }
   return(
-    <div className="view-div">
-    Choose a view :
-    <select className="view-select" onChange={handleChange} defaultValue={'user'} value={view}>
-      <option value="user">View By Users</option>
-      <option value="responses"> View By Responses </option>)
-    </select>
+    <div>
+    <div className="view lightgreen">
+        Choose a view :
+      </div>
+      <div className="view lightgreen">
+        <select className="view-select" onChange={handleChange} defaultValue={'user'} value={view}>
+          <option value="user">View By Users</option>
+          <option value="responses"> View By Responses </option>)
+        </select>
+      </div>
     </div>
   );
 }
@@ -187,7 +198,7 @@ function getHeaderWords(data, view) {
   const totalUsers = Object.keys(userWords).length;
   const divisions = [0, 0.25, 0.5, 0.75, 1];
   const userDivisions = divisions.map((value,index) =>{
-    return `${Math.round(divisions[index] * totalUsers)}`
+    return `${(divisions[index] * totalUsers)}`
   });
   let headerWords=[];
   let limits = [];
@@ -210,10 +221,10 @@ function ViewByUsers(props){
       const userVal = userData[user];
       const userInput = words.map((word,index)=>{
         if(userVal[word]){
-          return <td style={{backgroundColor:"#b2de83"}} key={index}></td>;
+          return <td style={{backgroundColor:constant.userInsightGreen}} key={index}></td>;
         }
         else {
-          return <td style={{backgroundColor:"#c35c14"}} key={index}></td>;
+          return <td style={{backgroundColor:constant.userInsightRed}} key={index}></td>;
         }
       });
       return(
@@ -272,38 +283,110 @@ function getWordResponseCount(word, userData){
 }
 
 function getLimits(totalUsers, userDivisions){
-  let headerWords=[];
+  //let headerWords=[];
   let limits = [];
-  if(totalUsers < 5){
+  const headerWords = ["0 %", "1 - 25 %", "26 - 50 %", "51 - 75 %", "76 - 99 %", "100 %"]
+  /*if(totalUsers < 5){
     for(var i=0; i<=totalUsers; i++ ){
       limits.push([i,i]);
-      headerWords.push(i);
+      //headerWords.push(actualDivisions[i]);
     }
   }
-  else{
-    headerWords.push(0);
+  else{*/
+    //headerWords.push(actualDivisions[0]);
     limits.push([0,0])
     for(let index = 1; index < userDivisions.length; index++){
-      let begin = parseInt(userDivisions[index-1]) + 1;
-      let end = parseInt(userDivisions[index]);
+      let begin = parseFloat(userDivisions[index-1]) + 0.1;
+      let end = parseFloat(userDivisions[index]);
       if(end === totalUsers){
-        end = end-1;
+        end = end - 0.1;
       }
+
       if(end < begin){
         break;
       }
       if(begin === end){
-        headerWords.push(end);
+        //headerWords.push(end);
         limits.push([end, end]);
       }
       else{
-        headerWords.push(`${begin} - ${end}` );
+        //headerWords.push(`${begin} - ${end}` );
         limits.push([begin, end]);
       }
 
     }
-    headerWords.push(totalUsers);
+    //headerWords.push(actualDivisions[5]);
+    //headerWords.push(totalUsers);
     limits.push([totalUsers, totalUsers]);
-  }
+  //}
   return {"headerWords":headerWords, "limits":limits};
+}
+
+function ViewByUsersLegend() {
+  return (
+    <div className="legend">
+      <div className="row lightgreen">
+        <span class="square" style={{backgroundColor:constant.userInsightGreen}}> </span>
+        answered
+        <span class="square" style={{backgroundColor:constant.userInsightRed}}> </span>
+        unanswered
+      </div>
+    </div>
+  );
+}
+
+function ViewByResponsesLegend() {
+  return (
+    <div className=" legend">
+      <div className="row" >
+      <div className="col-md-4">
+      <div className="row lightgreen">
+        <span class="square" style={{backgroundColor:constant.tableColors[0]}}> </span>
+        No users attempted
+      </div>
+      </div>
+      <div className="col-md-4">
+      <div className="row lightgreen">
+        <span class="square" style={{backgroundColor:constant.tableColors[1]}}> </span>
+        {"<"} 25% users attempted
+      </div>
+      </div>
+      <div className="col-md-4">
+      <div className="row lightgreen">
+        <span class="square" style={{backgroundColor:constant.tableColors[2]}}> </span>
+        26 - 50% users
+      </div>
+      </div>
+      </div>
+      <div className="row" >
+      <div className="col-md-4">
+      <div className="row lightgreen">
+        <span class="square" style={{backgroundColor:constant.tableColors[3]}}> </span>
+        51 - 75% users
+      </div>
+      </div>
+      <div className="col-md-4">
+      <div className="row lightgreen">
+        <span class="square" style={{backgroundColor:constant.tableColors[4]}}> </span>
+        76 - 99% users
+      </div>
+      </div>
+      <div className="col-md-4">
+      <div className="row lightgreen">
+        <span class="square" style={{backgroundColor:constant.tableColors[5]}}> </span>
+        attempted by all users
+      </div>
+      </div>
+      </div>
+    </div>
+  );
+}
+
+function ShowLegends(props) {
+  if(props.selectedView === "user"){
+    return <ViewByUsersLegend />
+  }
+  else{
+    return <ViewByResponsesLegend />
+  }
 }

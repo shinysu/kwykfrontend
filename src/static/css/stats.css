@@ -223,12 +223,10 @@
 .view-select{
   background-color: #ede2d5;
   height: 100%;
-  padding-left: 5%;
   padding-right: 5%;
   font-size: 0.8em;
   color: 0;
   font-family: "Helvetica";
-  margin-left: 2vw;
   border-radius: 10px;
   border-color: #959595;
 }

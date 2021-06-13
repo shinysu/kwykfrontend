@@ -9,6 +9,8 @@ export const loginTabColor = "#ffffff";
 export const adminTabColor = "#ffffff";
 export const blackColor = "#000000";
 export const darkGrey = "#959595";
+export const userInsightGreen = "#b2de83";
+export const userInsightRed = "#c55b11";
 
 ///URL changes
 //export const kwykURL = "http://localhost:3000/";
@@ -21,6 +23,9 @@ export const pwdResetSuccessMsg = 'Your password has been changed! SignIn to con
 export const pwdResetFailedMsg = 'Email id is not registered. Signup with your email id';
 export const feedbackMessage = 'Hello! you feedback is important to us. Tell us about your experience, issues faced, ideas and suggestions for improvement'
 export const fbToEmail = 'kwyktest01@gmail.com';
+export const shiny = 'shiny.suresh@gmail.com';
 export const TINYMCE_APIKEY = "0h3vsxidv9gzrfe2zafqct55zkg7tfj04dke4pk5j88e3aot";
 export const pySkillsTopic = "python";
 export const pySkillsSubTopic = "python basics";
+export const aboutUs1 = "PySkills is a simple app to test your conceptual knowledge of Python. It will work like this: \n1. You will be shown a Python concept or term. \n2. You can reply with one or more terms that come to your mind. \n3. If you do not know the term, you can skip it."
+export const aboutUs2 = "The beginner assessment has 20 terms. Please answer as many as you can. At the end of the test, you can: \n 1. Attempt skipped terms. \n 2. Use the link associated with a skipped term and learn more."

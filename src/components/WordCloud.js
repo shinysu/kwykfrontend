@@ -9,11 +9,11 @@ function ShowWordCloud(props) {
     const options = {
       content: {
         allowNumbers: false,
-        maxWords: 50,
+        maxWords: 20,
         stemmer: null,
         stopwordsInput: '',
         },
-      fontSizes: [10, 60],
+      fontSizes: [20, 70],
       rotations: 3,
       rotationAngles: [0, 0],
       padding: 3,
@@ -21,10 +21,10 @@ function ShowWordCloud(props) {
     }
     const resizeStyle = {
       background: "#ede2d5",
-      width:'90%',
+      width:'70%',
       height: '100%',
-      marginLeft: '5%',
-      marginRight: '5%'
+      marginLeft: '15%',
+      marginRight: '15%',
     }
     return (
       <ReactWordcloud className="wordcloud" options={options} words={words} style={resizeStyle}/>
