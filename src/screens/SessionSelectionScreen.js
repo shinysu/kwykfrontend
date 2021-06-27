@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import SelectionButtons from '../components/SelectionButtons';
 import Header from "../headers/KwykHeader";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import ReactGA from 'react-ga4';
 
 /*function SessionSelectionScreen() {
   const urlSplit = window.location.href.split("/")
@@ -31,6 +32,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 
 function DisplaySessions(props){
+  ReactGA.pageview(window.location.pathname + window.location.search);
   const [session,setSession] = useState("");
   function getSelectedSession(data){
     setSession(data);
@@ -87,13 +89,14 @@ function DisplayMessage(props){
 function ShowTestLink(props) {
   const [copySuccess, setCopySuccess] = useState('');
   const textRef = useRef(null);
-  const basename = window.location.href.split("admin")[0];
+  const basename = window.location.origin;
+  console.log(basename);
   let url = '';
   if(props.session){
-    url  = basename.split('#')[0]+'?session='+props.session+'/';
+    url  = basename.split('#')[0]+'?session='+props.session+'/#/'+constant.pySkillsTopic+'/'+props.subtopic;
   }
   else{
-    url  = basename
+    url  = basename +'/#/'+constant.pySkillsTopic+'/'+props.subtopic;
   }
 
   function handleClick(e) {

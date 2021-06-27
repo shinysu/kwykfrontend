@@ -4,8 +4,10 @@ import SessionHeader from "../headers/SessionHeader";
 import { useHistory, useLocation } from "react-router-dom";
 import '../static/css/contents.css';
 import TopicSelectionScreen from "./TopicSelectionScreen";
+import ReactGA from 'react-ga4';
 
 function DisplayTopic(){
+  ReactGA.pageview(window.location.pathname + window.location.search);
   let history = useHistory();
   const location = useLocation();
   if(sessionStorage.getItem('useremail') == null){

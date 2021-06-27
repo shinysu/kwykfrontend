@@ -2,7 +2,7 @@
   "name": "kwyk",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://app.pyskills.com/",
+  "homepage": "http://app.buildskills.in/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -18,6 +18,8 @@
     "react-chart-histogram": "^0.2.4",
     "react-copy-to-clipboard": "^5.0.3",
     "react-dom": "^16.13.1",
+    "react-ga": "^3.3.0",
+    "react-ga4": "^1.0.3",
     "react-jqcloud": "^1.0.5",
     "react-log-state": "^0.1.0",
     "react-scripts": "3.4.1",

@@ -3,8 +3,10 @@ import { useHistory } from 'react-router-dom';
 import Header from "../headers/KwykHeader";
 import SessionHeader from "../headers/SessionHeader";
 import '../static/css/error.css';
+import ReactGA from 'react-ga4';
 
 function FeedbackThanks() {
+  ReactGA.pageview(window.location.pathname + window.location.search);
   return(
     <div className="container">
       <div className="row">
@@ -20,10 +22,12 @@ function FeedbackThanks() {
 }
 function ThankYouMessage() {
   const history = useHistory();
-  sessionStorage.clear();
   function handleClick() {
+    const topic = sessionStorage.getItem('topic');
+    const subtopic = sessionStorage.getItem('subtopic');
+    sessionStorage.clear();
     history.push({
-      pathname:`/`
+      pathname:`/${topic}/${subtopic}`
     });
   }
   return(

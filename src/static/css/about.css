@@ -12,3 +12,50 @@
 .wrap{
   white-space: pre-wrap;
 }
+
+.aboutpage{
+  background-color: #ffffff !important;
+  height: 75vh;
+}
+
+.whitecolor{
+  background-color: #ffffff;
+}
+
+.aboutparah{
+  padding-left: 5vw;
+  padding-right: 5vw;
+  background-color: #ffffff;
+}
+
+.aboutlogin{
+  font-size:1.2em;
+  color: #959595;
+  background-color: #ffffff;
+  display: block;
+  text-align: center;
+  display: block;
+  position: relative;
+  height: auto;
+  margin-top: 5%;
+  margin-bottom: 0;
+  font-family: "Helvetica";
+  border-radius: 25px;
+  border-color: #959595;
+  border-style: solid;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.loginbuttonarea{
+  background-color: #ffffff;
+  height: 8vh;
+}
+
+.aboutlabel{
+  font-family: "Helvetica";
+  color: #000000;
+  margin-left: 5vh;
+  margin-right: 3vh;
+  background-color: #ede2d5 !important;
+}

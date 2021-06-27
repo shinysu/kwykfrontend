@@ -9,12 +9,14 @@ import useFetch from "../hooks/useFetch";
 import * as constant from '../components/Constants';
 import DisplayAlert from '../components/DisplayAlert';
 import ShowWordCloud from '../components/WordCloud'
-import ShowExplanation from "./Explanations";
 import * as utils from '../utils/jsutils';
 import TopicHeader from "../headers/TopicHeader";
 import useGetAttempted from "../hooks/useGetAttempted";
+import Collapse from 'react-bootstrap/Collapse';
+import ReactGA from 'react-ga4';
 
 function Responses() {
+  ReactGA.pageview(window.location.pathname + window.location.search);
   let history = useHistory();
   if(sessionStorage.getItem('topic') == null){
     history.push({
@@ -39,7 +41,7 @@ function ShowResponsePage() {
         <div className="col-md-2"></div>
         <div className="col-md-8">
             <Header username={username}/>
-            <ResponsesTab topic={topic} subtopic={subtopic} />
+            <ShowResponses topic={topic} subtopic={subtopic}/>
         </div>
         <div className="col-md-2"></div>
       </div>
@@ -47,7 +49,7 @@ function ShowResponsePage() {
   );
 }
 
-function ResponsesTab(props){
+/*function ResponsesTab(props){
   const [active, setActive] = useState(0);
   let history = useHistory();
   const handleClick = e => {
@@ -79,21 +81,11 @@ function ResponsesTab(props){
       </>
     </div>
   );
-}
+}*/
 export default Responses;
 
 function ShowResponses(props){
-  const useremail = sessionStorage.getItem('useremail');
-  const url = constant.kwykURL+"user_stats_custom/"+useremail+"/"+props.topic+"/"+props.subtopic;
-  const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
-  if (fetchResponse.error){
-    return <DisplayAlert message={fetchResponse.error} />
-  }
-  else if ( fetchResponse.isLoading) {
-    return 'Loading...';
-  }
-  const data = fetchResponse.data
-
+  const data = JSON.parse(sessionStorage.getItem('responsesData'));
   const topicUserWords = JSON.parse(sessionStorage.getItem('userResponses'));
   const topicWordsResponses = data["topic_answers"];
   const topicWords = topicWordsResponses["topic_words"];

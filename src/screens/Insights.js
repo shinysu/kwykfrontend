@@ -8,9 +8,11 @@ import * as constant from '../components/Constants'
 import Statistics from "./Statistics";
 import DisplayAlert from '../components/DisplayAlert';
 import { useHistory, useLocation } from "react-router-dom";
-import AdminAccessDenied from '../components/AdminAccessDenied'
+import AdminAccessDenied from '../components/AdminAccessDenied';
+import ReactGA from 'react-ga4';
 
 function Insights() {
+  ReactGA.pageview(window.location.pathname + window.location.search);
   let history = useHistory();
   const location = useLocation();
 
@@ -159,13 +161,14 @@ function GetTableHeader(props){
 }
 
 function GetTableData(props){
-  let words, userData;
+  let words, userData, users;
   if(props.data){
      words=props.data["topic_words"];
      userData = props.data["user_data"];
+     users = props.data["all_users"];
   }
   if(props.selectedView === "user"){
-    return <ViewByUsers words={words} userData={userData}/>
+    return <ViewByUsers words={words} userData={userData} users={users}/>
   }
   else{
     return <ViewByResponses words={words} userData={userData} limits={props.limits}/>
@@ -195,7 +198,7 @@ function ViewSelection(props){
 
 function getHeaderWords(data, view) {
   const userWords = data["user_data"];
-  const totalUsers = Object.keys(userWords).length;
+  const totalUsers = data["all_users"].length;
   const divisions = [0, 0.25, 0.5, 0.75, 1];
   const userDivisions = divisions.map((value,index) =>{
     return `${(divisions[index] * totalUsers)}`
@@ -215,24 +218,28 @@ function getHeaderWords(data, view) {
 
 function ViewByUsers(props){
     const userData = props.userData;
+    const users = props.users;
     const words = props.words;
-    if(userData){
-      const data = Object.keys(userData).map((user,index)=>{
-      const userVal = userData[user];
-      const userInput = words.map((word,index)=>{
-        if(userVal[word]){
-          return <td style={{backgroundColor:constant.userInsightGreen}} key={index}></td>;
-        }
-        else {
-          return <td style={{backgroundColor:constant.userInsightRed}} key={index}></td>;
-        }
-      });
-      return(
-        <tr key={index}>
-          <th className="rowheader">{user}</th>
-          {userInput}
-        </tr>
-      );
+    if(users){
+      const data = users.map((user,index)=>{
+          let userVal='';
+          if (userData[user]){
+            userVal = userData[user];
+          }
+          const userInput = words.map((word,index)=>{
+              if(userVal && userVal[word]){
+                return <td style={{backgroundColor:constant.userInsightGreen}} key={index}></td>;
+              }
+              else {
+                return <td style={{backgroundColor:constant.userInsightRed}} key={index}></td>;
+              }
+          });
+          return(
+            <tr key={index}>
+              <th className="rowheader">{user}</th>
+              {userInput}
+            </tr>
+          );
     });
     return <tbody>{data}</tbody>
   }

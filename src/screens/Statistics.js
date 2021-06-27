@@ -146,7 +146,8 @@ function getStats(data){
   const topicData = data;
   const words = topicData["topic_words"];
   const userWords = topicData["user_data"];
-  const totalUsers = Object.keys(userWords).length;
+  const users = topicData["all_users"];
+  const totalUsers = users.length;
   const totalWords = words.length;
   for(var i=0; i < words.length; i++){
       const word = words[i];
@@ -155,7 +156,25 @@ function getStats(data){
   }
   for (i=0; i < words.length; i++){
       const word = words[i];
-      for(const [key, value] of Object.entries(userWords)){
+      for(const name of users){
+        if(!(name in userWords)){
+          skipsCount[word] += 1;
+        }
+        else{
+            const userEntries = userWords[name];
+            if(!Object.keys(userEntries).includes(word)){
+             skipsCount[word] += 1;
+           }
+           else {
+             userAnswerCount[name] = (userAnswerCount[name]||0)+1;
+             answeredCount[word] +=1;
+             wordResponses=wordResponses.concat(userEntries[word].split(","))
+           }
+        }
+      }
+    /*  for(const [key, value] of Object.entries(userWords)){
+        console.log("key=",key);
+        console.log("value=",value);
         const userEntries = value;
         if(!Object.keys(userEntries).includes(word)){
           skipsCount[word] += 1;
@@ -165,7 +184,7 @@ function getStats(data){
           answeredCount[word] +=1;
           wordResponses=wordResponses.concat(userEntries[word].split(","))
         }
-      }
+      }*/
     }
     wordResponses = getWordFrequency(wordResponses);
     return {"answeredCount": answeredCount, "skipsCount": skipsCount, "commonResponseCount":wordResponses,

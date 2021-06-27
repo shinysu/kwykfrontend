@@ -6,9 +6,11 @@ import '../static/css/stats.css';
 import * as constant from '../components/Constants';
 import DisplayAlert from '../components/DisplayAlert';
 import useGetAttempted from "../hooks/useGetAttempted";
-
+import useFetch from "../hooks/useFetch";
+import ReactGA from 'react-ga4';
 
 function UserStats(){
+  ReactGA.pageview(window.location.pathname + window.location.search);
   let history = useHistory();
   const useremail = sessionStorage.getItem('useremail');
   if(useremail == null){
@@ -29,14 +31,17 @@ function CheckStatsAndDisplay(props) {
   useGetAttempted(useremail);
   const attemptedCount = parseInt(sessionStorage.getItem('attempted'));
   const skippedWordCount = parseInt(sessionStorage.getItem('skipped'));
+  const totalWordCount = parseInt(sessionStorage.getItem('totalWordCount'));
   let history = useHistory();
-  if(skippedWordCount === 0){
+  /*if(skippedWordCount === 0){
     history.push({
         pathname:`/view_responses/${topic}/${subtopic}`
       });
     return null;
   }
-  else if(attemptedCount === 0 && (sessionStorage.getItem('skipall') === 'false')){
+  else */
+  //if(attemptedCount === 0 && (sessionStorage.getItem('skipall') === 'false')){
+  if(attemptedCount === 0 && (skippedWordCount !== totalWordCount)){
     sessionStorage.setItem('retry', true);
     history.push({
         pathname:`/chat/${topic}/${subtopic}`
@@ -77,12 +82,24 @@ function ShowTimeHeader(props){
 function DisplayStats(props){
   const attemptedCount = parseInt(sessionStorage.getItem('attempted'));
   const skippedCount = parseInt(sessionStorage.getItem('skipped'));
+  const useremail = sessionStorage.getItem('useremail');
+  const url = constant.kwykURL+"user_stats_custom/"+useremail+"/"+props.topic+"/"+props.subtopic;
+  const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
+  if (fetchResponse.error){
+      return <DisplayAlert message={fetchResponse.error} />
+  }
+  else if ( fetchResponse.isLoading) {
+      return 'Loading...';
+  }
+  const data = fetchResponse.data
+
   return(
     <div className="stats-area">
       <DisplayScore minutes={props.minutes} seconds={props.seconds}
       skippedCount={skippedCount} attemptedCount={attemptedCount}/>
       <RetrySkips topic={props.topic} subtopic={props.subtopic} skippedCount={skippedCount}/>
-      <ViewResponses topic={props.topic} subtopic={props.subtopic}/>
+      <ViewResponses topic={props.topic} subtopic={props.subtopic} data={data} attemptedCount={attemptedCount}/>
+      <ViewExplanation topic={props.topic} subtopic={props.subtopic} skippedCount={skippedCount} attemptedCount={attemptedCount}/>
     </div>
   );
 }
@@ -110,17 +127,40 @@ function RetrySkips(props){
 }
 
 function ViewResponses(props){
-  let history = useHistory();
-  function handleClick(){
-    history.push({
-    pathname:`/view_responses/${props.topic}/${props.subtopic}`
-    });
+    sessionStorage.setItem('responsesData', JSON.stringify(props.data))
+
+    let history = useHistory();
+    if(props.attemptedCount > 0){
+      function handleClick(){
+        history.push({
+        pathname:`/view_responses/${props.topic}/${props.subtopic}`
+        });
+      }
+    return(
+      <div className= "button-area">
+      <button className="retry-button" value="response" onClick={handleClick}>See Popular Responses</button>
+      </div>
+    );
   }
-  return(
-    <div className= "button-area">
-    <button className="retry-button" value="response" onClick={handleClick}>See Responses & Explanation</button>
-    </div>
-  );
+  else{
+    return(
+      <div></div>
+    );
+  }
+}
+
+function ViewExplanation(props){
+    let history = useHistory();
+    function handleClick(){
+        history.push({
+        pathname:`/explanation/${props.topic}/${props.subtopic}`
+        });
+      }
+    return(
+      <div className= "button-area">
+      <button className="retry-button" value="response" onClick={handleClick}>See Explanation</button>
+      </div>
+    );
 }
 
 /*function SwitchTopic(){

@@ -3,9 +3,11 @@ import { useHistory } from "react-router-dom";
 import Header from "../headers/KwykHeader";
 import * as constant from '../components/Constants'
 import usePost from "../hooks/usePost";
-import DisplayAlert from '../components/DisplayAlert'
+import DisplayAlert from '../components/DisplayAlert';
+import ReactGA from 'react-ga4';
 
 function PasswordReset() {
+  ReactGA.pageview(window.location.pathname + window.location.search);
   return(
     <div className="container">
       <div className="row">

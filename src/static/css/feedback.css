@@ -24,7 +24,8 @@
 }
 .fbarea{
   background-color: #ede2d5 !important;
-  height: 80vh;
+  height: 85vh;
+  overflow-y: auto;
 }
 
 .blank{

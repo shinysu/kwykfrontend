@@ -152,7 +152,7 @@
 
 .responses-area{
   width: 100%;
-  height: 65vh;
+  height: 80vh;
   background-color: #ede2d5 !important;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -161,7 +161,7 @@
 
 .explanation-area{
   width: 100%;
-  height: 70vh;
+  height: 85vh;
   background-color: #ffffff !important;
   overflow-y: scroll;
   overflow-x: hidden;

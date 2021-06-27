@@ -5,15 +5,26 @@ import { Tabs, Tab, Content } from "../components/Tab";
 import * as constant from '../components/Constants'
 import usePost from "../hooks/usePost";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import Alert from 'react-bootstrap/Alert'
-var session = ""
+import Alert from 'react-bootstrap/Alert';
+import ReactGA from 'react-ga4';
+var session = "";
 
 function Login() {
+  ReactGA.pageview(window.location.pathname + window.location.search);
   const location = useLocation();
+  let history = useHistory();
   if (location.query){
     sessionStorage.setItem('destinationPath', location.query.destinationPath)
   }
-  if(sessionStorage.getItem('useremail') != null){
+
+  if((sessionStorage.getItem('destinationPath') !== '/admin') &&
+    ((sessionStorage.getItem('topic') == null) || (sessionStorage.getItem('subtopic') == null))){
+    history.push({
+      pathname:`/error`
+    });
+    return (<div></div>);
+  }
+  else if(sessionStorage.getItem('useremail') != null){
     return <Redirect />;
   }
   else{
@@ -23,10 +34,12 @@ function Login() {
 
 function DisplayLogin(){
   //sessionStorage.clear()
+
   const sessionPath = window.location.href.split('?session=')[1]
   if(typeof(sessionPath) !== 'undefined'){
     session = sessionPath.split('/')[0]
   }
+  session = 'bspr1jun2021'  //fix for release 1.0 default session
   return(
     <div className="container">
       <DisplayIcon />
@@ -49,10 +62,10 @@ function DisplayIcon() {
             </div>
             <div className="col-8 window-color">
               <div className="row logintitle">
-                PySkills (Beta-1)
+                Build Your Skills
               </div>
               <div className="row loginsubtitle">
-                Improve your Python skills
+                Assess your Python Skills
               </div>
             </div>
           </div>
@@ -67,7 +80,7 @@ function DisplayTitle() {
     <div className="row ">
         <div className="col-lg-2 "></div>
         <div className="col-lg-8 window-color title">
-            PySkills - Improve your Python skills
+            Build Your Skills - Assess your Python Skills
         </div>
         <div className="col-lg-2 "></div>
     </div>
@@ -279,9 +292,8 @@ function DisplayAlert() {
   }
 }
 
-function initializeSessionStorage(topic, subtopic) {
-  sessionStorage.setItem('topic', constant.pySkillsTopic);
-  sessionStorage.setItem('subtopic', constant.pySkillsSubTopic);
+
+function initializeSessionStorage() {
   sessionStorage.setItem('minutes', 0);
   sessionStorage.setItem('seconds', 0);
   sessionStorage.setItem('userResponses', JSON.stringify([]));
@@ -314,21 +326,19 @@ function Redirect() {
   let history = useHistory();
   const location = useLocation()
   let destination;
+  const topic = sessionStorage.getItem('topic');
+  const subtopic = sessionStorage.getItem('subtopic');
   if(sessionStorage.getItem('destinationPath')){
     destination = sessionStorage.getItem('destinationPath');
     sessionStorage.removeItem('destinationPath');
     const screenname = getDestinationScreen(destination);
     if (screenname === 'chat'){
-      const topicDetail = getTopicFromURL(destination);
-      const topic = topicDetail['topic'];
-      const subtopic = topicDetail['subtopic'];
-      //initializeSessionStorage(topic, subtopic);
       initializeSessionStorage()
     }
   }
   else{
     initializeSessionStorage()
-    destination = '/chat/'+constant.pySkillsTopic+'/'+constant.pySkillsSubTopic
+    destination = '/chat/'+topic+'/'+subtopic
   }
   history.push({
       pathname:destination

@@ -3,8 +3,11 @@ import { useHistory } from "react-router-dom";
 import Header from "../headers/KwykHeader";
 import SessionHeader from "../headers/SessionHeader";
 import '../static/css/feedback.css';
-import * as constant from '../components/Constants'
+import * as constant from '../components/Constants';
+import ReactGA from 'react-ga4';
+
 function Feedback() {
+  ReactGA.pageview(window.location.pathname + window.location.search);
   return(
     <div className="container">
       <div className="row">

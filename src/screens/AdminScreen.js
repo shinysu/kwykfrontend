@@ -5,8 +5,10 @@ import TopicSelectionScreen from "./TopicSelectionScreen";
 import { useHistory, useLocation } from "react-router-dom";
 import AdminAccessDenied from '../components/AdminAccessDenied';
 import * as constant from '../components/Constants';
+import ReactGA from 'react-ga4';
 
 function AdminScreen() {
+  ReactGA.pageview(window.location.pathname + window.location.search);
   let history = useHistory();
   const location = useLocation();
 

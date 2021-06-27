@@ -4,6 +4,43 @@ import { Editor } from '@tinymce/tinymce-react';
 import * as constant from '../components/Constants';
 import useFetch from "../hooks/useFetch";
 import DisplayAlert from '../components/DisplayAlert';
+import { useHistory } from "react-router-dom";
+import Header from "../headers/KwykHeader";
+import ReactGA from 'react-ga4';
+
+function Explanation() {
+  ReactGA.pageview(window.location.pathname + window.location.search);
+  let history = useHistory();
+  if(sessionStorage.getItem('topic') == null){
+    history.push({
+      pathname:`/404`
+    });
+    return null;
+  }
+  else {
+    return <ShowExplanationPage />
+  }
+}
+
+export default Explanation;
+
+function ShowExplanationPage() {
+  const topic = sessionStorage.getItem('topic');
+  const subtopic = sessionStorage.getItem('subtopic');
+  const username = sessionStorage.getItem('username');
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-md-2"></div>
+        <div className="col-md-8">
+            <Header username={username}/>
+            <ShowExplanation topic={topic} subtopic={subtopic}/>
+        </div>
+        <div className="col-md-2"></div>
+      </div>
+    </div>
+  );
+}
 
 function ShowExplanation(props) {
   /*const data = props.data;
@@ -19,7 +56,7 @@ function ShowExplanation(props) {
     }
   });
 */
-  const url = constant.kwykURL+"explaination_custom"+"/"+props.topic+"/"+props.subtopic;
+  const url = constant.kwykURL+"explaination_custom"+"/"+props.topic+"/"+props.subtopic+"/";
   const fetchResponse = useFetch(url, {isLoading: true, data: null, error: null});
   if (fetchResponse.error){
     return <DisplayAlert message={fetchResponse.error} />
@@ -50,7 +87,6 @@ function ShowExplanation(props) {
   );
 }
 
-export default ShowExplanation;
 
 function DisplayExplanation(props) {
   const explanations = props.topicExplanation[props.word];

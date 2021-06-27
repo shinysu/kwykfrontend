@@ -13,7 +13,7 @@ function ShowWordCloud(props) {
         stemmer: null,
         stopwordsInput: '',
         },
-      fontSizes: [20, 70],
+      fontSizes: [40, 70],
       rotations: 3,
       rotationAngles: [0, 0],
       padding: 3,

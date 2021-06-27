@@ -2,8 +2,10 @@ import React from 'react';
 import Header from "../headers/KwykHeader";
 import SessionHeader from "../headers/SessionHeader";
 import '../static/css/error.css';
+import ReactGA from 'react-ga4';
 
 function Error() {
+  ReactGA.pageview(window.location.pathname + window.location.search);
   return(
     <div className="container">
       <div className="row">

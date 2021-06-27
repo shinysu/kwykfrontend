@@ -12,6 +12,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import DisplayAlert from '../components/DisplayAlert';
 import SessionHeader from "../headers/SessionHeader";
 import useGetAttempted from "../hooks/useGetAttempted";
+import ReactGA from 'react-ga4';
 
 var time;
 var currentWord = '';
@@ -19,6 +20,7 @@ var is_retry;
 var totalCount = 0;
 
 function ChatBot(){
+  ReactGA.pageview(window.location.pathname + window.location.search);
   let history = useHistory();
   const location = useLocation();
   if(sessionStorage.getItem('useremail') == null){

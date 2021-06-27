@@ -26,12 +26,12 @@ function Header(props){
 
   return(
     <div className="row headercontainer">
-        <div className="col-11">
+        <div className="col-12">
           <div className="row window-color">
             <div className="col-2 headerfont">
               <img src={knowbotSVG} className="knowbotlogo" alt="logo" />
             </div>
-            <div className="col-md-6 col-7 headerfont">
+            <div className="col-md-10 col-10 headerfont">
               <div className="row title">
                 Build Your Skills
               </div>
@@ -39,13 +39,7 @@ function Header(props){
                 Assess your Python Skills
               </div>
             </div>
-            <div className="col-md-4 col-3 username ">
-              {username}
-            </div>
           </div>
-        </div>
-        <div className="col-1 headerfont">
-          <DisplayDropDown />
         </div>
       </div>
   );
@@ -56,11 +50,9 @@ export default Header;
 function DisplayDropDown() {
   let history = useHistory();
   function handleLogout() {
-    const topic = sessionStorage.getItem('topic');
-    const subtopic = sessionStorage.getItem('subtopic');
     sessionStorage.clear();
     history.push({
-      pathname:`/${topic}/${subtopic}`
+      pathname:`/`
     });
   }
   function handleFeedback() {

@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import Header from "../headers/KwykHeader";
 import SessionHeader from "../headers/SessionHeader";
 import '../static/css/error.css';
+import ReactGA from 'react-ga4';
 
 function Page404() {
+  ReactGA.pageview(window.location.pathname + window.location.search);
   return(
     <div className="container">
       <div className="row">
@@ -22,9 +24,6 @@ function Display404() {
   return(
     <div className='error'>
        <h2><div className='message'>Error: 404 - Page not found</div></h2>
-       <Link to='/'>
-       <div className='link'>Home</div>
-       </Link>
     </div>
   );
 }
